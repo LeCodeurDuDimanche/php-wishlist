@@ -1,6 +1,6 @@
 <?php
 
-namespace \mywishlist\models
+namespace mywishlist\modele;
 
 class Item extends \Illuminate\Database\Eloquent\Model{
 	protected $table = 'Item';
