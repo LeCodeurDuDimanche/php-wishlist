@@ -28,6 +28,7 @@ foreach(Item::select("*")->get() as $i)
     echo "</p>";
 }
 
+echo "<h3>Lister les listes</h3>";
 $lSouhait = Liste::select('*')->get();
 foreach($lSouhait as $i){
 	echo "<p>".$i."</p>";
