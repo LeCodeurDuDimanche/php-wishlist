@@ -2,7 +2,7 @@
 require_once 'vendor/autoload.php';
 
 
-use \mywishlist\modele\Item;
+use \mywishlist\models\Item;
 use Illuminate\Database\Capsule\Manager as DB;
 $db = new DB();
 $db->addConnection(parse_ini_file("src/conf/conf.ini"));
