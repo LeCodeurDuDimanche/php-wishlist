@@ -12,6 +12,6 @@ $db->bootEloquent();
 foreach(Item::select("*")->get() as $i)
 {
     echo "<p>";
-    var_dump($i);
+    echo $i->id . " " . $i->nom . " " . $i->description . " " . $i->tarif . "€";
     echo "</p>";
 }
