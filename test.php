@@ -15,14 +15,25 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 			->where("id", "=", $_GET['id'])
 			->first();
 	echo "<p>";
-	var_dump($item);	
-	echo "</p>";	
+	var_dump($item);
+	echo "</p>";
 }
 
 echo "<h3>Lister les items</h3>";
 foreach(Item::select("*")->get() as $i)
 {
     echo "<p>";
-    echo $i->id . " " . $i->nom . " " . $i->description . " " . $i->tarif . "€";
+    echo $i->id . " " . $i->nom . " " . $i->descr . " " . $i->tarif . "€";
     echo "</p>";
 }
+
+echo "<h3>Insérer un item</h3>";
+$item = new Item();
+$item->nom = "Nouvel item";
+$item->descr = "Item ajouté graĉe à Eloquent!";
+$item->tarif = 999;
+$item->liste_id = 1;
+
+$item->save();
+
+echo "Item sauvegardé avec l'id " . $item->id;
