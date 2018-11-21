@@ -25,6 +25,7 @@ foreach(Item::select("*")->get() as $i)
 {
     echo "<p>";
     echo $i->id . " " . $i->nom . " " . $i->descr . " " . $i->tarif . "€";
+    echo "Liste : " . $i->liste()->get();
     echo "</p>";
 }
 
@@ -43,4 +44,5 @@ echo "<h3>Lister les listes</h3>";
 $lSouhait = Liste::select('*')->get();
 foreach($lSouhait as $i){
 	echo "<p>".$i."</p>";
+    echo "<p> Items : " . $i->items()->get(). "</p>";
 }
