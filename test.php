@@ -1,7 +1,8 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use \mywishlist\models\Item;
+use \mywishlist\modele\Item;
+use \mywishlist\modele\Liste;
 use Illuminate\Database\Capsule\Manager as DB;
 $db = new DB();
 $db->addConnection(parse_ini_file("src/conf/conf.ini"));
@@ -37,3 +38,9 @@ $item->liste_id = 1;
 $item->save();
 
 echo "Item sauvegardé avec l'id " . $item->id;
+
+echo "<h3>Lister les listes</h3>";
+$lSouhait = Liste::select('*')->get();
+foreach($lSouhait as $i){
+	echo "<p>".$i."</p>";
+}
