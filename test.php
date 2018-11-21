@@ -1,7 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
 
-
 use \mywishlist\models\Item;
 use Illuminate\Database\Capsule\Manager as DB;
 $db = new DB();
