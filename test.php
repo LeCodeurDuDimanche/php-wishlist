@@ -16,7 +16,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 			->where("id", "=", $_GET['id'])
 			->first();
 	echo "<p>";
-	var_dump($item);
+	 echo $item->id . " " . $item->nom . " " . $item->descr . " " . $item->tarif . "€";
 	echo "</p>";
 }
 
