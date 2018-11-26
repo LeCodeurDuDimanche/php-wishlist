@@ -1,0 +1,9 @@
+Cas de création d une liste :
+	1 - 
+	2 - 
+	3 - 
+
+Cas de participation à une liste :
+	1 - 
+	2 - 
+	3 - 
