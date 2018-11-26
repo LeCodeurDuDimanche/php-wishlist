@@ -32,9 +32,9 @@ $container['view'] = function ($c) {
 };
 
 
-$app->get('/accueil/{name}', function ($request, $response, $args) {
+$app->get('/', function ($request, $response, $args) {
     $controller = new \mywishlist\controleurs\ControleurAccueil($response, $this->view);
-    return $controller->afficherAccueil($args["name"]);
+    return $controller->afficherAccueil();
 });
 
 $app->run();
