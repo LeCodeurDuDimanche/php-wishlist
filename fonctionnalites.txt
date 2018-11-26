@@ -1,0 +1,11 @@
+Participation à une liste:
+    -
+
+Création de liste:
+- 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
+- 1 Visualiser une liste /liste/{id}/editer
+- 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images /liste/{id}/editer/ajouterItem
+- 1 Partager la liste en ayant une url de partage /liste/{id}
+- 2 Voir les items selectionnes, sans voir qui les a selectionne /liste/{id}
+- 2 Supprimer des items /liste/{id}/editer/supprimerItem
+- 3 Voir les messages associés aux cadeaux /liste/{id}
