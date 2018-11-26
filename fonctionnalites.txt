@@ -1,9 +1,9 @@
 Cas de création d une liste :
-	1 - 
+	1 - Ajouter/Modifier/Supprimer des items à la liste
 	2 - 
 	3 - 
 
 Cas de participation à une liste :
-	1 - 
+	1 - reserver un item
 	2 - 
 	3 - 
