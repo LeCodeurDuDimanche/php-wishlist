@@ -7,10 +7,35 @@ Participation à une liste:
 - 3 Ajouter un message public à une liste (afficher dans le détails de la liste)
 
 Création de liste:
-- 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
-- 1 Visualiser une liste /liste/{id}/editer
-- 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images /liste/{id}/editer/ajouterItem
-- 1 Partager la liste en ayant une url de partage /liste/{id}
-- 2 Voir les items selectionnes, sans voir qui les a selectionne /liste/{id}
-- 2 Supprimer des items /liste/{id}/editer/supprimerItem
-- 3 Voir les messages associés aux cadeaux /liste/{id}
+a 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
+b 1 Visualiser une liste /liste/{id}/editer
+c 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images /liste/{id}/editer/ajouterItem
+d 1 Partager la liste en ayant une url de partage /liste/{id}
+e 2 Voir les items selectionnes, sans voir qui les a selectionne /item/{num}
+f 2 Modifier des Items /item/{num}/editer
+g 2 Supprimer des items /item/{num}/supprimer
+h 2 Modifier les informations d'une liste /liste{id}/editer
+i 3 Ajouter une image à un item /item/{num}/editer/ajouterImage
+j 3 Ajouter une image à un item /item/{num}/editer/modifierImage
+k 3 Voir les messages associés aux cadeaux /liste/{id}/messages
+l 3 Rendre une liste publique /liste/{num}/editer
+m 3 Ouvrir une cagnotte pour un item /item/{num}/editer/creerCagnotte
+n 3 Ajouter une image par upload /item/{num}/ajouterImage/upload
+
+Controleurs :
+    ListeCreateur(a, b, c, d, h, k, l)
+    Item(e, f, g, i, j, m, n)
+    (On pourrait ajouter 2 controleurs pour la modification liste et item)
+
+Compte:
+ a 1 Créer un Compte /compte/creer
+ b 1 S'authentifier /compte/login
+ c 2 Modifier son compte /compte et /compte/modifier
+ d 2 Modifier son mot de passe
+
+ Controleurs:
+    Authentification(a, b, d)
+    Compte(a, c)
+
+
+ 3 Afficher les liste publiques /liste/publiques
