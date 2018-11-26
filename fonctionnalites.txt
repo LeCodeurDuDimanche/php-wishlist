@@ -1,5 +1,5 @@
 Participation à une liste:
-    -
+    - réserver un  item
 
 Création de liste:
 - 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
