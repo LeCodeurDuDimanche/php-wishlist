@@ -1,6 +1,10 @@
 Participation à une liste:
-    - 1 réserver un  item /liste/{id}
-    -
+- 1 Accéder à une liste grâce à son url (utilisation d'un token)
+- 1 Afficher la liste (infos de la liste + items(nom, image, etat de la reservation))
+- 1 Afficher un item particuliuer de la liste (infos détaillé, image, etat de la reservation[nom du participant si reserve])
+- 1 Réserver un  item grâce à un formulaire (nom du particiapant) sur la page détaillée de l'item
+- 2 Saisir un message au créateur dans le formulaire de résertvation d'un item
+- 3 Ajouter un message public à une liste (afficher dans le détails de la liste)
 
 Création de liste:
 a 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
