@@ -1,11 +1,26 @@
 Participation à une liste:
-    - réserver un  item
+    - 1 réserver un  item /liste/{id}
+    -
 
 Création de liste:
 - 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
 - 1 Visualiser une liste /liste/{id}/editer
 - 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images /liste/{id}/editer/ajouterItem
 - 1 Partager la liste en ayant une url de partage /liste/{id}
-- 2 Voir les items selectionnes, sans voir qui les a selectionne /liste/{id}
-- 2 Supprimer des items /liste/{id}/editer/supprimerItem
-- 3 Voir les messages associés aux cadeaux /liste/{id}
+- 2 Voir les items selectionnes, sans voir qui les a selectionne /item/{num}
+- 2 Modifier des Items /item/{num}/editer
+- 2 Supprimer des items /item/{num}/supprimer
+- 2 Modifier les informations d'une liste /liste{id}/editer
+- 3 Ajouter une image à un item /item/{num}/editer/ajouterImage
+- 3 Ajouter une image à un item /item/{num}/editer/modifierImage
+- 3 Voir les messages associés aux cadeaux /liste/{id}/messages
+- 3 Rendre une liste publique /liste/{num}/editer
+- 3 Ouvrir une cagnotte pour un item /item/{num}/editer/creerCagnotte
+- 3 Ajouter une image par upload /item/{num}/ajouterImage/upload
+
+Compte:
+ - 1 Créer un Compte /compte/creer
+ - 1 S'authentifier /compte/login
+ - 2 Modifier son compte /compte et /compte/modifier
+
+ 3 Afficher les liste publiques /liste/publiques
