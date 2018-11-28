@@ -1,18 +1,18 @@
 Création de liste:
-a 1 Création de liste avec un titre, une desc et une date limite de validité  /liste/creer
-b 1 Visualiser une liste /liste/{id}/editer
-c 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images /liste/{id}/editer/ajouterItem
-d 1 Partager la liste en ayant une url de partage /liste/{id}
-e 2 Voir les items selectionnes, sans voir qui les a selectionne /item/{num}
-f 2 Modifier des Items /item/{num}/editer
-g 2 Supprimer des items /item/{num}/supprimer
-h 2 Modifier les informations d'une liste /liste{id}/editer
-i 3 Ajouter une image à un item /item/{num}/editer/ajouterImage
-j 3 Ajouter une image à un item /item/{num}/editer/modifierImage
-k 3 Voir les messages associés aux cadeaux /liste/{id}/messages
-l 3 Rendre une liste publique /liste/{num}/editer
-m 3 Ouvrir une cagnotte pour un item /item/{num}/editer/creerCagnotte
-n 3 Ajouter une image par upload /item/{num}/ajouterImage/upload
+a 1 Création de liste avec un titre, une desc et une date limite de validité  POST /liste/creer
+b 1 Visualiser une liste GET /liste/{id_edit}
+c 1  Ajouter un item à une liste avec un nom, descriptid, tarif indicatif, url, images POST /liste/{id_edit}/ajouterItem
+d 1 Partager la liste en ayant une url de partage GET /liste/{id_edit}
+e 2 Voir les items selectionnes, sans voir qui les a selectionne GET /liste/{id_edit}/item/{num}
+f 2 Modifier des Items PUT /liste/{id_edit}/item/{num}/editer
+g 2 Supprimer des items DELETE /item/{num}/supprimer
+h 2 Modifier les informations d'une liste PUT /liste/{id_edit}/editer
+i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
+j 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
+k 3 Voir les messages associés aux cadeaux GET /liste/{id}/messages
+l 3 Rendre une liste publique POST /liste/{id_edit}/rendrePublique
+m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
+n 3 Ajouter une image par upload POST /liste/{id_edit}/item/{num}/ajouterImage/upload
 
 Participation à une liste:
 o 1 Accéder à une liste grâce à son url (utilisation d'un token) /liste/{id}
@@ -23,21 +23,21 @@ s 2 Saisir un message au créateur dans le formulaire de réservation d'un item
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste)
 
 
-Controleurs :
+Compte:
+ u 1 Créer un Compte POST /compte/creer
+ v 1 S'authentifier POST /compte/login
+ w 2 Modifier son compte GET /compte et PUT /compte/modifier
+ x 2 Modifier son mot de passe PUT /compte/modifier
+
+Accueil:
+y 1 Page d'accueil du visite GET /
+z 3 Afficher les liste publiques GET /liste/publiques
+
+ Controleurs:
     ListeCreateur(a, b, c, d, h, k, l)
     ItemCreateur(e, f, g, i, j, m, n)
     ListeParticipant(o, p, t)
     ItemParticipant(q, r, s)
-
-Compte:
- u 1 Créer un Compte /compte/creer
- v 1 S'authentifier /compte/login
- w 2 Modifier son compte /compte et /compte/modifier
- x 2 Modifier son mot de passe
-
- Controleurs:
     Authentification(u, v, x)
     Compte(u, w, x)
-
-
- 3 Afficher les liste publiques /liste/publiques
+    Accueil(y, z)
