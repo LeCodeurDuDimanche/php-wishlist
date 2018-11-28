@@ -23,21 +23,21 @@ s 2 Saisir un message au créateur dans le formulaire de réservation d'un item
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste)
 
 
-Controleurs :
-    ListeCreateur(a, b, c, d, h, k, l)
-    ItemCreateur(e, f, g, i, j, m, n)
-    ListeParticipant(o, p, t)
-    ItemParticipant(q, r, s)
-
 Compte:
  u 1 Créer un Compte POST /compte/creer
  v 1 S'authentifier POST /compte/login
  w 2 Modifier son compte GET /compte et PUT /compte/modifier
  x 2 Modifier son mot de passe PUT /compte/modifier
 
+Accueil:
+y 1 Page d'accueil du visite GET /
+z 3 Afficher les liste publiques GET /liste/publiques
+
  Controleurs:
+    ListeCreateur(a, b, c, d, h, k, l)
+    ItemCreateur(e, f, g, i, j, m, n)
+    ListeParticipant(o, p, t)
+    ItemParticipant(q, r, s)
     Authentification(u, v, x)
     Compte(u, w, x)
-
-
- 3 Afficher les liste publiques /liste/publiques
+    Accueil(y, z)
