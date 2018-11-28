@@ -36,8 +36,8 @@ Compte:
  x 2 Modifier son mot de passe
 
  Controleurs:
-    Authentification(a, b, d)
-    Compte(a, c)
+    Authentification(u, v, x)
+    Compte(u, w, x)
 
 
  3 Afficher les liste publiques /liste/publiques
