@@ -5,16 +5,14 @@
 
         private $reponse, $view;
 
-        public function __construct($reponse, $view)
+        public function __construct(\Slim\Http\Response $reponse, \Slim\Views\Twig $view)
         {
             $this->reponse = $reponse;
             $this->view = $view;
         }
 
-        public function afficherAccueil($nom)
+        public function afficherAccueil()
         {
-            return $this->view->render($this->reponse, 'accueil.html', [
-                  'nom' => $nom
-              ]);
+            return $this->view->render($this->reponse, "accueil.html");
         }
     }
