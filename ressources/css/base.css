@@ -1,0 +1,7 @@
+.main-container{
+    min-height: 80vh;
+}
+
+footer, nav{
+    min-height: 10vh;
+}
