@@ -36,29 +36,29 @@ $container['view'] = function ($c) {
 $app->get('/', function ($request, $response, $args) {
     $controller = new \mywishlist\controleurs\ControleurAccueil($response, $this->view);
     return $controller->afficherAccueil();
-});
+})->setName('accueil');
 
-$app->get('/liste/c:id', function ($request, $response, $args){
+$app->get('/liste/c{id}', function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeCreateur();
     return $controller->afficherListe($args[0]);
-});
+})->setName('listeCreateur');
 
-$app->get('/liste/c:id/details',function ($request, $response, $args){
+$app->get('/liste/c{id}/details',function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeCreateur();
     return $controller->afficherListeAvecDetails($args[0]);
-});
+})->setName('listeCreateurDetails');
 
-$app->get('/liste/p:id', function ($request, $response, $args){
+$app->get('/liste/p{id}', function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeParticipant();
     return $controller->afficherListe($args[0]);
-});
+})->setName('listeParticipant');
 
-$app->get('/liste/p:id/details',function ($request, $response, $args){
+$app->get('/liste/p{id}/details',function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeParticipant();
     return $controller->afficherListeAvecDetails($args[0]);
-});
+})->setName('listeParticipantDetails');
 
-$app->get('/item/:id', function ($request, $response, $args){
+$app->get('/item/{id}', function ($request, $response, $args){
 
 });
 
