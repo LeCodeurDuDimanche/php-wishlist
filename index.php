@@ -38,4 +38,16 @@ $app->get('/', function ($request, $response, $args) {
     return $controller->afficherAccueil();
 });
 
+$app->get('/liste/:id', function ($request, $response, $args){
+
+});
+
+$app->get('/liste/:id/details',function ($request, $response, $args){
+
+});
+
+$app->get('/item/:id', function ($request, $response, $args){
+
+});
+
 $app->run();
