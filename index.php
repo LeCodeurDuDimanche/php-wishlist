@@ -20,7 +20,8 @@ $container = $app->getContainer();
 // Register Twig View helper
 $container['view'] = function ($c) {
     $view = new \Slim\Views\Twig('src/vues', [
-        'cache' => 'src/cache'
+        'cache' => 'src/cache',
+        'debug' => true
     ]);
 
     // Instantiate and add Slim specific extension
