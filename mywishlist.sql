@@ -15,6 +15,13 @@ CREATE TABLE `item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `clients`;
+CREATE TABLE `clients` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nom` text not null,
+    `mdp` text not null
+) ENGINE InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`) VALUES
 (1,	2,	'Champagne',	'Bouteille de champagne + flutes + jeux à gratter',	'champagne.jpg',	'',	20.00),
 (2,	2,	'Musique',	'Partitions de piano à 4 mains',	'musique.jpg',	'',	25.00),
