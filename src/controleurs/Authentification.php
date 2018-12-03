@@ -5,9 +5,17 @@
 
     class Authentification {
 
-        public function creerCompte(string $nom, string $mdp)
+        public function creerCompte(string $nom, string $mdp) : integer
         {
-            //TODO: a faire
+            $u = new Utilisateur();
+            $u->nom = $nom;
+            $u->mdp = password_hash($mdp);
+            $id = $u->save();
+
+            if (! connexion($nom, $mdp))
+                $id = false;
+
+            return $id;
         }
 
         public function connexion(string $nom, string $mdp) : boolean
