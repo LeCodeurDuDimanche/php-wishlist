@@ -41,3 +41,7 @@ z 3 Afficher les liste publiques GET /liste/publiques
     Authentification(u, v, x)
     Compte(u, w, x)
     Accueil(y, z)
+
+
+les ids participants commencent par la lettre p
+les ids createurs commenecent par la lettre c
