@@ -38,12 +38,24 @@ $app->get('/', function ($request, $response, $args) {
     return $controller->afficherAccueil();
 });
 
-$app->get('/liste/:id', function ($request, $response, $args){
-
+$app->get('/liste/c:id', function ($request, $response, $args){
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur();
+    return $controller->afficherListe($args[0]);
 });
 
-$app->get('/liste/:id/details',function ($request, $response, $args){
+$app->get('/liste/c:id/details',function ($request, $response, $args){
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur();
+    return $controller->afficherListeAvecDetails($args[0]);
+});
 
+$app->get('/liste/p:id', function ($request, $response, $args){
+    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
+    return $controller->afficherListe($args[0]);
+});
+
+$app->get('/liste/p:id/details',function ($request, $response, $args){
+    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
+    return $controller->afficherListeAvecDetails($args[0]);
 });
 
 $app->get('/item/:id', function ($request, $response, $args){

@@ -4,4 +4,11 @@
 
  class  ControleurListePartcipant{
  	
+ 	public function afficherListe($idListe){
+
+ 	}
+
+ 	public function afficherListeAvecDetails($idListe){
+ 		
+ 	}
  }
