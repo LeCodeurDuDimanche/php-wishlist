@@ -39,6 +39,10 @@ $app->get('/', function ($request, $response, $args) {
     return $controller->afficherAccueil();
 })->setName('accueil');
 
+//listeCreateur
+$app->post('/liste/creer', function ($request, $response, $args){
+
+})->setName("creerListe");
 $app->get('/liste/c{id}', function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeCreateur();
     return $controller->afficherListe($args[0]);
