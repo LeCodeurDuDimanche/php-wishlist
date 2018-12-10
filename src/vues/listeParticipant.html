@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - Liste{% endblock %}
+
+{% block content %}
+    <h1>Accueil</h1>
+    <p>Bienvenue sur My Wish List !</p>
+    {{liste->titre|e}}
+{% endblock %}
