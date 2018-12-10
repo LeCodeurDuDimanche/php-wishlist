@@ -5,5 +5,8 @@
 
 {% block content %}
     <h1>Affichage Liste avec details</h1>
- 	<p>{{liste}}</p>
+ 	<p>{{liste.titre}}</p>
+ 	{% for it in listeIt %}
+ 		<p>{{it.nom}}</p>
+ 	{% endfor %}
 {% endblock %}

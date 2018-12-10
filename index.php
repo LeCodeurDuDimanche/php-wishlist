@@ -38,8 +38,8 @@ $app->get('/liste/c{id}', function ($request, $response, $args){
 })->setName('listeCreateur');
 
 $app->get('/liste/c{id}/details',function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur();
-    return $controller->afficherListeAvecDetails($args[0]);
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
+    return $controller->afficherListeAvecDetails($args["id"]);
 })->setName('listeCreateurDetails');
 
 $app->get('/liste/p{id}', function ($request, $response, $args){
