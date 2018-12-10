@@ -12,25 +12,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 //Init Eloquent
 
 //Init Slim
-$app = new Slim\App();
-
-//Init Twig
-// Fetch DI Container
-$container = $app->getContainer();
-// Register Twig View helper
-$container['view'] = function ($c) {
-    $view = new \Slim\Views\Twig('src/vues', [
-        'cache' => 'src/cache',
-        'debug' => true
-    ]);
-
-    // Instantiate and add Slim specific extension
-    $router = $c->get('router');
-    $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
-    $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
-
-    return $view;
-};
+$settings = require_once __DIR__ . "/src/conf/settings.php";
+$container = new Slim\Container($settings);
+$app = new Slim\App($container);
 
 
 //Accueil
