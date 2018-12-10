@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class Liste extends \illuminate\Database\Eloquent\Model{
+class Liste extends \Illuminate\Database\Eloquent\Model{
 
 	protected $table = 'liste';
 	protected $primaryKey = "no";
