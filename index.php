@@ -29,9 +29,15 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('accueil');
 
 //listeCreateur
+$app->get('/liste/creer', function ($request, $response, $args){
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
+    return $controller->afficherFormulaireCreation();
+})->setName("formulaireCreerListe");
 $app->post('/liste/creer', function ($request, $response, $args){
-
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
+    return $controller->creerListe($request);
 })->setName("creerListe");
+
 $app->get('/liste/c{id}', function ($request, $response, $args){
     $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
     return $controller->afficherListe($args["id"]);

@@ -8,6 +8,10 @@
  class ControleurListeCreateur extends Controleur{
 
 
+     public function afficherFormulaireCreation()
+     {
+         return $this->view->render($this->reponse, "creerListe.html");
+     }
 
  	public function afficherListe($idListe){
  		$liste = Liste::find($idListe);
