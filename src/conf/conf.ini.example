@@ -1,8 +1,7 @@
 driver=mysql
-username=root
-password=
+username=A_REMPLIR
+password=A_REMPLIR
 host=localhost
-database=wishlist
+database=A_REMPLIR
 charset=utf8
 collation=utf8_unicode_ci
-prefix=
