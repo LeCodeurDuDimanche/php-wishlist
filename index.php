@@ -10,6 +10,11 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 //Init Eloquent
+$db = new Illuminate\Database\Capsule\Manager();
+$db_conf = parse_ini_file(__DIR__ . "/src/conf/conf.ini");
+$db->addConnection($db_conf);
+$db->setAsGlobal();
+$db->bootEloquent();
 
 //Init Slim
 $settings = require_once __DIR__ . "/src/conf/settings.php";
