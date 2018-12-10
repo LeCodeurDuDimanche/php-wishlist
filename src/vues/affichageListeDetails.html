@@ -1,9 +1,59 @@
 {% extends "base.html" %}
+{% block titre %}{{parent()}} - ListeDetaille{% endblock %}
+{% block css %}
+	{{parent()}}
+{% endblock %}
 
-{% block titre %}{{parent()}} - Accueil{% endblock %}
 
 
 {% block content %}
     <h1>Affichage Liste avec details</h1>
- 	<p>{{liste}}</p>
+ 	<p>{{liste.titre}}</p>
+
+ 	<table class="table table-striped">
+ 		<thead>
+	 		<tr>
+	 			<th>
+	 				Nom
+	 			</th>
+	 			<th>
+	 				Description
+	 			</th>
+	 			<th>
+	 				Image
+	 			</th>
+	 			<th>
+	 				Tarif
+	 			</th>
+	 			<th>
+	 				Edition
+	 			</th>
+	 		</tr>
+ 		</thead>
+ 		<tbody>
+	 		{% for it in listeIt %}
+	 		<tr>
+	 			<td>
+	 				{{it.nom}}
+	 			</td>
+	 			<td>
+	 				{{it.descr}}
+	 			</td>
+	 			<td>
+	 				<img src="{{base_url()}}/ressources/img/{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+	 			</td>
+	 			<td>
+	 				{{it.tarif}}
+	 			</td>
+	 		</tr>
+	 		{% endfor %}
+ 		</tbody>
+ 		
+ 		
+
+
+ 	</table>
+
+
+ 	
 {% endblock %}

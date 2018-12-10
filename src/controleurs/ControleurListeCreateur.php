@@ -19,8 +19,8 @@
  	}
 
  	public function afficherListeAvecDetails($idListe){
- 		$liste = Liste::where('id', '=', $idListe)->first();
- 		$listeIt = $liste->items();
+ 		$liste = Liste::where('no', '=', $idListe)->get()[0];
+ 		$listeIt = $liste->items()->get();	
  		return $this->view->render($this->reponse, "affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
  	}
 
