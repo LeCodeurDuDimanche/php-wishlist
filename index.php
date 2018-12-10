@@ -28,8 +28,8 @@ $app->post('/liste/creer', function ($request, $response, $args){
 
 })->setName("creerListe");
 $app->get('/liste/c{id}', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur();
-    return $controller->afficherListe($args[0]);
+    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
+    return $controller->afficherListe($args["id"]);
 })->setName('listeCreateur');
 
 $app->get('/liste/c{id}/details',function ($request, $response, $args){

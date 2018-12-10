@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - Accueil{% endblock %}
+
+
+{% block content %}
+    <h1>Affichage Liste</h1>
+    <p>{{liste->titre}}
+{% endblock %}
