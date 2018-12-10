@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
-{% block titre %}{{parent()}} - Accueil{% endblock %}
+{% block titre %}{{parent()}} - Liste{% endblock %}
 
 
 {% block content %}
     <h1>Affichage Liste</h1>
-    <p>{{liste.titre}}
+    <p>{{liste.titre}}</p>
+    <p>{{liste.description}}</p>
+    <p>{{liste.expiration}}</p>
+
+
 {% endblock %}
