@@ -12,7 +12,12 @@
      {
          return $this->view->render($response, "createur/creerListe.html");
      }
-
+/*
+     public function afficherFormulaireAjoutItem($request, $response, $args)
+     {
+         return $this->view->render($response, "createur/ajouterItem.html");
+     }
+*/
  	public function afficherListe($request, $response, $args){
  		$liste = Liste::find($args['id']);
  		return $this->view->render($response, "createur/affichageListe.html", ["liste" => $liste]);

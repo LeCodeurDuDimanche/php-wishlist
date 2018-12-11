@@ -7,7 +7,7 @@
 
 
 {% block content %}
-    <h1>Affichage Liste avec details</h1>
+    <h1>Liste créateur correspondant à la liste numéro {{liste.user_id}}</h1>
  	<p>{{liste.titre}}</p>
 
  	<table class="table table-striped">
@@ -48,12 +48,6 @@
 	 		</tr>
 	 		{% endfor %}
  		</tbody>
- 		
- 		
-
-
  	</table>
-
-
  	
 {% endblock %}
