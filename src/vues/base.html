@@ -14,18 +14,20 @@
     </head>
     <body>
 		{% block header %}
-		<nav class="navbar justify-content-center navbar-light bg-light">
+		<nav class="navbar justify-content-center navbar-light">
 		  <a class="navbar-brand" href="{{ path_for('accueil') }}"><h1>My Wish List</h1></a>
 		</nav>
 		{% endblock %}
 
 		{% block main %}
-		<div class='container main-container p-5'>
-			<div class='content'>
-				{% block content %}
-				{% endblock %}
-			</div>
-		</div>
+        <div class='wrapper py-5'>
+    		<div class='container main-container p-5'>
+    			<div class='content'>
+    				{% block content %}
+    				{% endblock %}
+    			</div>
+    		</div>
+        </div>
 		{% endblock %}
 		{% block footer %}
 		<footer class="container-fluid bg-dark text-light d-flex">

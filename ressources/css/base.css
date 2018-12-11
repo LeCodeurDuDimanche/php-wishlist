@@ -1,5 +1,16 @@
+
 .main-container{
     min-height: 80vh;
+    background: white;
+    opacity: .95;
+}
+
+.wrapper{
+    background: url(/ressources/img/bg1.jpg);
+}
+
+nav{
+    background: #fed;
 }
 
 footer, nav{
