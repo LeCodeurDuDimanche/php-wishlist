@@ -8,20 +8,20 @@
  class ControleurListeCreateur extends Controleur{
 
 
-     public function afficherFormulaireCreation()
+     public function afficherFormulaireCreation($request, $response, $args)
      {
-         return $this->view->render($this->reponse, "creerListe.html");
+         return $this->view->render($response, "createur/creerListe.html");
      }
 
- 	public function afficherListe($idListe){
- 		$liste = Liste::find($idListe);
- 		return $this->view->render($this->reponse, "affichageListe.html", ["liste" => $liste]);
+ 	public function afficherListe($request, $response, $args){
+ 		$liste = Liste::find($args['id']);
+ 		return $this->view->render($response, "createur/affichageListe.html", ["liste" => $liste]);
  	}
 
- 	public function afficherListeAvecDetails($idListe){
- 		$liste = Liste::where('no', '=', $idListe)->get()[0];
- 		$listeIt = $liste->items()->get();	
- 		return $this->view->render($this->reponse, "affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
+ 	public function afficherListeAvecDetails($request, $response, $args){
+ 		$liste = Liste::where('no', '=', $args['id'])->get()[0];
+ 		$listeIt = $liste->items()->get();
+ 		return $this->view->render($response, "createur/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
  	}
 
  }

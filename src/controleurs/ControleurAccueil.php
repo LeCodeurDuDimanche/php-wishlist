@@ -2,9 +2,9 @@
 namespace mywishlist\controleurs;
 
  class ControleurAccueil extends Controleur{
-    
-    public function afficherAccueil()
+
+    public function afficherAccueil($request, $response, $args)
     {
-        return $this->view->render($this->reponse, "accueil.html");
+        return $this->view->render($response, "accueil.html");
     }
 }

@@ -4,10 +4,9 @@
 
 class Controleur {
 
- 	protected $reponse, $view;
+ 	protected $view;
 
-    public function __construct(\Slim\Http\Response $reponse, \Slim\Views\Twig $view) {
-        $this->reponse = $reponse;
-        $this->view = $view;
+    public function __construct(\Slim\Container $container) {
+        $this->view = $container->view;
     }
 }

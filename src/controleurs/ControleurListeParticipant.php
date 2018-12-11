@@ -2,13 +2,15 @@
 
  namespace mywishlist\controleurs;
 
- class  ControleurListePartcipant{
- 	
- 	public function afficherListe($idListe){
+ use mywishlist\models\Liste;
 
+ class ControleurListeParticipant extends Controleur{
+
+ 	public function afficherListe($request, $response, $args){
+        $liste = Liste::find($args['id']);
+ 		return $this->view->render($response, "participant/affichageListe.html", ["liste" => $liste]);
  	}
 
- 	public function afficherListeAvecDetails($idListe){
- 		
+ 	public function afficherListeAvecDetails($request, $response, $args){
  	}
  }

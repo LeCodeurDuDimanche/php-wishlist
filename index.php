@@ -7,10 +7,14 @@
  * @author: canals
  */
 
+ use \mywishlist\controleurs\ControleurListeCreateur;
+ use \mywishlist\controleurs\ControleurListeParticipant;
+ use Illuminate\Database\Capsule\Manager as DBManager;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 //Init Eloquent
-$db = new Illuminate\Database\Capsule\Manager();
+$db = new DBManager();
 $db_conf = parse_ini_file(__DIR__ . "/src/conf/conf.ini");
 $db->addConnection($db_conf);
 $db->setAsGlobal();
@@ -23,40 +27,21 @@ $app = new Slim\App($container);
 
 
 //Accueil
-$app->get('/', function ($request, $response, $args) {
-    $controller = new \mywishlist\controleurs\ControleurAccueil($response, $this->view);
-    return $controller->afficherAccueil();
-})->setName('accueil');
+$app->get('/', \mywishlist\controleurs\ControleurAccueil::class.":afficherAccueil")->setName('accueil');
 
 //listeCreateur
-$app->get('/liste/creer', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
-    return $controller->afficherFormulaireCreation();
-})->setName("formulaireCreerListe");
-$app->post('/liste/creer', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
-    return $controller->creerListe($request);
-})->setName("creerListe");
+$app->group("/liste", function() use ($app){
+    $app->get('/creer', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireCreation")->setName("formulaireCreerListe");
+    $app->post('/creer', \mywishlist\controleurs\ControleurListeCreateur::class.":creerListe")->setName("creerListe");
+    $app->get('/c{id}', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
+    $app->get('/c{id}/details',\mywishlist\controleurs\ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
+});
 
-$app->get('/liste/c{id}', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
-    return $controller->afficherListe($args["id"]);
-})->setName('listeCreateur');
-
-$app->get('/liste/c{id}/details',function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeCreateur($response, $this->view);
-    return $controller->afficherListeAvecDetails($args["id"]);
-})->setName('listeCreateurDetails');
-
-$app->get('/liste/p{id}', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
-    return $controller->afficherListe($args[0]);
-})->setName('listeParticipant');
-
-$app->get('/liste/p{id}/details',function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
-    return $controller->afficherListeAvecDetails($args[0]);
-})->setName('listeParticipantDetails');
+//Liste participant
+$app->group("/liste", function() use ($app){
+    $app->get('/p{id}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
+    $app->get('/p{id}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
+});
 
 $app->get('/item/{id}', function ($request, $response, $args){
 
