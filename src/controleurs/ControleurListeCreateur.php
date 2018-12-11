@@ -12,6 +12,12 @@
      {
          return $this->view->render($response, "createur/creerListe.html");
      }
+
+     public function creerListe($request, $response, $args)
+     {
+         
+     }
+
 /*
      public function afficherFormulaireAjoutItem($request, $response, $args)
      {
