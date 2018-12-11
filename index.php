@@ -49,13 +49,13 @@ $app->get('/liste/c{id}/details',function ($request, $response, $args){
 })->setName('listeCreateurDetails');
 
 $app->get('/liste/p{id}', function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
-    return $controller->afficherListe($args[0]);
+    $controller = new \mywishlist\controleurs\ControleurListeParticipant($response, $this->view);
+    return $controller->afficherListe($args["id"]);
 })->setName('listeParticipant');
 
 $app->get('/liste/p{id}/details',function ($request, $response, $args){
-    $controller = new \mywishlist\controleurs\ControleurListeParticipant();
-    return $controller->afficherListeAvecDetails($args[0]);
+    $controller = new \mywishlist\controleurs\ControleurListeParticipant($response, $this->view);
+    return $controller->afficherListeAvecDetails($args['id']);
 })->setName('listeParticipantDetails');
 
 $app->get('/item/{id}', function ($request, $response, $args){
