@@ -24,7 +24,7 @@
 	 				Tarif
 	 			</th>
 	 			<th>
-	 				Reserver
+	 				Reserver par
 	 			</th>
 	 		</tr>
  		</thead>
@@ -42,6 +42,14 @@
 	 			</td>
 	 			<td>
 	 				{{it.tarif}}
+	 			</td>
+	 			<td>
+	 				{% if it.reserverPar == NULL %}
+	 				<i>Disponible ! </i><br><br>
+	 				<a href="{{path_for('rerserverItem', {id : it.id})}}" class='btn btn-primary e-120' title='Reserver'>Reserver</a>
+	 				{% else %}
+	 				{{it.reserverPar}}
+	 				{% endif %}
 	 			</td>
 	 		</tr>
 	 		{% endfor %}

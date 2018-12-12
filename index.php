@@ -48,8 +48,8 @@ $app->group("/liste", function() use ($app){
 
 //Liste participant
 $app->group("/liste", function() use ($app){
-    $app->get('/p{id}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
-    $app->get('/p{id}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
+    $app->get('/p{token}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
+    $app->get('/p{token}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
 });
 
 $app->group("/item", function() use ($app){
