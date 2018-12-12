@@ -7,7 +7,7 @@
 
 {% block content %}
  	<h1>{{item.nom}}</h1>
- 	<h3><i>Appartient à </i><a href="{{base_url()}}/liste/p{{item.liste_id}}">{{liste.titre}}</a></h3>
+ 	<h3><i>Appartient à la liste : </i><a href="{{base_url()}}/liste/p{{item.liste_id}}">{{liste.titre}}</a></h3>
 
  	<p><b>Prix : {{item.tarif}} euros</b></p>
  	 <p>{{item.descr}}</p>
