@@ -46,8 +46,6 @@ $app->group("/liste", function() use ($app){
     $app->get('/p{id}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
 });
 
-$app->get('/item/{id}', function ($request, $response, $args){
-
-});
+$app->get('/item/{id}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName("voirItem");
 
 $app->run();
