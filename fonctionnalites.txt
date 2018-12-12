@@ -1,3 +1,8 @@
+Pour run les migrations :
+supprimer toutes les tables puis executer
+    php vendor/bin/phinx migrate -c src/Migration/config.php
+(depuis la racine du projet)
+
 Création de liste:
 a 1 Création de liste avec un titre, une desc et une date limite de validité  POST /liste/creer
 b 1 Visualiser une liste GET /liste/{id_edit}
