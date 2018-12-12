@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "participant/AffichageListe.html" %}
 {% block titre %}{{parent()}} - ListeDetaille{% endblock %}
 {% block css %}
 	{{parent()}}
@@ -7,10 +7,7 @@
 
 
 {% block content %}
- 	<h1>{{liste.titre}}</h1>
- 	    <p>{{liste.description}}</p>
-    	<p><i>Expire le : {{liste.expiration}}</i></p>
-
+	{{parent()}}
  	<table class="table table-striped">
  		<thead>
 	 		<tr>
