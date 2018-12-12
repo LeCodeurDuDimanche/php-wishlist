@@ -11,7 +11,7 @@ class ControleurItem extends Controleur{
 	}
 
 	public function afficherItem($request, $response, $args){
-		$idItem = $args['id'];
+		$idItem = filter_var($args['id'], FILTER_SANITIZE_STRING);
 		$item = Item::find($idItem);
 		$liste = Liste::find($item->liste_id);
         return $this->view->render($response, "affichageItem.html", compact("item","liste"));
