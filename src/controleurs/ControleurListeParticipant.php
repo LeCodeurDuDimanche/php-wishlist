@@ -12,7 +12,7 @@
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
- 		$liste = Liste::where('no', '=', $args["id"])->get()[0];
+ 		$liste = Liste::where('id', '=', $args["id"])->get()[0];
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "participant/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
  	}

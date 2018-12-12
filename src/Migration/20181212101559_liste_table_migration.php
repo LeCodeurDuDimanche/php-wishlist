@@ -46,9 +46,9 @@ class ListeTableMigration extends Migration
         });
 
 
-        Liste::create([1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'nosecure1']);
-        Liste::create([2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'nosecure2']);
-        Liste::create([3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'nosecure3']);
+        Liste::create([ "id" => 1,	"user_id" => 1,	"titre" => 'Pour fêter le bac !',"desc" =>'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	"expiration" =>'2018-06-27', "tokenCreateur" =>	'nosecure1', "tokenParticipant" =>    'token11']);
+        Liste::create(["id" => 2,	"user_id" => 2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	"expiration" =>'2018-06-30',"tokenCreateur" => 'toekn21',"tokenParticipant" =>    'token22']);
+        Liste::create(["id" => 3,	"user_id" => 3,"titre" =>	'C\'est l\'anniversaire de Charlie', "desc" =>	'Pour lui préparer une fête dont il se souviendra :)',	"expiration" =>'2017-12-12',"tokenCreateur" =>	'token31', "tokenParticipant" =>    'token32']);
 
     }
 
