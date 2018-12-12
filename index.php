@@ -38,6 +38,11 @@ $app->group("/liste", function() use ($app){
 
     $app->get('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
     $app->post('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
+
+    $app->get('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
+
+    //methode put
+    $app->post('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":modifItem")->setName("modifierItem");
 });
 
 //Liste participant
@@ -46,6 +51,9 @@ $app->group("/liste", function() use ($app){
     $app->get('/p{id}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
 });
 
-$app->get('/item/{id}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName("voirItem");
+$app->group("/item", function() use ($app){
+	$app->get('/{id}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
+	$app->get('/{id}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('rerserverItem');
+});
 
 $app->run();

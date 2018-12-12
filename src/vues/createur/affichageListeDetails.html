@@ -7,6 +7,7 @@
 
 
 {% block content %}
+
     <h1>Liste créateur correspondant à la liste numéro {{liste.user_id}}</h1>
  	<p>{{liste.titre}}</p>
 
@@ -44,6 +45,9 @@
 	 			</td>
 	 			<td>
 	 				{{it.tarif}}
+	 			</td>
+	 			<td>
+	 				<a href="{{path_for('formulaireAjouterItem', {idl : liste.no, idit : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
