@@ -3,10 +3,11 @@
 namespace mywishlist\models;
 
 class Item extends \Illuminate\Database\Eloquent\Model{
-	
+
 	protected $table = 'item';
 	protected $primaryKey = 'id';
-	public $timestamps = false;
+
+    protected $fillable = ['id' , "liste_id", "titre", "desc", "url", "tarif", "img"," updated_at", "created_at"];
 
 	public function liste()
 	{
