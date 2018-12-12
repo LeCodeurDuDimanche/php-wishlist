@@ -35,7 +35,7 @@
 	 		{% for it in listeIt %}
 	 		<tr>
 	 			<td>
-	 				{{it.nom}}
+	 				{{it.titre}}
 	 			</td>
 	 			<td>
 	 				{{it.descr}}
@@ -47,13 +47,13 @@
 	 				{{it.tarif}}
 	 			</td>
 	 			<td>
-	 				<a href="{{path_for('formulaireAjouterItem', {idl : liste.no, idit : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
+	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.id, num : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
 			<tr>
 				<td colspan='4' class='text-center'>
-						<a href="{{path_for('formulaireAjouterItem', {id : liste.no})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
+						<a href="{{path_for('formulaireAjouterItem', {id : liste.id})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
 				</td>
 			</tr>
  		</tbody>

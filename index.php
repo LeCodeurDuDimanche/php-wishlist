@@ -39,10 +39,11 @@ $app->group("/liste", function() use ($app){
     $app->get('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
     $app->post('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
 
+/*
     $app->get('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
 
     //methode put
-    $app->post('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":modifItem")->setName("modifierItem");
+    $app->post('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":modifItem")->setName("modifierItem");*/
 });
 
 //Liste participant
