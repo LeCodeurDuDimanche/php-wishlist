@@ -4,28 +4,28 @@
 
 
 {% block content %}
-    <a href="{{path_for('listeCreateurDetails', {id : liste.no})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
-    <h1 class='text-center'>Ajouter un item</h1>
-    <form action="{{path_for("ajouterItem", {id : liste.no})}}" method="POST">
+    <a href="{{path_for('listeCreateurDetails', {id : liste.id})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
+    <h1 class='text-center'>Modification de l'item {{item.nom}}</h1>
+    <form action="{{path_for("modifierItem", {id : liste.id, num : item.id})}}" method="POST">
         <div class='form-group'>
             <label for='nom'>Titre de l'item</label>
-            <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' required>
+            <input id='nom' name='nom' class='form-control' type='text' value="{{item.titre}}" required>
         </div>
         <div class='form-group'>
             <label for='desc'>Description</label>
-            <textarea id='desc' name='description' class='form-control' placeholder="Descriptif de l'item" required></textarea>
+            <textarea id='desc' name='description' class='form-control' required>"{{item.descr}}"</textarea>
         </div>
         <div class='form-group'>
             <label for='image'>Image</label>
-            <input id='image' name='image' class='form-control' type='texte' placeholder='url...' required>
+            <input id='image' name='image' class='form-control' type='texte' value="{{item.img}}" required>
         </div>
         <div class='form-group'>
             <label for='url'>Url</label>
-            <input id='url' name='url' class='form-control' type='texte'>
+            <input id='url' name='url' class='form-control' value="{{item.url}}" type='texte'>
         </div>
         <div class='form-group'>
             <label for='tarif'>Tarif</label>
-            <input id='tarif' name='tarif' class='form-control' type='number' value="0.0"required>
+            <input id='tarif' name='tarif' class='form-control' type='number' value="{{item.tarif}}"required>
         </div>
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value="Ajouter">

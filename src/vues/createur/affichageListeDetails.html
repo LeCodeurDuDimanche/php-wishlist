@@ -7,9 +7,9 @@
 
 
 {% block content %}
-
-    <h1>Liste créateur correspondant à la liste numéro {{liste.user_id}}</h1>
- 	<p>{{liste.titre}}</p>
+	<h1>{{liste.titre}}</h1>
+    <h1>Liste crée par le num {{liste.user_id}}</h1>
+ 	
 
  	<table class="table table-striped">
  		<thead>
@@ -47,7 +47,9 @@
 	 				{{it.tarif}}
 	 			</td>
 	 			<td>
-	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.id, num : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
+	 				<a href="{{path_for('formulaireModifItem', {id : liste.id, num : it.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
+	 				
+	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.id, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
