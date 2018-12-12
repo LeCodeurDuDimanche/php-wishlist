@@ -47,7 +47,12 @@
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
+			<tr>
+				<td colspan='4' class='text-center'>
+						<a href="{{path_for('formulaireAjouterItem', {id : liste.no})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
+				</td>
+			</tr>
  		</tbody>
  	</table>
- 	
+
 {% endblock %}

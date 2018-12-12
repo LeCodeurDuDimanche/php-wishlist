@@ -16,3 +16,21 @@ nav{
 footer, nav{
     min-height: 10vh;
 }
+
+
+.extensible{
+    padding-left: 15px!important;
+}
+.extensible:after {
+
+    content: attr(title);
+    display: inline-block;
+    max-width : 0;
+    overflow: hidden;
+    transition: max-width .6s;
+    margin: 0 0 -5px 8px;
+}
+
+.extensible.e-120:hover:after{
+    max-width: 120px;
+}

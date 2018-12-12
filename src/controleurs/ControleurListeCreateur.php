@@ -15,24 +15,25 @@
 
      public function creerListe($request, $response, $args)
      {
-         
+
      }
 
-/*
+
      public function afficherFormulaireAjoutItem($request, $response, $args)
      {
-         return $this->view->render($response, "createur/ajouterItem.html");
+  		$liste = Liste::find($args['id']);
+        return $this->view->render($response, "createur/ajouterItem.html", compact("liste"));
      }
-*/
+
  	public function afficherListe($request, $response, $args){
  		$liste = Liste::find($args['id']);
- 		return $this->view->render($response, "createur/affichageListe.html", ["liste" => $liste]);
+ 		return $this->view->render($response, "createur/affichageListe.html", compact("liste"));
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
  		$liste = Liste::where('no', '=', $args['id'])->get()[0];
  		$listeIt = $liste->items()->get();
- 		return $this->view->render($response, "createur/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
+ 		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
  	}
 
  }

@@ -36,8 +36,8 @@ $app->group("/liste", function() use ($app){
     $app->get('/c{id}', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
     $app->get('/c{id}/details',\mywishlist\controleurs\ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
 
-    /*$app->get('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
-    $app->post('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");*/
+    $app->get('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
+    $app->post('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
 });
 
 //Liste participant
