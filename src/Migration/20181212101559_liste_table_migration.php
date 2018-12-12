@@ -38,16 +38,16 @@ class ListeTableMigration extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('titre');
-            $table->string('desc');
+            $table->string('desc', 2048);
             $table->date('expiration');
-            $table->string('tokenCreateur');
-            $table->string('tokenParticipant');
+            $table->string('tokenCreateur')->nullable();
+            $table->string('tokenParticipant')->nullable();
             $table->timestamps();
         });
 
 
         Liste::create([ "id" => 1,	"user_id" => 1,	"titre" => 'Pour fêter le bac !',"desc" =>'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	"expiration" =>'2018-06-27', "tokenCreateur" =>	'nosecure1', "tokenParticipant" =>    'token11']);
-        Liste::create(["id" => 2,	"user_id" => 2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	"expiration" =>'2018-06-30',"tokenCreateur" => 'toekn21',"tokenParticipant" =>    'token22']);
+        Liste::create(["id" => 2,	"user_id" => 2,	"titre"=> 'Liste de mariage d\'Alice et Bob',"desc" => 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	"expiration" =>'2018-06-30',"tokenCreateur" => 'toekn21',"tokenParticipant" =>    'token22']);
         Liste::create(["id" => 3,	"user_id" => 3,"titre" =>	'C\'est l\'anniversaire de Charlie', "desc" =>	'Pour lui préparer une fête dont il se souviendra :)',	"expiration" =>'2017-12-12',"tokenCreateur" =>	'token31', "tokenParticipant" =>    'token32']);
 
     }

@@ -38,9 +38,9 @@ class ItemsTableMigration extends Migration
             $table->increments('id');
             $table->integer('liste_id')->unsigned();
             $table->string('titre');
-            $table->string('desc');
-            $table->string('img');
-            $table->string('url');
+            $table->string('desc', 2048);
+            $table->string('img')->default('');
+            $table->string('url')->default('');
             $table->float('tarif');
             $table->timestamps();
         });
