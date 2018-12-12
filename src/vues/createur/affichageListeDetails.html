@@ -47,7 +47,7 @@
 	 				{{it.tarif}}
 	 			</td>
 	 			<td>
-	 				<a href="{{path_for('formulaireAjouterItem', {idl : liste.no, idit : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
+	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.id, num : listeIt.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}

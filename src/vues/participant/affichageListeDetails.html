@@ -43,6 +43,13 @@
 	 			<td>
 	 				{{it.tarif}}
 	 			</td>
+	 			<td>
+	 				{% if it.reserverPar == NULL %}
+	 				<a href="{{path_for('rerserverItem', {id : it.id})}}" class='btn btn-primary e-120' title='Reserver'>Reserver</a>
+	 				{% else %}
+	 				{{it.reserverPar}}
+	 				{% endif %}
+	 			</td>
 	 		</tr>
 	 		{% endfor %}
  		</tbody>	

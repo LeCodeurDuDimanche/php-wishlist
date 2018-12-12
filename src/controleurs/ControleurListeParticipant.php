@@ -7,12 +7,14 @@
  class ControleurListeParticipant extends Controleur{
 
  	public function afficherListe($request, $response, $args){
-        $liste = Liste::find($args['id']);
+ 		$token = $args['token'];
+        $liste = Liste::where('tokenParticipant', '=', $token)->first();
  		return $this->view->render($response, "participant/affichageListe.html", ["liste" => $liste]);
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
- 		$liste = Liste::where('id', '=', $args["id"])->get()[0];
+ 		$token = $args['token'];
+ 		$liste = Liste::where('tokenParticipant', '=', $token)->first();
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "participant/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
  	}

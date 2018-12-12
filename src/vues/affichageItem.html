@@ -6,10 +6,18 @@
 
 
 {% block content %}
- 	<h1>{{item.nom}}</h1>
+ 	<h1>{{item.titre}}</h1>
  	<h3><i>Appartient à la liste : </i><a href="{{base_url()}}/liste/p{{item.liste_id}}">{{liste.titre}}</a></h3>
 
- 	<p><b>Prix : {{item.tarif}} euros</b></p>
+ 	<p><b>Prix : {{item.tarif}} euros</b>
+ 		<br>
+ 		{% if item.reserverPar == NULL %}
+ 			Disponible !
+ 		{% else %}
+ 			Déjà réservé par {{liste.resreverPar}}.
+ 		{% endif %}
+ 	</p>
+
  	 <p>{{item.descr}}</p>
     <p><img src="{{base_url()}}/ressources/img/{{item.img}}" alt="{{item.descr}}" class='w-100 d-block mx-auto'></p>
  	
