@@ -1,6 +1,7 @@
 Pour run les migrations :
 supprimer toutes les tables puis executer
-    php vendor/bin/phinx migrate -c src/Migration/config.php
+    Linux only : php vendor/bin/phinx migrate -c src/Migration/config.php
+    php vendor/robmorgan/phinx/bin/phinx migrate -c src/Migration/config.php
 (depuis la racine du projet)
 
 Création de liste:
