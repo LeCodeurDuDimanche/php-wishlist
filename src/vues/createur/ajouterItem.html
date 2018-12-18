@@ -5,6 +5,7 @@
 
 {% block content %}
     <a href="{{path_for('listeCreateurDetails', {id : liste.id})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
+
     <h1 class='text-center'>Ajouter un item</h1>
     <form action="{{path_for("ajouterItem", {id : liste.id})}}" method="POST">
         <div class='form-group'>
@@ -13,7 +14,7 @@
         </div>
         <div class='form-group'>
             <label for='desc'>Description</label>
-            <textarea id='desc' name='description' class='form-control' placeholder="Descriptif de l'item" required></textarea>
+            <textarea id='desc' name='desc' class='form-control' placeholder="Descriptif de l'item" required></textarea>
         </div>
         <div class='form-group'>
             <label for='image'>Image</label>
