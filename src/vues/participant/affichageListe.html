@@ -8,4 +8,6 @@
     <p>{{liste.descr}}</p>
     <p><i>Expire le : {{liste.expiration}}</i></p>
 
+    <a href="{{path_for('listeParticipantDetails', {token : liste.tokenParticipant})}}" class='btn btn-primary extensible e-120' title='Voir les items'><i class='far fa-eye'></i></a>
+
 {% endblock %}
