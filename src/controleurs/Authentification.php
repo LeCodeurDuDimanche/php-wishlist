@@ -29,7 +29,7 @@
             $user = Utilisateur::where("nom", "=", $nom)->first();
             if ($user != null && password_verify($mdp, $user->password))
             {
-                $_SESSION['id_utilisateur'] = $user->id;
+                $_SESSION['user'] = array( "id" => $user->id, "nom" => $user->nom);
                 return true;
             }
 
@@ -38,7 +38,12 @@
 
         public function deconnexion()
         {
-            unset($_SESSION['id_utilisateur']);
+            unset($_SESSION['user']);
+        }
+
+        public function getNomUtilisateur() : string
+        {
+            return $_SESSION['user']['nom'];
         }
 
         public function getUtilisateur() : Utilisateur
@@ -46,11 +51,11 @@
             if (!$this->estConnecte())
                 return null;
 
-            return Utilisateur::where("id", "=", $_SESSION['id_utilisateur'])->first();
+            return Utilisateur::where("id", "=", $_SESSION['user']['id'])->first();
         }
 
         public function estConnecte() : boolean
         {
-            return isset($_SESSION['id_utilisateur']);
+            return isset($_SESSION['user']);
         }
     }
