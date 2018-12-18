@@ -10,6 +10,7 @@
  use \mywishlist\controleurs\ControleurListeCreateur;
  use \mywishlist\controleurs\ControleurListeParticipant;
  use Illuminate\Database\Capsule\Manager as DBManager;
+ use Psr7Middlewares\Middleware;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -24,6 +25,16 @@ $db->bootEloquent();
 $settings = require_once __DIR__ . "/src/conf/settings.php";
 $container = new Slim\Container($settings);
 $app = new Slim\App($container);
+
+$appMiddlewares = [
+    Middleware::TrailingSlash(false) //(optional) set true to add the trailing slash instead remove
+        ->redirect(301)
+];
+
+foreach($appMiddlewares as $middleware)
+{
+    $app->add($middleware);
+}
 
 
 //Accueil
@@ -50,11 +61,8 @@ $app->group("/liste", function() use ($app){
 $app->group("/liste", function() use ($app){
     $app->get('/p{token}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
     $app->get('/p{token}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
-});
-
-$app->group("/item", function() use ($app){
-	$app->get('/{id}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
-	$app->get('/{id}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('rerserverItem');
+    $app->get('/p{token}/details/item/{idItem}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
+    $app->get('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('rerserverItem');
 });
 
 $app->run();

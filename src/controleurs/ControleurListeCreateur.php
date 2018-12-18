@@ -9,6 +9,23 @@
  class ControleurListeCreateur extends Controleur{
 
 
+     private function generateToken() : string
+     {
+         //TODO: check for uniqueness
+         return strtr(base64_encode(random_bytes(24)), "+/", "-_");
+     }
+
+     private function isValidDate(string $date) : bool
+     {
+         try{
+             new \DateTime($date);
+         } catch(Exception $e)
+         {
+             return false;
+         }
+         return true;
+     }
+
      public function afficherFormulaireCreation($request, $response, $args)
      {
          return $this->view->render($response, "createur/creerListe.html");
@@ -16,7 +33,31 @@
 
      public function creerListe($request, $response, $args)
      {
+         $nom = $request->getParsedBodyParam("nom", null);
+         $desc = $request->getParsedBodyParam("description", null);
+         $expiration = $request->getParsedBodyParam("expiration", null);
 
+         if ($nom == null || $desc == null || $expiration == null ||
+            !$this->isValidDate($expiration))
+        {
+            throw new Exception("Données invalides");
+        }
+
+        $nom = filter_var($nom, FILTER_SANITIZE_STRING);
+        $desc = filter_var($nom, FILTER_SANITIZE_STRING);
+        $expiration = new \DateTime($expiration);
+
+        $liste = new Liste();
+        $liste->titre = $nom;
+        $liste->desc = $desc;
+        $liste->expiration = $expiration;
+        $liste->tokenCreateur = $this->generateToken();
+        $liste->tokenParticipant = $this->generateToken();
+
+        $liste->save();
+
+        global $app;
+        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateur", ["id" => $liste->tokenCreateur]));
      }
 
 
@@ -47,18 +88,18 @@
 
 	 public function afficherModifItemListe($request, $response, $args)
      {
-  		$liste = Liste::where('id', '=', $args['id'])->get()[0];
+  		$liste = Liste::where('tokenCreateur', '=', $args['id'])->first();
         $item = Item::where('id', '=', $args['num'])->first();
         return $this->view->render($response, "createur/modifierItem.html", compact("liste", "item"));
-     }   
+     }
 
  	public function afficherListe($request, $response, $args){
- 		$liste = Liste::find($args['id']);
+ 		$liste =Liste::where('tokenCreateur', '=', $args['id'])->first();
  		return $this->view->render($response, "createur/affichageListe.html", compact("liste"));
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
- 		$liste = Liste::where('id', '=', $args['id'])->get()[0];
+ 		$liste =Liste::where('tokenCreateur', '=', $args['id'])->first();
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
  	}

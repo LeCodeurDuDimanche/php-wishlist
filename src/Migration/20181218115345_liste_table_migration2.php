@@ -5,7 +5,7 @@ use \mywishlist\Migration\Migration;
 use \mywishlist\models\Liste;
 use Illuminate\Database\Schema\Blueprint;
 
-class ListeTableMigration extends Migration
+class ListeTableMigration2 extends Migration
 {
     /**
      * Change Method.
@@ -37,7 +37,7 @@ class ListeTableMigration extends Migration
         $this->schema->dropIfExists("list");
         $this->schema->create("liste", function(Blueprint $table){
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->string('titre');
             $table->string('desc', 2048);
             $table->date('expiration');
