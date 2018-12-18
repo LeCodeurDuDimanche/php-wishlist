@@ -84,7 +84,8 @@
         $item->tarif = $prix;
         $item->liste_id = $idListe;
         $item->save();
-        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $liste->tokenCreateur]));
+        global $app;
+        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $token]));
      }
 
 	 public function afficherModifItemListe($request, $response, $args)

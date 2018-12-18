@@ -8,9 +8,12 @@
 
 {% block content %}
 	<h1>{{liste.titre}}</h1>
-    <h1>Liste crée par le num {{liste.user_id}}</h1>
- 	
-
+    <h1>Liste crée par le num {{liste.id}}</h1>
+	{% if listeIt is empty %}
+		<p>Cette liste ne contient pas encore d'item, ajoutez-en un !</p>
+		
+ 		<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
+ 	{% else %}
  	<table class="table table-striped">
  		<thead>
 	 		<tr>
@@ -47,18 +50,18 @@
 	 				{{it.tarif}}
 	 			</td>
 	 			<td>
-	 				<a href="{{path_for('formulaireModifItem', {id : liste.id, num : it.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
+	 				<a href="{{path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
 	 				
-	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.id, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
+	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
 			<tr>
 				<td colspan='4' class='text-center'>
-						<a href="{{path_for('formulaireAjouterItem', {id : liste.id})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
+						<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
 				</td>
 			</tr>
  		</tbody>
  	</table>
-
+{% endif %}
 {% endblock %}
