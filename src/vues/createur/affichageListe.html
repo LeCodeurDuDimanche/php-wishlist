@@ -9,5 +9,5 @@
     <p>{{liste.descr}}</p>
     <p>{{liste.expiration}}</p>
 
-
+<a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
 {% endblock %}

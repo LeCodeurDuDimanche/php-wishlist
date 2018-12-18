@@ -34,7 +34,7 @@ class ListeTableMigration extends Migration
      */
     public function up()
     {
-        $this->schema->dropIfExists("list");
+        $this->schema->dropIfExists("liste");
         $this->schema->create("liste", function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id')->unsigned();

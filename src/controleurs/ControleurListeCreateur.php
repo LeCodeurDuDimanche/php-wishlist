@@ -82,8 +82,9 @@
         $item->img = $img;
         $item->url = $url;
         $item->tarif = $prix;
+        $item->liste_id = $idListe;
         $item->save();
-        return $response->withRedirect($this->router->pathFor('listeCreateurDetails'));
+        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $liste->tokenCreateur]));
      }
 
 	 public function afficherModifItemListe($request, $response, $args)
@@ -100,6 +101,9 @@
 
  	public function afficherListeAvecDetails($request, $response, $args){
  		$liste =Liste::where('tokenCreateur', '=', $args['id'])->first();
+        if($liste == null){
+            throw new \Slim\Exception\NotFoundException($request, $response);  
+        }
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
  	}
