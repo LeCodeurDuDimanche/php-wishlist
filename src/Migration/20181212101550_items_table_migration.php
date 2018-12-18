@@ -34,6 +34,7 @@ class ItemsTableMigration extends Migration
      */
     public function up()
     {
+        $this->schema->dropIfExists("item");
         $this->schema->create("item", function(Blueprint $table){
             $table->increments('id');
             $table->integer('liste_id')->unsigned();

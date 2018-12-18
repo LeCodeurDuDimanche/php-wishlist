@@ -34,6 +34,7 @@ class UsersTableMigration extends Migration
      */
     public function up()
     {
+        $this->schema->dropIfExists("user");
         $this->schema->create("user", function(Blueprint $table){
             $table->increments('id');
             $table->string('nom');
