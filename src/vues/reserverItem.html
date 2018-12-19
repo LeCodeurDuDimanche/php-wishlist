@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - Réserver item{% endblock %}
+
+
+{% block content %}
+    <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
+    <form action="{{path_for('reserverItem', {token : item.liste.tokenParticipant, idItem : item.id})}}" method="POST">
+        <div class='form-group'>
+            <label for='nom'>Votre nom :</label>
+            <input id='nom' name='nom' class='form-control' type='text' placeholder='Votre nom' required>
+        </div>
+        <div class='form-group'>
+            <input type='submit' class='btn btn-primary mx-auto d-block' value='Réserver'>
+        </div>
+    </form>
+{% endblock %}

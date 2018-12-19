@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block titre %}{{parent()}} - ListeDetaille{% endblock %}
+{% block titre %}{{parent()}} - Item{% endblock %}
 {% block css %}
 	{{parent()}}
 {% endblock %}
@@ -9,12 +9,12 @@
  	<h1>{{item.titre}}</h1>
  	<h3><i>Appartient à la liste : </i><a href="{{base_url()}}/liste/p{{liste.tokenParticipant}}/details">{{liste.titre}}</a></h3>
 
- 	<p><b>Prix : {{item.tarif}} euros</b>
- 		<br>
+ 	<p><b>Prix : {{item.tarif}} euros</b></p>
+ 	<p>
  		{% if item.reserverPar == NULL %}
- 			Disponible !
+ 			Disponible !<br><a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : item.id})}}" class='btn btn-primary e-120' title='Reserver'>Reserver</a>
  		{% else %}
- 			Déjà réservé par {{liste.resreverPar}}.
+ 			Déjà réservé par {{item.reserverPar}}.
  		{% endif %}
  	</p>
 

@@ -62,7 +62,8 @@ $app->group("/liste", function() use ($app){
     $app->get('/p{token}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
     $app->get('/p{token}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
     $app->get('/p{token}/details/item/{idItem}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
-    $app->get('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('rerserverItem');
+    $app->get('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
+    $app->post('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":reserverItem")->setName('reserverItem');
 });
 
 $app->run();

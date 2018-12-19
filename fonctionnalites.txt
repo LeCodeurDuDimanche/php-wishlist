@@ -23,8 +23,8 @@ n 3 Ajouter une image par upload POST /liste/{id_edit}/item/{num}/ajouterImage/u
 Participation à une liste:
 o 1 Accéder à une liste grâce à son url (utilisation d'un token) /liste/{id}
 p 1 Afficher la liste (infos de la liste + items(nom, image, etat de la reservation)) /liste/{id}/details
-q 1 Afficher un item particulier de la liste (infos détaillé, image, etat de la reservation[nom du participant si reserve]) /item/{id}
-r 1 Réserver un  item grâce à un formulaire (nom du particiapant) sur la page détaillée de l'item /item/{id}/reserver
+q 1 Afficher un item particulier de la liste (infos détaillé, image, etat de la reservation[nom du participant si reserve]) /liste/{id}/details/item/{id}
+r 1 Réserver un  item grâce à un formulaire (nom du particiapant) sur la page détaillée de l'item /liste/{id}/details/item/{id}/reserver
 s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
 
