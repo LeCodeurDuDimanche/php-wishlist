@@ -28,7 +28,8 @@ $app = new Slim\App($container);
 
 $appMiddlewares = [
     Middleware::TrailingSlash(false) //(optional) set true to add the trailing slash instead remove
-        ->redirect(301)
+        ->redirect(301),
+    \mywishlist\controleurs\Flash::middleware()
 ];
 
 foreach($appMiddlewares as $middleware)
@@ -64,6 +65,14 @@ $app->group("/liste", function() use ($app){
     $app->get('/p{token}/details/item/{idItem}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
     $app->get('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
     $app->post('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":reserverItem")->setName('reserverItem');
+});
+
+//compte
+$app->group("/compte", function() use ($app){
+$app->post("", \mywishlist\controleurs\ControleurUser::class . ":afficherCompte")->setName("compte");
+    $app->get("/login", \mywishlist\controleurs\ControleurUser::class . ":afficherLogin")->setName("afficherLogin");
+    $app->post("/login", \mywishlist\controleurs\ControleurUser::class . ":login")->setName("login");
+    $app->post("/nouveau", \mywishlist\controleurs\ControleurUser::class . ":creer")->setName("creerCompte");
 });
 
 $app->run();
