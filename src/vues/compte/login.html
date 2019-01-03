@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - Accueil{% endblock %}
+
+{% block content %}
+<div class='row'>
+    <div class="col-12 col-md-6">
+        <a href="{{path_for('accueil')}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
+    </div>
+</div>
+{% if erreur is flashed %}
+    <div class='alert alert-danger mx-auto p-2'>
+        <i class='fa fa-cross'></i>
+        <span class='px-2'>{{ get_data("erreur")}}</span>
+    </div>
+{% endif %}
+<h2 class='text-center mb-4'>Connexion au compte</h2>
+<form class='form-row' action="{{path_for("login")}}" method="POST">
+    <div class='col-12 col-md-4 form-group'>
+        <label for='user'>Nom</label>
+        <input id='user' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" required>
+    </div>
+    <div class='col-12 col-md-4 form-group'>
+        <label for='mdp'>Mot de passe</label>
+        <input id='mdp' name='mdp' class='form-control' type='password' required>
+    </div>
+    <div class='col-12 col-md-4 form-group d-flex align-items-end'>
+        <input type='submit' class='btn btn-primary mx-auto d-block' value='Se connecter'>
+    </div>
+</form>
+<h2 class='text-center m-4'>Pas encore de compte ?</h2>
+<p class='m-2'>Créez un compte maintenant pour faciliter votre utilisation de My Wish List et bénéficier de plusieurs avantages !</p>
+<form class='form-row' action="{{path_for("creerCompte")}}" method="POST">
+    <div class='col-12 col-md-12 form-group'>
+        <label for='user_new'>Nom d'utilisateur</label>
+        <input id='user_new' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" required>
+    </div>
+    <div class='col-12 col-md-6 form-group'>
+        <label for='mdp_new'>Mot de passe</label>
+        <input id='mdp_new' name='mdp' class='form-control' type='password' required>
+    </div>
+    <div class='col-12 col-md-6 form-group'>
+        <label for='mdp_conf'>Confirmation du mot de passe</label>
+        <input id='mdp_conf' name='mdp_conf' class='form-control' type='password' required>
+    </div>
+    <div class='col-12 col-md-12 form-group d-flex align-items-end'>
+        <input type='submit' class='btn btn-primary mx-auto d-block' value='Créer son compte'>
+    </div>
+</form>
+{% endblock %}
