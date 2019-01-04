@@ -9,6 +9,10 @@
 
  use \mywishlist\controleurs\ControleurListeCreateur;
  use \mywishlist\controleurs\ControleurListeParticipant;
+ use \mywishlist\controleurs\ControleurAccueil;
+ use \mywishlist\controleurs\ControleurUser;
+ use \mywishlist\controleurs\ControleurItem;
+
  use Illuminate\Database\Capsule\Manager as DBManager;
  use Psr7Middlewares\Middleware;
 
@@ -39,40 +43,40 @@ foreach($appMiddlewares as $middleware)
 
 
 //Accueil
-$app->get('/', \mywishlist\controleurs\ControleurAccueil::class.":afficherAccueil")->setName('accueil');
+$app->get('/', ControleurAccueil::class.":afficherAccueil")->setName('accueil');
 
 //listeCreateur
 $app->group("/liste", function() use ($app){
-    $app->get('/creer', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireCreation")->setName("formulaireCreerListe");
-    $app->post('/creer', \mywishlist\controleurs\ControleurListeCreateur::class.":creerListe")->setName("creerListe");
-    $app->get('/c{id}', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
-    $app->get('/c{id}/details',\mywishlist\controleurs\ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
+    $app->get('/creer', ControleurListeCreateur::class.":afficherFormulaireCreation")->setName("formulaireCreerListe");
+    $app->post('/creer', ControleurListeCreateur::class.":creerListe")->setName("creerListe");
+    $app->get('/c{id}', ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
+    $app->get('/c{id}/details', ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
 
-    $app->get('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
-    $app->post('/c{id}/creerItem', \mywishlist\controleurs\ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
+    $app->get('/c{id}/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
+    $app->post('/c{id}/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
 
 
-    $app->get('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
+    $app->get('/c{id}/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
 
     //methode put
-    $app->post('/c{id}/item{num}/editer', \mywishlist\controleurs\ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
+    $app->post('/c{id}/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
 });
 
 //Liste participant
 $app->group("/liste", function() use ($app){
-    $app->get('/p{token}', \mywishlist\controleurs\ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
-    $app->get('/p{token}/details',\mywishlist\controleurs\ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
-    $app->get('/p{token}/details/item/{idItem}', \mywishlist\controleurs\ControleurItem::class.":afficherItem")->setName('afficherItem');
-    $app->get('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
-    $app->post('/p{token}/details/item/{idItem}/reserver', \mywishlist\controleurs\ControleurItem::class.":reserverItem")->setName('reserverItem');
+    $app->get('/p{token}', ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
+    $app->get('/p{token}/details', ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
+    $app->get('/p{token}/details/item/{idItem}', ControleurItem::class.":afficherItem")->setName('afficherItem');
+    $app->get('/p{token}/details/item/{idItem}/reserver', ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
+    $app->post('/p{token}/details/item/{idItem}/reserver', ControleurItem::class.":reserverItem")->setName('reserverItem');
 });
 
 //compte
 $app->group("/compte", function() use ($app){
-$app->post("", \mywishlist\controleurs\ControleurUser::class . ":afficherCompte")->setName("compte");
-    $app->get("/login", \mywishlist\controleurs\ControleurUser::class . ":afficherLogin")->setName("afficherLogin");
-    $app->post("/login", \mywishlist\controleurs\ControleurUser::class . ":login")->setName("login");
-    $app->post("/nouveau", \mywishlist\controleurs\ControleurUser::class . ":creer")->setName("creerCompte");
+    $app->post("", ControleurUser::class . ":afficherCompte")->setName("compte");
+    $app->get("/login", ControleurUser::class . ":afficherLogin")->setName("afficherLogin");
+    $app->post("/login", ControleurUser::class . ":login")->setName("login");
+    $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte");
 });
 
 $app->run();
