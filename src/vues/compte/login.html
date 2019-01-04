@@ -8,9 +8,9 @@
         <a href="{{path_for('accueil')}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
     </div>
 </div>
-{% if erreur is flashed %}
-    <div class='alert alert-danger mx-auto p-2'>
-        <i class='fa fa-cross'></i>
+{% if "erreur" is flashed %}
+    <div class='alert alert-danger mx-auto p-2 text-center my-3'>
+        <i class='fa fa-exclamation-triangle'></i>
         <span class='px-2'>{{ get_data("erreur")}}</span>
     </div>
 {% endif %}
