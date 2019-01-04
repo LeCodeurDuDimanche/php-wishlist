@@ -13,15 +13,15 @@
     <form action="{{path_for("creerListe")}}" method="POST">
         <div class='form-group'>
             <label for='nom'>Titre de la liste</label>
-            <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' required>
+            <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' value='{{get_data(["form", "nom"])}}' required>
         </div>
         <div class='form-group'>
             <label for='desc'>Description</label>
-            <textarea id='desc' name='description' class='form-control' placeholder='Pour quel évènement la liste est créée, précisions, remerciements...' required></textarea>
+            <textarea id='desc' name='description' class='form-control' placeholder='Pour quel évènement la liste est créée, précisions, remerciements...' value='{{get_data(["form", "description"])}}' required></textarea>
         </div>
         <div class='form-group'>
             <label for='expiration'>Date d'expiration de la liste</label>
-            <input id='expiration' name='expiration' class='form-control' type='date' min='{{"now"|date('Y-m-d')}}' required />
+            <input id='expiration' name='expiration' class='form-control' type='date' min='{{"now"|date('Y-m-d')}}' value='{{get_data(["form", "expiration"])}}' required />
         </div>
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value='Créer'>
