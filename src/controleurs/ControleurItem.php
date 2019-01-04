@@ -33,7 +33,7 @@ class ControleurItem extends Controleur{
 		}
 
 		global $app;
-		return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeParticipantDetails", ["token" => $tokenListe]));
+		return Utils::redirect($reponse, "listeParticipantDetails", ["token" => $tokenListe]);
 	}
 
 	private function recuperItem($request, $response, $idItem, $tokenListe){

@@ -57,7 +57,7 @@
         $liste->save();
 
         global $app;
-        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateur", ["id" => $liste->tokenCreateur]));
+        return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
      }
 
 
@@ -85,7 +85,7 @@
         $item->liste_id = $idListe;
         $item->save();
         global $app;
-        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $token]));
+        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
      }
 
 	 public function afficherModifItemListe($request, $response, $args)
@@ -103,7 +103,7 @@
  	public function afficherListeAvecDetails($request, $response, $args){
  		$liste =Liste::where('tokenCreateur', '=', $args['id'])->first();
         if($liste == null){
-            throw new \Slim\Exception\NotFoundException($request, $response);  
+            throw new \Slim\Exception\NotFoundException($request, $response);
         }
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));

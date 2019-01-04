@@ -13,6 +13,14 @@ namespace mywishlist\controleurs;
         return $this->view->render($response, "compte/login.html");
     }
 
+    public function deconnecter($request, $response, $args)
+    {
+        global $app;
+
+        Authentification::deconnexion();
+        return Utils::redirect($response, "afficherLogin");
+    }
+
     public function login($request, $response, $args)
     {
         global $app;
@@ -27,17 +35,17 @@ namespace mywishlist\controleurs;
         if (! $res)
         {
             Flash::flash("erreur", "Nom d'utilisateur ou mot de passe incorrect !");
-            return $response->withRedirect($app->getContainer()->get('router')->pathFor("afficherLogin"));
+            return Utils::redirect($response, "afficherLogin");
         }
         else
-            return $response->withRedirect($app->getContainer()->get('router')->pathFor("compte"));
+            return Utils::redirect($response, "compte");
     }
 
     public function creer($request, $response, $args)
     {
         global $app;
 
-        $user = isset($_POST["user"]) ? $_POST["user"] : null;
+        $user = isset($_POST["user_new"]) ? $_POST["user_new"] : null;
         $mdp = isset($_POST["mdp"]) ? $_POST["mdp"] : null;
         $mdpConf = isset($_POST["mdp_conf"]) ? $_POST["mdp_conf"] : null;
 
@@ -47,16 +55,16 @@ namespace mywishlist\controleurs;
         if ($mdp !== $mdpConf)
         {
             Flash::flash("erreur", "Le mot de passe et sa confirmation ne correspondent pas");
-            return $response->withRedirect($app->getContainer()->get('router')->pathFor("afficherLogin"));
+            return Utils::redirect($response, "afficherLogin");
         }
 
         $id = Authentification::creerCompte($user, $mdp);
         if ($id === -1)
         {
             Flash::flash("erreur", "Impossible de créer un compte");
-            return $response->withRedirect($app->getContainer()->get('router')->pathFor("afficherLogin"));
+            return Utils::redirect($response, "afficherLogin");
         }
         else
-            return $response->withRedirect($app->getContainer()->get('router')->pathFor("compte"));
+            return Utils::redirect($response, "compte");
     }
 }
