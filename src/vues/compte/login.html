@@ -18,7 +18,7 @@
 <form class='form-row' action="{{path_for("login")}}" method="POST">
     <div class='col-12 col-md-4 form-group'>
         <label for='user'>Nom</label>
-        <input id='user' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" required>
+        <input id='user' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user"])}}' required>
     </div>
     <div class='col-12 col-md-4 form-group'>
         <label for='mdp'>Mot de passe</label>
@@ -33,7 +33,7 @@
 <form class='form-row' action="{{path_for("creerCompte")}}" method="POST">
     <div class='col-12 col-md-12 form-group'>
         <label for='user_new'>Nom d'utilisateur</label>
-        <input id='user_new' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" required>
+        <input id='user_new' name='user_new' class='form-control' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user_new"])}}' required>
     </div>
     <div class='col-12 col-md-6 form-group'>
         <label for='mdp_new'>Mot de passe</label>

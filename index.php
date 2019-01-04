@@ -33,7 +33,8 @@ $app = new Slim\App($container);
 $appMiddlewares = [
     Middleware::TrailingSlash(false) //(optional) set true to add the trailing slash instead remove
         ->redirect(301),
-    \mywishlist\controleurs\Flash::middleware()
+    \mywishlist\controleurs\Flash::flashMiddleware(),
+    \mywishlist\controleurs\Flash::savePostMiddleware()
 ];
 
 foreach($appMiddlewares as $middleware)
@@ -73,8 +74,10 @@ $app->group("/liste", function() use ($app){
 
 //compte
 $app->group("/compte", function() use ($app){
-    $app->post("", ControleurUser::class . ":afficherCompte")->setName("compte");
+    $app->get("", ControleurUser::class . ":afficherCompte")->setName("compte");
     $app->get("/login", ControleurUser::class . ":afficherLogin")->setName("afficherLogin");
+    $app->get("/deconnexion", ControleurUser::class . ":deconnecter")->setName("deconnexion");
+
     $app->post("/login", ControleurUser::class . ":login")->setName("login");
     $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte");
 });
