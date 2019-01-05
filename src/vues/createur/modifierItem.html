@@ -4,16 +4,16 @@
 
 
 {% block content %}
-    <a href="{{path_for('listeCreateurDetails', {id : liste.id})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
+    <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
     <h1 class='text-center'>Modification de l'item {{item.nom}}</h1>
-    <form action="{{path_for("modifierItem", {id : liste.id, num : item.id})}}" method="POST">
+    <form action="{{path_for("modifierItem", {id : liste.tokenCreateur, num : item.id})}}" method="POST">
         <div class='form-group'>
             <label for='nom'>Titre de l'item</label>
             <input id='nom' name='nom' class='form-control' type='text' value="{{item.titre}}" required>
         </div>
         <div class='form-group'>
             <label for='desc'>Description</label>
-            <textarea id='desc' name='description' class='form-control' required>"{{item.descr}}"</textarea>
+            <textarea id='desc' name='desc' class='form-control' required>{{item.desc}}</textarea>
         </div>
         <div class='form-group'>
             <label for='image'>Image</label>

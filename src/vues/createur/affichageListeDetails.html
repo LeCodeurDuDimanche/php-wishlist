@@ -51,8 +51,28 @@
 	 			</td>
 	 			<td>
 	 				<a href="{{path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary' title='Modifier'><i class="fas fa-pen"></i></a>
-	 				
+	 				<!--
 	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
+	 				*/-->
+	 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-trash-alt"></i></button>
+	 				<div class="container">
+		 				<div class="modal fade" id="myModal" role="dialog">
+						    <div class="modal-dialog modal-sm">
+						      <div class="modal-content">
+						        <div class="modal-header">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Modal Header</h4>
+						        </div>
+						        <div class="modal-body">
+						          <p>This is a small modal.</p>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+						    </div>
+					  	</div>
+					  </div>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}

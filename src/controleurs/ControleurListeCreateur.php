@@ -63,8 +63,8 @@
 
      public function afficherFormulaireAjoutItem($request, $response, $args)
      {
-        $idItem = filter_var($args['id'], FILTER_SANITIZE_STRING);
-  		$liste = Liste::find($idItem);
+        $tokenCreateur = filter_var($args['id'], FILTER_SANITIZE_STRING);
+  		$liste = Liste::where("tokenCreateur", "=", $tokenCreateur)->first();
         return $this->view->render($response, "createur/ajouterItem.html", compact("liste"));
      }
 
@@ -75,14 +75,34 @@
         $img = filter_var($_POST["image"], FILTER_SANITIZE_STRING);
         $url = filter_var($_POST["url"], FILTER_SANITIZE_STRING);
         $prix = filter_var($_POST["tarif"], FILTER_SANITIZE_STRING);
-        $idListe = filter_var($args['id'],FILTER_SANITIZE_STRING );
+        $token = filter_var($args['id'],FILTER_SANITIZE_STRING );
         $item = new Item();
         $item->titre = $titre;
         $item->desc = $descrip;
         $item->img = $img;
         $item->url = $url;
         $item->tarif = $prix;
-        $item->liste_id = $idListe;
+        $liste = Liste::where("tokenCreateur", "=", $token)->first();
+        $item->liste_id = $liste->id;
+        $item->save();
+        global $app;
+        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $token]));
+     }
+
+     public function modifierItem($request, $response, $args)
+     {
+        $titre = filter_var($_POST["nom"], FILTER_SANITIZE_STRING);
+        $descrip = filter_var($_POST["desc"], FILTER_SANITIZE_STRING);
+        $img = filter_var($_POST["image"], FILTER_SANITIZE_STRING);
+        $url = filter_var($_POST["url"], FILTER_SANITIZE_STRING);
+        $prix = filter_var($_POST["tarif"], FILTER_SANITIZE_STRING);
+        $token = filter_var($args['id'],FILTER_SANITIZE_STRING );
+        $item = Item::where('id', '=', $args['num'])->first();
+        $item->titre = $titre;
+        $item->desc = $descrip;
+        $item->img = $img;
+        $item->url = $url;
+        $item->tarif = $prix;
         $item->save();
         global $app;
         return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $token]));
