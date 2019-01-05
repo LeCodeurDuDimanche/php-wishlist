@@ -16,7 +16,19 @@
     <body>
 		{% block header %}
 		<nav class="navbar justify-content-center navbar-light">
-		  <a class="navbar-brand" href="{{ path_for('accueil') }}"><h1>My Wish List</h1></a>
+		  <div class='col-4'></div>
+		  <a class="navbar-brand col-4 text-center" href="{{ path_for('accueil') }}"><h1>My Wish List</h1></a>
+          <div class='col'>
+              <ul class='navbar-nav align-items-end'>
+                  <li class="nav-item">
+                      {% if est_connecte() %}
+                        <a class='btn btn-primary' href='{{ path_for('compte') }}'><i class='fas fa-user'></i><span class='ml-2'>{{ get_username() }}</span></a>
+                      {% else %}
+                        <a class='btn btn-primary' href='{{ path_for('afficherLogin') }}'><i class='fa fa-sign-in-alt'></i><span class='d-none d-md-inline ml-2'>Se connecter</span></a>
+                      {% endif %}
+                  </li>
+             </ul>
+        </div>
 		</nav>
 		{% endblock %}
 

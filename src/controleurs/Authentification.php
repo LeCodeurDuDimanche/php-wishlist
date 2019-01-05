@@ -5,29 +5,37 @@
 
     class Authentification {
 
-        public function creerCompte(string $nom, string $mdp) : integer
-        {
-            $u = new Utilisateur();
-            $u->nom = $nom;
-            $u->mdp = password_hash($mdp);
-            $id = $u->save();
-
-            if (! connexion($nom, $mdp))
-                $id = false;
-
-            return $id;
-        }
-
-        public function connexion(string $nom, string $mdp) : boolean
+        private static function init()
         {
             if (session_status() != PHP_SESSION_ACTIVE)
                 session_start();
+        }
 
-            if ($this->estConnecte())
+        public static function creerCompte(string $nom, string $mdp) : int
+        {
+            static::init();
+
+            $u = new Utilisateur();
+            $u->nom = $nom;
+            $u->mdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+            if (! $u->save())
+                return -1;
+
+            $_SESSION['user'] = array( "id" => $u->id, "nom" => $u->nom);
+
+            return $u->id;
+        }
+
+        public static function connexion(string $nom, string $mdp) : bool
+        {
+            if (static::estConnecte())
                 return true;
 
+            static::init();
+
             $user = Utilisateur::where("nom", "=", $nom)->first();
-            if ($user != null && password_verify($mdp, $user->password))
+            if ($user != null && password_verify($mdp, $user->mdp))
             {
                 $_SESSION['user'] = array( "id" => $user->id, "nom" => $user->nom);
                 return true;
@@ -36,26 +44,30 @@
             return false;
         }
 
-        public function deconnexion()
+        public static function deconnexion()
         {
+            static::init();
             unset($_SESSION['user']);
         }
 
-        public function getNomUtilisateur() : string
+        public static function getNomUtilisateur() : string
         {
+            static::init();
             return $_SESSION['user']['nom'];
         }
 
-        public function getUtilisateur() : Utilisateur
+        public static function getUtilisateur() : Utilisateur
         {
-            if (!$this->estConnecte())
+            if (!static::estConnecte())
                 return null;
 
+            static::init();
             return Utilisateur::where("id", "=", $_SESSION['user']['id'])->first();
         }
 
-        public function estConnecte() : boolean
+        public static function estConnecte() : bool
         {
+            static::init();
             return isset($_SESSION['user']);
         }
     }
