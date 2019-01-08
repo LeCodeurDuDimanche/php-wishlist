@@ -36,7 +36,7 @@ $(document).ready((e) => {
             elem.blur();
 
             classe = "alert-success";
-            message = "<i class='fa fa-check mr-2'></i>Lien copié avec succès !";
+            message = "<i class='fa fa-check mr-2'></i>Copié dans le presse-papier !";
         } catch(ex)
         {
             classe = "alert-danger";
