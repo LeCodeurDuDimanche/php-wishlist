@@ -16,14 +16,31 @@
             <label for='desc'>Description</label>
             <textarea id='desc' name='desc' class='form-control' placeholder="Descriptif de l'item" required></textarea>
         </div>
+
         <div class='form-group'>
-            <label for='image'>Image</label>
-            <input id='image' name='image' class='form-control' type='texte' placeholder='url...' required>
+            <label for='image' class='form-label d-block'>Image</label>
+           <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" checked>
+              <label class="form-check-label" for="inlineRadio1">Upload</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
+              <label class="form-check-label" for="inlineRadio2">Url</label>
+            </div>
+        
+            <div id='image-upload' class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile">
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <div id='image-url' style='display:none'>
+                <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
+            </div>
+            <div class='form-group' style='display:none'>
+                <label for='url'>Url</label>
+                <input id='url' name='url' class='form-control' type='text'>
         </div>
-        <div class='form-group'>
-            <label for='url'>Url</label>
-            <input id='url' name='url' class='form-control' type='texte'>
         </div>
+        
         <div class='form-group'>
             <label for='tarif'>Tarif</label>
             <input id='tarif' name='tarif' class='form-control' type='number' value="0.0"required>

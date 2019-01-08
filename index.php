@@ -58,9 +58,10 @@ $app->group("/liste", function() use ($app){
 
 
     $app->get('/c{id}/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
-
     //methode put
     $app->post('/c{id}/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
+    $app->post('/c{id}/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem');
+
 });
 
 //Liste participant
