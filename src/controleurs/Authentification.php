@@ -58,6 +58,12 @@
             return $_SESSION['user']['nom'];
         }
 
+        public static function getIdUtilisateur() : int
+        {
+            static::init();
+            return intval($_SESSION['user']['id']);
+        }
+
         public static function getUtilisateur() : Utilisateur
         {
             if (!static::estConnecte())

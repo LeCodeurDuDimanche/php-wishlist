@@ -26,6 +26,7 @@ return [
         //Fonctions d'Authentification
         $view->getEnvironment()->addFunction(new Twig_Function("est_connecte", Authentification::class."::estConnecte"));
         $view->getEnvironment()->addFunction(new Twig_Function("get_username", Authentification::class."::getNomUtilisateur"));
+        $view->getEnvironment()->addFunction(new Twig_Function("get_user_id", Authentification::class."::getIdUtilisateur"));
 
         //Flash
         $view->getEnvironment()->addFunction(new Twig_Function("get_data", Flash::class . "::get"));
