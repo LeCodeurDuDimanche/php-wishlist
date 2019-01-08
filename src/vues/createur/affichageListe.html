@@ -2,25 +2,56 @@
 
 {% block titre %}{{parent()}} - Liste{% endblock %}
 
+{% set url = base_url() ~ path_for('listeParticipant', {token: liste.tokenParticipant}) %}
+{% set text = "Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" %}
+
+
+{% block main %}
+    <div id='modal-social' class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Partagez votre liste</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{{text}}" data-url="{{url}}" data-hashtags="mywishlist" data-dnt="true" data-show-count="false">Tweet</a>
+              <iframe src="https://www.facebook.com/plugins/share_button.php?href={{url|url_encode}}&layout=button&size=large&mobile_iframe=false&width=88&height=28&appId" width="88" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+              <a href='mailto:?body={{text ~ url|url_encode}}&subject=Ma liste de souhait pour le {{liste.expiration}}' title="Partager par mail" class='btn btn-sm btn-social btn-primary'><i class='fa fa-envelope mr-1'></i>Envoyer par mail</a>
+          </div>
+          <div class='modal-footer'></div>
+        </div>
+      </div>
+    </div>
+    {{parent()}}
+{% endblock %}
 
 {% block content %}
+
+
+
     <h1>Liste {{liste.titre}}</h1>
     <p>{{liste.descr}}</p>
     <p>{{liste.expiration}}</p>
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage</strong></label>
-        <div class="input-group ml-sm-2 my-2 mr-sm-2 d-inline-flex w-75">
-          <input id ='url-partage' type='text' class="form-control" value="{{base_url()}}{{path_for('listeParticipant', {token: liste.tokenParticipant})}}" readonly>
+        <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex w-75">
+          <input id ='url-partage' type='text' class="form-control" value="{{url}}" readonly>
             <div class="input-group-append">
               <button id='copy-link' class="input-group-btn btn btn-primary"><i class='fa fa-copy'></i><span class='ml-2'>Copier</span></button>
             </div>
               <div class="input-group-append">
-                <button id='share-link' class="input-group-btn btn btn-success"><i class='fa fa-share'></i><span class='ml-2'>Partager</span></button>
+                <button id='share-link' class="input-group-btn btn btn-success" data-toggle="modal" data-target="#modal-social"><i class='fa fa-share'></i><span class='ml-2'>Partager</span></button>
               </div>
         </div>
         <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
     </div>
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" data-hashtags="mywishlist" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 {% endblock %}

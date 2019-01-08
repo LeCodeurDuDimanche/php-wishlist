@@ -34,3 +34,7 @@ footer, nav{
     max-width: 120px;
 }
 
+.btn-social{
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
