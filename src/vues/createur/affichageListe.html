@@ -17,9 +17,11 @@
             </button>
           </div>
           <div class="modal-body">
-              <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{{text}}" data-url="{{url}}" data-hashtags="mywishlist" data-dnt="true" data-show-count="false">Tweet</a>
-              <iframe src="https://www.facebook.com/plugins/share_button.php?href={{url|url_encode}}&layout=button&size=large&mobile_iframe=false&width=88&height=28&appId" width="88" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-              <a href='mailto:?body={{text ~ url|url_encode}}&subject=Ma liste de souhait pour le {{liste.expiration}}' title="Partager par mail" class='btn btn-sm btn-social btn-primary'><i class='fa fa-envelope mr-1'></i>Envoyer par mail</a>
+              <div class='centered-bar'>
+                  <span class='twitter-container' data-text="{{text}}" data-url="{{url}}"></span>
+                  <iframe src="https://www.facebook.com/plugins/share_button.php?href={{url|url_encode}}&layout=button&size=large&mobile_iframe=false&width=88&height=28&appId" width="88" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                  <a href='mailto:?body={{text ~ " Participez-y grâce au lien suivant : " ~ url|url_encode}}&subject=Ma liste de souhait pour le {{liste.expiration}}' title="Partager par mail" class='btn btn-sm btn-social btn-primary'><i class='fa fa-envelope mr-1'></i>Envoyer par mail</a>
+             </div>
           </div>
           <div class='modal-footer'></div>
         </div>
@@ -32,9 +34,17 @@
 
 
 
-    <h1>Liste {{liste.titre}}</h1>
-    <p>{{liste.descr}}</p>
-    <p>{{liste.expiration}}</p>
+    <h1>{{liste.titre}}</h1>
+    <div class='mb-2'>
+        <small class='d-block font-italic text-muted'>Liste créée le {{format_date(liste.created_at)}}</small>
+        <small class='d-block font-italic text-muted'>Liste modifiée pour la dernière fois le {{format_date(liste.updated_at)}}</small>
+    </div>
+    <div>
+        <p><strong>Description : </strong> {{liste.description ?? "Aucune description"}}</p>
+    </div>
+    <div>
+        <p>Cette liste de souhait expire le {{format_date(liste.expiration)}}, soit dans <strong>{{liste.expiration|time_diff}}</strong>.</p>
+    </div>
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage</strong></label>
         <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex w-75">
@@ -48,7 +58,10 @@
         </div>
         <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
     </div>
-<a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
+    <div class='mt-5'>
+        <div>Pour plus d'informations sur la liste, cliquez ici</div>
+        <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
+    </div>
 {% endblock %}
 
 {% block scripts %}

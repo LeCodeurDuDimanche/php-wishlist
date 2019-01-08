@@ -45,4 +45,12 @@ $(document).ready((e) => {
         }
         $("#url-alert").removeClass("alert-danger").removeClass("alert-success").addClass(classe).html(message).fadeIn().delay(5000).fadeOut();
     });
+
+    $("#modal-social").on("shown.bs.modal", function(e){
+        let elem = $("#modal-social .twitter-container");
+        if (! elem.html())
+        {
+            twttr.widgets.createShareButton(elem.data("url"), elem[0], {text: elem.data("text"), dnt: true, size: "large", hashtags: "mywishlist", showCount: "false"});
+        }
+    });
 });
