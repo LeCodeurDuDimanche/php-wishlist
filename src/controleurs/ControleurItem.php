@@ -11,6 +11,10 @@ class ControleurItem extends Controleur{
 		$tokenListe = filter_var($args['token'], FILTER_SANITIZE_STRING);
 		$item = $this->recuperItem($request, $response, $idItem, $tokenListe);
 
+		if($item->reserverPar != null){
+			return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
+		}
+
 		return $this->view->render($response, "reserverItem.html", compact("item"));
 	}
 
