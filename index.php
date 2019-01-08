@@ -30,6 +30,7 @@ $db->bootEloquent();
 //Init Slim
 $settings = require_once __DIR__ . "/src/conf/settings.php";
 $container = new Slim\Container($settings);
+$container["rootDir"] = __DIR__;
 $app = new Slim\App($container);
 
 $appMiddlewares = [
