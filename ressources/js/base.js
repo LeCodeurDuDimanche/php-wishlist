@@ -23,5 +23,26 @@ $(document).ready((e) => {
     	}
 
     });
-});
 
+    //Copy-share links
+    $("#copy-link,#url-partage").click(function(e) {
+        let classe, message;
+        try{
+            //On selectionne
+            let elem = document.querySelector("#url-partage");
+            elem.select();
+            //On copie
+            document.execCommand("copy");
+            elem.blur();
+
+            classe = "alert-success";
+            message = "<i class='fa fa-check mr-2'></i>Lien copié avec succès !";
+        } catch(ex)
+        {
+            classe = "alert-danger";
+            message = "<i class='fa fa-times mr-2'></i>Erreur lors de la copie, copiez manuellement";
+            console.error(ex)
+        }
+        $("#url-alert").removeClass("alert-danger").removeClass("alert-success").addClass(classe).html(message).fadeIn().delay(5000).fadeOut();
+    });
+});

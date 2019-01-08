@@ -4,10 +4,23 @@
 
 
 {% block content %}
-    <h1>Affichage Liste</h1>
-    <p>{{liste.titre}}</p>
+    <h1>Liste {{liste.titre}}</h1>
     <p>{{liste.descr}}</p>
     <p>{{liste.expiration}}</p>
+    <div>
+        <label for='url-partage' class='form-label d-inline'><strong>Lien de partage</strong></label>
+        <div class="input-group ml-sm-2 my-2 mr-sm-2 d-inline-flex w-75">
+          <input id ='url-partage' type='text' class="form-control" value="{{base_url()}}{{path_for('listeParticipant', {token: liste.tokenParticipant})}}" readonly>
+            <div class="input-group-append">
+              <button id='copy-link' class="input-group-btn btn btn-primary"><i class='fa fa-copy'></i><span class='ml-2'>Copier</span></button>
+            </div>
+              <div class="input-group-append">
+                <button id='share-link' class="input-group-btn btn btn-success"><i class='fa fa-share'></i><span class='ml-2'>Partager</span></button>
+              </div>
+        </div>
+        <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
+    </div>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" data-hashtags="mywishlist" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
 {% endblock %}
