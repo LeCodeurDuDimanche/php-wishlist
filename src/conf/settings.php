@@ -28,6 +28,13 @@ return [
         $view->getEnvironment()->addFunction(new Twig_Function("get_data", Flash::class . "::get"));
         $view->getEnvironment()->addTest(new Twig_Test("flashed", Flash::class . "::has"));
 
+        $view->getEnvironment()->addFunction(new Twig_Function("session", function($var){
+            return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
+        }));
+        $view->getEnvironment()->addTest(new Twig_Test("inSession", function($var){
+            return isset($_SESSION[$var]);
+        }));
+
         return $view;
     },
     'settings' => [

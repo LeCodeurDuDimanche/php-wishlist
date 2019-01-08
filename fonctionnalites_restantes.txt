@@ -1,0 +1,32 @@
+Création de liste:
+d 1 Partager la liste en ayant une url de partage GET /liste/{id_edit}
+e 2 Voir les items selectionnes, sans voir qui les a selectionne GET /liste/{id_edit}/item/{num}
+h 2 Modifier les informations d'une liste PUT /liste/{id_edit}/editer
+i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
+j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
+k 3 Voir les messages associés aux cadeaux GET /liste/{id}/messages
+l 3 Rendre une liste publique POST /liste/{id_edit}/rendrePublique
+m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
+n 3 Ajouter une image par upload POST /liste/{id_edit}/item/{num}/ajouterImage/upload
+
+Participation à une liste:
+r 1 Réserver un  item grâce à un formulaire (nom du particiapant) sur la page détaillée de l'item /liste/{id}/details/item/{id}/reserver
+s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver
+t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
+
+
+Compte:
+ w 2 Modifier son compte GET /compte et PUT /compte/modifier
+ x 2 Modifier son mot de passe PUT /compte/modifier
+
+Accueil:
+z 3 Afficher les liste publiques GET /liste/publiques
+
+ Controleurs:
+    ListeCreateur(a, b, c, d, h, k, l)
+    ItemCreateur(e, f, g, i, j, m, n)
+    ListeParticipant(o, p, t)
+    ItemParticipant(q, r, s)
+    Authentification(u, v, x)
+    Compte(u, w, x)
+    Accueil(y, z)

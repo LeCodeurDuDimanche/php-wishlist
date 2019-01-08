@@ -2,6 +2,8 @@
     namespace mywishlist\controleurs;
 
     use mywishlist\models\Utilisateur;
+    use Psr\Http\Message\ServerRequestInterface;
+    use Psr\Http\Message\ResponseInterface;
 
     class Authentification {
 
@@ -69,5 +71,21 @@
         {
             static::init();
             return isset($_SESSION['user']);
+        }
+
+        public static function requireLoggedMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+        {
+            if (! self::estConnecte())
+                return Utils::redirect($response, "afficherLogin");
+
+            return $next($request, $response);
+        }
+
+        public static function requireAnonMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+        {
+            if (self::estConnecte())
+                return Utils::redirect($response, "compte");
+
+            return $next($request, $response);
         }
     }

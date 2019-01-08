@@ -117,29 +117,23 @@
         * Middleware PSR-7 (compatible Slim 3) permettant de faire marcher le mécanisme de flash
         * Retourne un callable qui est le middleware.
         */
-        public static function flashMiddleware() : callable
+        public static function flashMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
         {
-            return function(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
-            {
-                $response = $next($request, $response);
-                Flash::next();
-                return $response;
-            };
+            $response = $next($request, $response);
+            self::next();
+            return $response;
         }
 
         /**
         * Middleware PSR-7 permettant de sauvegarder les données POST jusqu'à la prochaine éxécution
         * Retourne un callable qui est le middleware.
         */
-        public static function savePostMiddleware() : callable
+        public static function savePostMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
         {
-            return function(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
-            {
-                if ($_POST)
-                    Flash::flash("form", $_POST);
-                $response = $next($request, $response);
-                return $response;
-            };
+            if ($_POST)
+                self::flash("form", $_POST);
+            $response = $next($request, $response);
+            return $response;
         }
 
     }
