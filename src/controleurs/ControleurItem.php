@@ -7,9 +7,7 @@ namespace mywishlist\controleurs;
 class ControleurItem extends Controleur{
 
 	public function afficherFormulaireReservation($request, $response, $args){
-		$idItem = filter_var($args['idItem'], FILTER_SANITIZE_STRING);
-		$tokenListe = filter_var($args['token'], FILTER_SANITIZE_STRING);
-		$item = $this->recuperItem($request, $response, $idItem, $tokenListe);
+		$item = $this->recuperItem($request, $response, $args);
 
 		if($item->reserverPar != null){
 			return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
@@ -19,20 +17,16 @@ class ControleurItem extends Controleur{
 	}
 
 	public function afficherItem($request, $response, $args){
-		$idItem = filter_var($args['idItem'], FILTER_SANITIZE_STRING);
-		$tokenListe = filter_var($args['token'], FILTER_SANITIZE_STRING);
-		$item = $this->recuperItem($request, $response, $idItem, $tokenListe);
+		$item = $this->recuperItem($request, $response, $args);
 		$liste = $item->liste;
         return $this->view->render($response, "affichageItem.html", compact("item","liste"));
 	}
 
 	public function reserverItem($request, $response, $args){
-		$idItem = filter_var($args['idItem'], FILTER_SANITIZE_STRING);
-		$tokenListe = filter_var($args['token'], FILTER_SANITIZE_STRING);
-		$item = $this->recuperItem($request, $response, $idItem, $tokenListe);
+		$item = $this->recuperItem($request, $response, $args);
 
 		if($item->reserverPar == NULL){
-			$item->reserverPar =  filter_var($request->getParsedBodyParam("nom", null), FILTER_SANITIZE_STRING);
+			$item->reserverPar =  Utils::getFilteredPost($request, "nom");
 			$item->save();
 			$_SESSION['nomReservation'] = $item->reserverPar;
 		}
@@ -40,7 +34,11 @@ class ControleurItem extends Controleur{
 		return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
 	}
 
-	private function recuperItem($request, $response, $idItem, $tokenListe){
+	private function recuperItem($request, $response, $args){
+        //Mieux vaut un intval pour un int
+		$idItem = intval($args['idItem']);
+        //Pas besoin de sanitize le token
+		$tokenListe = $args['token'];
 		$item = Item::find($idItem);
 		$liste = Liste::where('tokenParticipant', '=', $tokenListe)->first();
 		if($item->liste_id !== $liste->id){

@@ -25,8 +25,8 @@ namespace mywishlist\controleurs;
     {
         global $app;
 
-        $user = isset($_POST["user"]) ? $_POST["user"] : null;
-        $mdp = isset($_POST["mdp"]) ? $_POST["mdp"] : null;
+        $user = $request->getParsedBodyParam("user", null);
+        $mdp = $request->getParsedBodyParam("mdp", null);
 
         if ($user === null || $mdp === null)
             throw new Exception("Données invalides");

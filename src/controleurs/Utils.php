@@ -2,6 +2,7 @@
     namespace mywishlist\controleurs;
 
     use Psr\Http\Message\ResponseInterface;
+    use Psr\Http\Message\ServerRequestInterface;
 
     class Utils{
 
@@ -14,20 +15,53 @@
             return $response->withRedirect($app->getContainer()->get('router')->pathFor($route, $args));
         }
 
+
+        /**
+        * Check si une date est valide (compréhensible par create_date)
+        */
+        public static function isValidDate(string $date) : bool
+        {
+            try{
+                new \DateTime($date);
+            } catch(Exception $e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+        * Permet de sanitize une string (vis-à-vis de l'affichage HTML seulement)
+        */
+        public static function sanitize(string $unsafe) : string
+        {
+            return strip_tags($unsafe);
+        }
+
+        /**
+        * Permet de récupérer une variable POST et de la filtrer
+        * Retourne null si $key n'est pas présentes dans la requête
+        */
+        public static function getFilteredPost(ServerRequestInterface $request, string $key) : string
+        {
+            $data = $request->getParsedBody($key, null);
+            return $data === null ? null : sanitize($data);
+        }
+
         /**
         * Destiné à être utilisé comme filtre Twig
         * Le paramètre $includeTime permet de prendre en compte ou non les heures, minutes et secondes en plus de la date
         * Le paramètre $threesold définit, si $includeTime est vrai, le nombre de secondes à partir duquel on considère qu'on est "maintenant"
         */
-        public static function timeDiffTwigFilter($time, $includeTime = true, $threesold = 30){
+        public static function timeDiffTwigFilter($time, bool $includeTime = true, int $threesold = 30) : string{
             $dateTime = $time instanceof \DateTime ? $time : date_create($time);
             $diff = $dateTime->diff(date_create());
 
             //On check le sens de l'interval
             if ($diff->invert)
-                $prefix = "il y a";
-            else
                 $prefix = "dans";
+            else
+                $prefix = "il y a";
 
             //On récupère le temps passé par ordre décroissant d'importance
             if ($diff->y)
@@ -46,9 +80,9 @@
                 {
                     $prefix = "";
                     if ($diff->invert)
-                        $suffix = "hier";
-                    else
                         $suffix = "demain";
+                    else
+                        $suffix = "hier";
                 }
                 else
                     $suffix = $diff->d . " jour" . ($diff->d > 1 ? "s" : "");
@@ -74,7 +108,7 @@
         * Le format est celui accepté par strftime
         * La locale doit être correctement définie pour LC_TIME pour un résultat correct
         */
-        public static function formatTwigFunction($time, $format = "%A %e %B %Y"){
+        public static function formatTwigFunction($time, string $format = "%A %e %B %Y") : string{
             return $time instanceof Illuminate\Support\Carbon ?
                 $time->formatLocalized($format) :
                 strftime($format, (new \DateTime($time))->getTimestamp());

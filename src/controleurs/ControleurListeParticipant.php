@@ -8,14 +8,16 @@
  class ControleurListeParticipant extends Controleur{
 
  	public function afficherListe($request, $response, $args){
- 		$token = filter_var($args['token'], FILTER_SANITIZE_STRING);
+        //Pas besoin de sanitize le token
+ 		$token = $args['token'];
         $liste = $this->recupererListe($request, $response, $token);
 
  		return $this->view->render($response, "participant/affichageListe.html", ["liste" => $liste]);
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
- 		$token = filter_var($args['token'], FILTER_SANITIZE_STRING);
+        //Pas besoin de sanitize le token
+        $token = $args['token'];
  		$liste = $this->recupererListe($request, $response, $token);
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "participant/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
@@ -25,7 +27,7 @@
  		$liste = Liste::where('tokenParticipant', '=', $token)->first();
  		if($liste === null)
  			throw new NotFoundException($request, $response);
- 		
+
  		return $liste;
  	}
  }
