@@ -4,10 +4,12 @@
 
 
 {% block content %}
+	<div class="center-block text-center">
     <h1>{{liste.titre}}</h1>
     <p>{{liste.desc}}</p>
     <p><i>Expire le : {{liste.expiration}}</i></p>
 
-    <a href="{{path_for('listeParticipantDetails', {token : liste.tokenParticipant})}}" class='btn btn-primary extensible e-120' title='Voir les items'><i class='far fa-eye'></i></a>
+    <a href="{{path_for('listeParticipantDetails', {token : liste.tokenParticipant})}}" class='btn btn-primary' title='Voir les items'><i class='far fa-eye mr-2'></i>Voir les items</a>
+    </div>
 
 {% endblock %}
