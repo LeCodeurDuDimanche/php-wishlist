@@ -43,6 +43,13 @@ return [
         $view->getEnvironment()->addFunction(new Twig_Function("format_date", Utils::class . "::formatTwigFunction"));
         $view->getEnvironment()->addFilter(new Twig_Filter("time_diff", Utils::class . "::timeDiffTwigFilter"));
 
+        //debug
+        $view->getEnvironment()->addFilter(new Twig_Filter("d", function($val){
+            ob_start();
+            var_dump($val);
+            return ob_get_clean();
+        }));
+
         return $view;
     },
     'settings' => [
