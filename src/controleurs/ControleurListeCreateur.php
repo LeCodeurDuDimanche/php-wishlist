@@ -110,6 +110,14 @@
         return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
      }
 
+     public function supprimerItem($request, $response, $args){
+        $numItem = $args['num'];
+        $item = Item::where('id', '=', $numItem)->first();
+        $token = $args['id'];
+        $item->delete();
+        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+     }
+
 	 public function afficherModifItemListe($request, $response, $args)
      {
   		$liste = Liste::where('tokenCreateur', '=', $args['id'])->first();
