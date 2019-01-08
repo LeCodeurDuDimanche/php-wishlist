@@ -4,6 +4,11 @@
 
 
 {% block content %}
+    <div class='row'>
+        <div class="col-12 col-md-6">
+            <a href="{{path_for('listeParticipantDetails', {token : item.liste.tokenParticipant})}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
+        </div>
+    </div>
     <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
     <form action="{{path_for('reserverItem', {token : item.liste.tokenParticipant, idItem : item.id})}}" method="POST">
         <div class='form-group'>

@@ -72,22 +72,39 @@
 
      public function ajouterItem($request, $response, $args)
      {
+        global $app;
+
+        Flash::flash("erreur", "Des données sont manquantes ou invalides");
+        return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
+
         $titre = filter_var($_POST["nom"], FILTER_SANITIZE_STRING);
         $descrip = filter_var($_POST["desc"], FILTER_SANITIZE_STRING);
-        $img = filter_var($_POST["image"], FILTER_SANITIZE_STRING);
         $url = filter_var($_POST["url"], FILTER_SANITIZE_STRING);
         $prix = filter_var($_POST["tarif"], FILTER_SANITIZE_STRING);
         $token = filter_var($args['id'],FILTER_SANITIZE_STRING );
+
+        $files = $request->getUploadedFiles();
+
+        $file = $files["customFile"];
+        if($file->getError() === UPLOAD_ERR_OK){
+            $filename = $file->getClientFilename();
+            //Sanitize filename
+            $filename = basename($filename);
+            //Check nom unique
+
+            $file->moveTo($app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename);
+        }
+
+
         $item = new Item();
         $item->titre = $titre;
         $item->desc = $descrip;
-        $item->img = $img;
+        $item->img = $name;
         $item->url = $url;
         $item->tarif = $prix;
         $liste = Liste::where("tokenCreateur", "=", $token)->first();
         $item->liste_id = $liste->id;
         $item->save();
-        global $app;
         return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
      }
 

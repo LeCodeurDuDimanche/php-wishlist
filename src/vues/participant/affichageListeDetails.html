@@ -8,7 +8,7 @@
 
 {% block content %}
 	<h1>{{liste.titre}}</h1>
-    <p>{{liste.descr}}</p>
+    <p>{{liste.desc}}</p>
     <p><i>Expire le : {{liste.expiration}}</i></p>
 
  	<table class="table table-striped">
@@ -47,15 +47,15 @@
 	 				{{it.tarif}}
 	 			</td>
 	 			<td>
+
+
+	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
+
 	 				{% if it.reserverPar == NULL %}
-	 				<i>Disponible ! </i><br><br>
-	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary e-120' title='Reserver'>Reserver</a>
+	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
 	 				{% else %}
-	 				{{it.reserverPar}}
+	 					<i> Réserver par : </i>{{it.reserverPar}}
 	 				{% endif %}
-
-
-	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary e-120' title='Voir le détail'>Voir le détail</a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}

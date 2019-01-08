@@ -6,6 +6,12 @@
 {% block content %}
     <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
 
+    {% if "erreur" is flashed %}
+        <div class='alert alert-danger text-center'>
+            <i class='fa fa-exclamation-triangle mr-2'></i>
+            <span>{{get_data("erreur")}}</span>
+        </div>
+    {% endif %}
     <h1 class='text-center'>Ajouter un item</h1>
     <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST">
         <div class='form-group'>
@@ -29,13 +35,13 @@
             </div>
         
             <div id='image-upload' class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile">
+              <input type="file" class="custom-file-input" name="customFile" id="customFile">
               <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
             <div id='image-url' style='display:none'>
                 <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
             </div>
-            <div class='form-group' style='display:none'>
+            <div class='form-group'>
                 <label for='url'>Url</label>
                 <input id='url' name='url' class='form-control' type='text'>
         </div>
