@@ -45,11 +45,11 @@ namespace mywishlist\controleurs;
     {
         global $app;
 
-        $user = isset($_POST["user_new"]) ? $_POST["user_new"] : null;
-        $mdp = isset($_POST["mdp"]) ? $_POST["mdp"] : null;
-        $mdpConf = isset($_POST["mdp_conf"]) ? $_POST["mdp_conf"] : null;
+        $user = Utils::getFilteredPost($request, "user_new");
+        $mdp = $request->getParsedBodyParam("mdp", null);
+        $mdpConf = $request->getParsedBodyParam("mdp_conf", null);
 
-        if ($user === null || $mdp === null)
+        if ($user === null || $mdp === null || $mdpConf == null)
             throw new Exception("Données invalides");
 
         if ($mdp !== $mdpConf)

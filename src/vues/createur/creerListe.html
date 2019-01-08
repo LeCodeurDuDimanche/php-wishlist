@@ -11,6 +11,14 @@
     </div>
     <h1 class='text-center'>Création de liste</h1>
     <form action="{{path_for("creerListe")}}" method="POST">
+        {% if est_connecte() %}
+            <input type='hidden' name="userId" value="{{get_user_id()}}">
+        {% else %}
+            <div class='form-group'>
+                <label for='createur'>Nom du créateur de la liste</label>
+                <input id='createur' name='createur' class='form-control' type='text' placeholder='Votre nom' value='{{get_data(["form", "createur"])}}' required>
+            </div>
+        {% endif %}
         <div class='form-group'>
             <label for='nom'>Titre de la liste</label>
             <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' value='{{get_data(["form", "nom"])}}' required>

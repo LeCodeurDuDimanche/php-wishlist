@@ -27,8 +27,10 @@
          $nom = Utils::getFilteredPost($request, "nom");
          $desc = Utils::getFilteredPost($request, "description");
          $expiration = $request->getParsedBodyParam("expiration", null);
+         $user_id = $request->getParsedBodyParam("userId", null);
+         $createur = Utils::getFilteredPost($request, "createur");
 
-         if ($nom == null || $desc == null || $expiration == null ||
+         if ($nom == null || $desc == null || $expiration == null || ($createur == null && $user_id == null) ||
             !Utils::isValidDate($expiration))
         {
             throw new Exception("Données invalides");
@@ -40,6 +42,8 @@
         $liste->titre = $nom;
         $liste->desc = $desc;
         $liste->expiration = $expiration;
+        $liste->user_id = $user_id === null ? null : intval($user_id);
+        $liste->createur = $createur;
         $liste->tokenCreateur = $this->generateToken();
         $liste->tokenParticipant = $this->generateToken();
 
