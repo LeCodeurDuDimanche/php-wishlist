@@ -11,8 +11,10 @@
 
      private function generateToken() : string
      {
-         //TODO: check for uniqueness
-         return strtr(base64_encode(random_bytes(24)), "+/", "-_");
+         do{
+             $token = strtr(base64_encode(random_bytes(24)), "+/", "-_");
+         } while (Liste::where("tokenCreateur", "=", $token)->orWhere("tokenParticipant", "=", $token)->count());
+         return $token;
      }
 
      private function isValidDate(string $date) : bool
@@ -86,7 +88,7 @@
         $item->liste_id = $liste->id;
         $item->save();
         global $app;
-        return $response->withRedirect($app->getContainer()->get('router')->pathFor("listeCreateurDetails", ["id" => $token]));
+        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
      }
 
      public function modifierItem($request, $response, $args)
