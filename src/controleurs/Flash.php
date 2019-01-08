@@ -31,7 +31,7 @@
         * Permet de savoir si une valeur est associée à la clef $name dans les données
         * Si $name est un tableau, il est interprété comme un ensemble de clef d'un tableau mutlidimensionnel
         */
-        public static function has($name) {
+        public static function has(string $name) {
             self::init();
             if (is_array($name))
             {
@@ -53,7 +53,7 @@
         * Permet de retourner la valeur associée à la clef $name, ou null si non présente
         * Si $name est un tableau, il est interprété comme un ensemble de clef d'un tableau mutlidimensionnel
         */
-        public static function get($name) {
+        public static function get(string $name) {
             self::init();
             if (!self::has($name))
                 return null;
@@ -74,7 +74,7 @@
         * Permet de sauvegarder pour la prochaine éxécution la valeur $value avec la clef $key.
         * Ecrase la valeur précédente si la clef est déjà présente
         */
-        public static function flash($key, $value)
+        public static function flash(string $key, $value)
         {
             self::init();
             self::$flashedData[$key] = $value;
@@ -94,7 +94,7 @@
         * Garde la valeur pour la clef $key pour l'éxécution suivante.
         * Si $key est null, garde toutes les valeurs, en gardant les modifications faites lors de cette éxécution
         */
-        public static function reflash($key = null)
+        public static function reflash(string $key = null)
         {
             self::init();
             if ($key !== null)
