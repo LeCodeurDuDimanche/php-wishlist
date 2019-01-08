@@ -44,8 +44,8 @@
         */
         public static function getFilteredPost(ServerRequestInterface $request, string $key) : string
         {
-            $data = $request->getParsedBody($key, null);
-            return $data === null ? null : sanitize($data);
+            $data = $request->getParsedBodyParam($key, null);
+            return $data === null ? null : self::sanitize($data);
         }
 
         /**

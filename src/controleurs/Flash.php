@@ -31,7 +31,7 @@
         * Permet de savoir si une valeur est associée à la clef $name dans les données
         * Si $name est un tableau, il est interprété comme un ensemble de clef d'un tableau mutlidimensionnel
         */
-        public static function has(string $name) {
+        public static function has($name) {
             self::init();
             if (is_array($name))
             {
@@ -53,7 +53,7 @@
         * Permet de retourner la valeur associée à la clef $name, ou null si non présente
         * Si $name est un tableau, il est interprété comme un ensemble de clef d'un tableau mutlidimensionnel
         */
-        public static function get(string $name) {
+        public static function get($name) {
             self::init();
             if (!self::has($name))
                 return null;
