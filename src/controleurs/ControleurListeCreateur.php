@@ -73,39 +73,42 @@
      public function ajouterItem($request, $response, $args)
      {
         global $app;
+        if($request->getParsedBodyParam("nom", null) !== null && $request->getParsedBodyParam("desc", null) !== null && $request->getParsedBodyParam("url", null) !== null && $request->getParsedBodyParam("tarif", null) !== null && isset($args['id'])){
+            $titre = filter_var($request->getParsedBodyParam("nom", null), FILTER_SANITIZE_STRING);
+            $descrip = filter_var($request->getParsedBodyParam("desc", null), FILTER_SANITIZE_STRING);
+            $url = filter_var($request->getParsedBodyParam("url", null), FILTER_SANITIZE_STRING);
+            $prix = filter_var($request->getParsedBodyParam("tarif", null), FILTER_SANITIZE_STRING);
+            $token = filter_var($args['id'],FILTER_SANITIZE_STRING );
 
-        Flash::flash("erreur", "Des données sont manquantes ou invalides");
-        return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
+            $files = $request->getUploadedFiles();
+            $file = $files["customFile"];
+            if($file->getError() === UPLOAD_ERR_OK){
+                $filename = $file->getClientFilename();
+                //Sanitize filename
+                $filename = basename($filename);
+                //Check nom unique
 
-        $titre = filter_var($_POST["nom"], FILTER_SANITIZE_STRING);
-        $descrip = filter_var($_POST["desc"], FILTER_SANITIZE_STRING);
-        $url = filter_var($_POST["url"], FILTER_SANITIZE_STRING);
-        $prix = filter_var($_POST["tarif"], FILTER_SANITIZE_STRING);
-        $token = filter_var($args['id'],FILTER_SANITIZE_STRING );
+                $file->moveTo($app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename);
+            }
+            $item = new Item();
+            $item->titre = $titre;
+            $item->desc = $descrip;
+            $item->img = $name;
+            $item->url = $url;
+            $item->tarif = $prix;
+            $liste = Liste::where("tokenCreateur", "=", $token)->first();
+            $item->liste_id = $liste->id;
+            $item->save();
+        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
 
-        $files = $request->getUploadedFiles();
-
-        $file = $files["customFile"];
-        if($file->getError() === UPLOAD_ERR_OK){
-            $filename = $file->getClientFilename();
-            //Sanitize filename
-            $filename = basename($filename);
-            //Check nom unique
-
-            $file->moveTo($app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename);
+        } else {
+            Flash::flash("erreur", "Des données sont manquantes ou invalides");
+            return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
         }
 
+        
 
-        $item = new Item();
-        $item->titre = $titre;
-        $item->desc = $descrip;
-        $item->img = $name;
-        $item->url = $url;
-        $item->tarif = $prix;
-        $liste = Liste::where("tokenCreateur", "=", $token)->first();
-        $item->liste_id = $liste->id;
-        $item->save();
-        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+        
      }
 
      public function modifierItem($request, $response, $args)
