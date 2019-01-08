@@ -94,7 +94,7 @@
         * Garde la valeur pour la clef $key pour l'éxécution suivante.
         * Si $key est null, garde toutes les valeurs, en gardant les modifications faites lors de cette éxécution
         */
-        public static function reflash(string $key = null)
+        public static function reflash($key = null)
         {
             self::init();
             if ($key !== null)

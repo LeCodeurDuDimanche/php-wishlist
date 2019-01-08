@@ -42,7 +42,7 @@
         * Permet de récupérer une variable POST et de la filtrer
         * Retourne null si $key n'est pas présentes dans la requête
         */
-        public static function getFilteredPost(ServerRequestInterface $request, string $key) : string
+        public static function getFilteredPost(ServerRequestInterface $request, string $key)
         {
             $data = $request->getParsedBodyParam($key, null);
             return $data === null ? null : self::sanitize($data);
