@@ -27,7 +27,7 @@
 	 				Tarif
 	 			</th>
 	 			<th>
-	 				Reserver par
+	 				Actions
 	 			</th>
 	 		</tr>
  		</thead>
@@ -53,6 +53,9 @@
 	 				{% else %}
 	 				{{it.reserverPar}}
 	 				{% endif %}
+
+
+	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary e-120' title='Voir le détail'>Voir le détail</a>
 	 			</td>
 	 		</tr>
 	 		{% endfor %}

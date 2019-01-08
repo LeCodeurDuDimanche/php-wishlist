@@ -30,10 +30,10 @@ class ControleurItem extends Controleur{
 		if($item->reserverPar == NULL){
 			$item->reserverPar =  filter_var($request->getParsedBodyParam("nom", null), FILTER_SANITIZE_STRING);
 			$item->save();
+			$_SESSION['nomReservation'] = $item->reserverPar;
 		}
 
-		global $app;
-		return Utils::redirect($reponse, "listeParticipantDetails", ["token" => $tokenListe]);
+		return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
 	}
 
 	private function recuperItem($request, $response, $idItem, $tokenListe){
