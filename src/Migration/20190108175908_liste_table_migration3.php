@@ -42,6 +42,7 @@ class ListeTableMigration3 extends Migration
             $table->string('titre');
             $table->string('desc', 2048);
             $table->date('expiration');
+            $table->boolean('estPublique')->default(false);
             $table->string('tokenCreateur')->nullable();
             $table->string('tokenParticipant')->nullable();
             $table->timestamps();

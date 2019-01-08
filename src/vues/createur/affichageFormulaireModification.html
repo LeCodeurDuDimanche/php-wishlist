@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - {{liste.titre}}{% endblock %}
+
+{% set url = base_url() ~ path_for('listeParticipant', {token: liste.tokenParticipant}) %}
+{% set text = "Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" %}
+
+
+{% block main %}
+    <div id='modal-social' class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Partagez votre liste</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class='centered-bar'>
+                  <span class='twitter-container' data-text="{{text}}" data-url="{{url}}"></span>
+                  <iframe src="https://www.facebook.com/plugins/share_button.php?href={{url|url_encode}}&layout=button&size=large&mobile_iframe=false&width=88&height=28&appId" width="88" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                  <a href='mailto:?body={{text ~ " Participez-y grâce au lien suivant : " ~ url|url_encode}}&subject=Ma liste de souhait pour le {{format_date(liste.expiration)}}' title="Partager par mail" class='btn btn-sm btn-social btn-primary'><i class='fa fa-envelope mr-1'></i>Envoyer par mail</a>
+             </div>
+          </div>
+          <div class='modal-footer'></div>
+        </div>
+      </div>
+    </div>
+    {{parent()}}
+{% endblock %}
+
+{% block content %}
+    <h1>Modification de la liste</h1>
+    <div class='form-group'>
+        <p>
+            <strong>Liste créée par : </strong> {{liste.createur()}}
+        </p>
+    </div>
+    <div class='mb-3'>
+        <small class='d-block font-italic text-muted'>Liste créée le {{format_date(liste.created_at)}}</small>
+        <small class='d-block font-italic text-muted'>Liste modifiée pour la dernière fois le {{format_date(liste.updated_at)}}</small>
+    </div>
+    <form action='{{path_for("modifierListe", {id: liste.tokenCreateur})}}' method='POST'>
+        <input type="hidden" name="_METHOD" value="PUT"/>
+        <div class='form-group'>
+            <label for='nom'>Titre</label>
+            <input id="nom" name="nom" type='text' class='form-control' placeholder="Titre de la liste" value="{{liste.titre}}" required>
+        </div>
+        <div class='form-group'>
+            <label for='desc'>Description</label>
+            <textarea id="desc" class='form-control' name="description" placeholder="Pour quel évènement la liste est créée, précisions, remerciements..." required>{{liste.desc}}</textarea>
+        </div>
+        <div class='form-group'>
+                <label for='expiration'>Date d'expiration de la liste</label>
+                <input id='expiration' name='expiration' class='form-control' type='date' min='{{"now"|date('Y-m-d')}}' value='{{liste.expiration}}' required />
+        </div>
+        <div class='form-group'>
+            <p>Confidentialite de la liste</p>
+            <div class="custom-control custom-radio">
+              <input type="radio" id="publique" name="confidentialite" class="custom-control-input" value="publique" {% if liste.estPublique %} checked {% endif %}>
+              <label class="custom-control-label" for="publique">Liste publique</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" id='privee' name="confidentialite" class="custom-control-input" value="privee" {% if not liste.estPublique %} checked {% endif %}>
+              <label class="custom-control-label" for="privee">Liste privée</label>
+            </div>
+        </div>
+        <div class='form-group'>
+            <button class='btn btn-primary d-block mx-auto'>Valider</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+{% endblock %}

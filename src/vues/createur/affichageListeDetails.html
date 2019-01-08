@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block titre %}{{parent()}} - ListeDetaille{% endblock %}
+{% block titre %}{{parent()}} - Détails de {{liste.titre}}{% endblock %}
 {% block css %}
 	{{parent()}}
 {% endblock %}
@@ -11,7 +11,7 @@
     <h1>Liste crée par le num {{liste.user_id}}</h1>
 	{% if listeIt is empty %}
 		<p>Cette liste ne contient pas encore d'item, ajoutez-en un !</p>
-		
+
  		<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
  	{% else %}
  	<table class="table table-striped">
@@ -55,7 +55,7 @@
 	 				<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
 	 				*/-->
 	 				<form action="{{path_for('supprimerItem', {id : liste.tokenCreateur, num : it.id})}}" method="POST">
-	 					<button onclick="return confirm('Cet item sera supprimer définitivement')" class='btn btn-primary' title="supprimer"><i class="fas fa-trash-alt"></i></button> 
+	 					<button onclick="return confirm('Cet item sera supprimé définitivement')" class='btn btn-primary' title="supprimer"><i class="fas fa-trash-alt"></i></button>
 	 				</form>
 	 			</td>
 	 		</tr>

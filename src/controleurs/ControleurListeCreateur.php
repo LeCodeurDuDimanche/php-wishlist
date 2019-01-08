@@ -17,6 +17,15 @@
          return $token;
      }
 
+     private static function recupererListe($request, $response, $args)
+     {
+        $tokenCreateur = $args['id'];
+   		$liste = Liste::where("tokenCreateur", "=", $tokenCreateur)->first();
+        if ($liste === null)
+            throw new NotFoundException($request, $response);
+        return $liste;
+     }
+
      public function afficherFormulaireCreation($request, $response, $args)
      {
          return $this->view->render($response, "createur/creerListe.html");
@@ -49,17 +58,48 @@
 
         $liste->save();
 
-        global $app;
         return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
      }
 
+     public function modifierListe($request, $response, $args)
+     {
+         $nom = Utils::getFilteredPost($request, "nom");
+         $desc = Utils::getFilteredPost($request, "description");
+         $conf = Utils::getFilteredPost($request, "confidentialite");
+         $expiration = $request->getParsedBodyParam("expiration", null);
+
+         if ($nom == null || $desc == null || $conf == null || $expiration == null ||
+            !Utils::isValidDate($expiration) || !in_array($conf, ["publique", "privee"]))
+        {
+            throw new Exception("Données invalides");
+        }
+
+        $expiration = new \DateTime($expiration);
+
+        $liste = self::recupererListe($request, $response, $args);
+        $liste->titre = $nom;
+        $liste->desc = $desc;
+        $liste->expiration = $expiration;
+        $liste->estPublique = $conf === "publique";
+
+        if (! $liste->save())
+            Flash::flash("erreur", "Impossible de modifier la liste");
+        else
+            Flash::flash("message", "Modification réussie");
+
+        return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
+     }
+
+     public function afficherFormulaireModification($request, $response, $args)
+     {
+        $liste = self::recupererListe($request, $response, $args);
+
+        return $this->view->render($response, "createur/affichageFormulaireModification.html", compact("liste"));
+     }
 
      public function afficherFormulaireAjoutItem($request, $response, $args)
      {
-        $tokenCreateur = filter_var($args['id'], FILTER_SANITIZE_STRING);
-  		$liste = Liste::where("tokenCreateur", "=", $tokenCreateur)->first();
-        if ($liste === null)
-            throw new NotFoundException($request, $response);
+        $liste = self::recupererListe($request, $response, $args);
 
         return $this->view->render($response, "createur/ajouterItem.html", compact("liste"));
      }
@@ -143,26 +183,20 @@
 
 	 public function afficherModifItemListe($request, $response, $args)
      {
-  		$liste = Liste::where('tokenCreateur', '=', $args['id'])->first();
-        if ($liste === null)
-            throw new NotFoundException($request, $response);
+        $liste = self::recupererListe($request, $response, $args);
 
         $item = Item::where('id', '=', $args['num'])->first();
         return $this->view->render($response, "createur/modifierItem.html", compact("liste", "item"));
      }
 
  	public function afficherListe($request, $response, $args){
- 		$liste = Liste::where('tokenCreateur', '=', $args['id'])->first();
-        if ($liste === null)
-            throw new NotFoundException($request, $response);
+        $liste = self::recupererListe($request, $response, $args);
 
  		return $this->view->render($response, "createur/affichageListe.html", compact("liste"));
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
- 		$liste =Liste::where('tokenCreateur', '=', $args['id'])->first();
-        if($liste == null)
-            throw new NotFoundException($request, $response);
+        $liste = self::recupererListe($request, $response, $args);
 
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));

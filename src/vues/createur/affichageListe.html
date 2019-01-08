@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titre %}{{parent()}} - Liste{% endblock %}
+{% block titre %}{{parent()}} - {{liste.titre}}{% endblock %}
 
 {% set url = base_url() ~ path_for('listeParticipant', {token: liste.tokenParticipant}) %}
 {% set text = "Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" %}
@@ -33,8 +33,30 @@
 {% block content %}
 
 
+    {% if "message" is flashed %}
+        <div class='alert alert-success w-100 text-center'>
+            <i class='fa fa-check mr-2'></i>
+            <span>{{get_data("message")}}</span>
+        </div>
+    {% elseif "erreur" is flashed %}
+        <div class='alert alert-danger w-100 text-center'>
+            <i class='fa fa-exclamation-triangle mr-2'></i>
+            <span>{{get_data("erreur")}}</span>
+        </div>
+    {% endif %}
 
-    <h1>{{liste.titre}}</h1>
+    <div class='row mb-2'>
+        <div class='col-12 col-sm-8'>
+            <h1 class='d-block d-sm-none text-center'>{{liste.titre}}</h1>
+            <h1 class='d-none d-sm-block'>{{liste.titre}}</h1>
+        </div>
+        <div class='col-12 col-sm-4 justify-content-center align-items-center d-flex'>
+            <a href="{{path_for("formulaireModifListe" ,{id: liste.tokenCreateur})}}" class='btn btn-primary'>
+                <i class='far fa-edit'></i>
+                <span class='d-inline d-sm-none d-md-inline'>Éditer</span>
+            </a>
+        </div>
+    </div>
     <div class='mb-3'>
         <small class='d-block font-italic text-muted'>Liste créée le {{format_date(liste.created_at)}}</small>
         <small class='d-block font-italic text-muted'>Liste modifiée pour la dernière fois le {{format_date(liste.updated_at)}}</small>
@@ -48,10 +70,10 @@
         <p><strong>Description : </strong> {{liste.desc ?? "Aucune description"}}</p>
     </div>
     <div>
-        <p>Cette liste de souhait expire le {{format_date(liste.expiration)}}, soit <strong>{{liste.expiration|time_diff(false)}}</strong>.</p>
+        <p><strong>Expiration : </strong>Cette liste de souhait expire le {{format_date(liste.expiration)}}, soit <strong>{{liste.expiration|time_diff(false)}}</strong>.</p>
     </div>
     <div>
-        <label for='url-partage' class='form-label d-inline'><strong>Lien de partage</strong></label>
+        <label for='url-partage' class='form-label d-inline'><strong>Lien de partage : </strong></label>
         <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex w-75">
           <input id ='url-partage' type='text' class="form-control" value="{{url}}" readonly>
             <div class="input-group-append">
@@ -62,6 +84,21 @@
               </div>
         </div>
         <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
+    </div>
+    <div class='my-2'>
+        <p><strong>Confidentialité : </strong> Cette liste est
+        {% if liste.estPublique %}
+            <span class='alert alert-success p-2 ml-1'>
+                <strong>publique</strong>
+                <i class='fa fa-lock-open ml-1'></i>
+            </span>
+        {% else %}
+            <span class='alert alert-dark p-2 ml-1'>
+                <strong>privée</strong>
+                <i class='fa fa-lock ml-1'></i>
+            </span>
+        {% endif %}
+        </p>
     </div>
     <div class='mt-5'>
         <span class='mr-2'>Pour plus d'informations sur la liste, cliquez ici :</span>
