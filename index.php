@@ -12,6 +12,8 @@
  use \mywishlist\controleurs\ControleurAccueil;
  use \mywishlist\controleurs\ControleurUser;
  use \mywishlist\controleurs\ControleurItem;
+ use \mywishlist\controleurs\Flash;
+ use \mywishlist\controleurs\Authentification;
 
  use Illuminate\Database\Capsule\Manager as DBManager;
  use Psr7Middlewares\Middleware;
@@ -33,9 +35,12 @@ $app = new Slim\App($container);
 $appMiddlewares = [
     Middleware::TrailingSlash(false) //(optional) set true to add the trailing slash instead remove
         ->redirect(301),
-    \mywishlist\controleurs\Flash::flashMiddleware(),
-    \mywishlist\controleurs\Flash::savePostMiddleware()
+    Flash::class."::flashMiddleware",
+    Flash::class."::savePostMiddleware"
 ];
+
+$requireLogged = Authentification::class."::requireLoggedMiddleware";
+$requireAnon = Authentification::class."::requireAnonMiddleware";
 
 foreach($appMiddlewares as $middleware)
 {
@@ -73,13 +78,14 @@ $app->group("/liste", function() use ($app){
 });
 
 //compte
-$app->group("/compte", function() use ($app){
-    $app->get("", ControleurUser::class . ":afficherCompte")->setName("compte");
-    $app->get("/login", ControleurUser::class . ":afficherLogin")->setName("afficherLogin");
-    $app->get("/deconnexion", ControleurUser::class . ":deconnecter")->setName("deconnexion");
+$app->group("/compte", function() use ($app, $requireAnon, $requireLogged){
 
-    $app->post("/login", ControleurUser::class . ":login")->setName("login");
-    $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte");
+    $app->get("", ControleurUser::class . ":afficherCompte")->setName("compte")->add($requireLogged);
+    $app->get("/login", ControleurUser::class . ":afficherLogin")->setName("afficherLogin")->add($requireAnon);
+    $app->get("/deconnexion", ControleurUser::class . ":deconnecter")->setName("deconnexion")->add($requireLogged);
+
+    $app->post("/login", ControleurUser::class . ":login")->setName("login")->add($requireAnon);
+    $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte")->add($requireAnon);
 });
 
 $app->run();
