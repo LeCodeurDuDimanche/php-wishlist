@@ -1,6 +1,5 @@
-Ajouter nom créateur dans la création de liste
-Ajotuer user_id dans la création de liste
 Ajouter une page 404 custom
+Faire footer et header
 
 
 Création de liste:
