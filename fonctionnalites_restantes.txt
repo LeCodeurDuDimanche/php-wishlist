@@ -1,3 +1,8 @@
+Ajouter nom créateur dans la création de liste
+Ajotuer user_id dans la création de liste
+Ajouter une page 404 custom
+
+
 Création de liste:
 d 1 Partager la liste en ayant une url de partage GET /liste/{id_edit}
 e 2 Voir les items selectionnes, sans voir qui les a selectionne GET /liste/{id_edit}/item/{num}
