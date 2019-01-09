@@ -139,7 +139,7 @@ use mywishlist\models\Utilisateur;
 
         if (!Authentification::modifierMotDePasse($mdp, $mdpNew))
         {
-            Flash::flash("erreur", "Le pseudo $user n'est pas disponible");
+            Flash::flash("erreur", "Le mot de passe n'est pas correcte");
             return Utils::redirect($response, "compte");
         }
 
