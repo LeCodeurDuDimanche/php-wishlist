@@ -1,6 +1,6 @@
 Ajouter une page 404 custom
 Faire footer et header
-
+Ajouter reserveParUser 
 
 Création de liste:
 e 2 Voir les items selectionnes, sans voir qui les a selectionne GET /liste/{id_edit}/item/{num}

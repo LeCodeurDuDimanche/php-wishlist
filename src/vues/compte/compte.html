@@ -3,16 +3,73 @@
 {% block titre %}{{parent()}} - Accueil{% endblock %}
 
 {% block content %}
+    {% if "erreur" is flashed %}
+        <div class='alert alert-danger mx-auto p-2 text-center my-3'>
+            <i class='fa fa-exclamation-triangle'></i>
+            <span class='px-2'>{{ get_data("erreur")}}</span>
+        </div>
+    {% elseif "message" is flashed %}
+        <div class='alert alert-success mx-auto p-2 text-center my-3'>
+            <i class='fa fa-check'></i>
+            <span class='px-2'>{{ get_data("message")}}</span>
+        </div>
+    {% endif %}
     <div class="row">
-        <div class='col-12 col-md-9'><h2 class='text-center my-4'>Mon compte</h2></div>
+        <div class='col-12 col-md-9'><h2 class='text-center'>Mon compte</h2></div>
         <div class='col-12 col-md-3'>
             <a href="{{path_for("deconnexion")}}" class='btn btn-outline-primary'>
                 <i class='fa fa-sign-out-alt'></i>
                 <span class='ml-2'>Se déconnecter</span>
             </a>
         </div>
-        <div class='col-12'><strong>Nom :</strong>{{get_username()}}</div>
-
-       <a href="{{path_for('afficherMesListes')}}" class='btn btn-primary' title='Voir mes listes'><i class="far fa-arrow-alt-circle-right pr-1"></i>Voir mes listes</a>
+    </div>
+    <h3 class='my-4'>Bonjour {{user.prenom ~ " " ~ user.nom}}</h3>
+    <div class='section mb-3'>
+        <h4>Informations de mon compte</h4>
+        <form action='{{path_for("modifierCompte")}}' method='POST' class='form-row'>
+            <input type='hidden' name='_METHOD' value='PUT' required>
+            <div class='col-12 col-sm-4 form-group'>
+                <label class='form-label' for='pseudo'>Nom d'utilisateur</label>
+                <input id='pseudo' name='pseudo' class='form-control' type='text' value="{{user.pseudo}}" placeholder="Nom d'utilisateur" required>
+            </div>
+            <div class='col-12 col-sm-4 form-group'>
+                <label class='form-label' for='pseudo'>Nom</label>
+                <input id='nom' name='nom' class='form-control' type='text' value="{{user.nom}}" placeholder="Votre nom" required>
+            </div>
+            <div class='col-12 col-sm-4 form-group'>
+                <label class='form-label' for='pseudo'>Prénom</label>
+                <input id='prenom' name='prenom' class='form-control' type='text' value="{{user.prenom}}" placeholder="Votre prénom" required>
+            </div>
+            <div class='col-12 form-group'>
+                <button class='btn btn-primary d-block mx-auto'>Enregistrer les modifications</button>
+            </div>
+        </form>
+    </div>
+    <div class='section'>
+        <h4>Modification de mot de passe</h4>
+        <form action='{{path_for("modifierMdp")}}' method='POST' class='form-row'>
+            <input type='hidden' name='_METHOD' value='PUT' required>
+            <div class='col-12 col-sm-12 form-group'>
+                <label class='form-label' for='mdp'>Mot de passe actuel</label>
+                <input id='mdp' name='mdp' class='form-control' type='password' placeholder="Mot de passe" required>
+            </div>
+            <div class='col-12 col-sm-6 form-group'>
+                <label class='form-label' for='mdp_new'>Nouveau mot de passe</label>
+                <input id='mdp_new' name='mdp_new' class='form-control follow-input' type='password' placeholder="Nouveau mot de passe" pattern='(?=.*\d)(?=.*[a-zA-Z]).{6,}' required>
+                <small class='text-muted text-feedback'>Le mot de passe doit faire au moins 6 caractères et contenir 1 chiffre et 1 lettre</small>
+            </div>
+            <div class='col-12 col-sm-6 form-group'>
+                <label class='form-label' for='mdp_conf'>Confirmation du mot de passe</label>
+                <input id='mdp_conf' name='mdp_conf' class='form-control follow-input' type='password' placeholder="Confirmation du mot de passe" data-target='mdp_new' required>
+                <small class='text-muted text-feedback'>Le mot de passe doit correspondre</small>
+            </div>
+            <div class='form-group col-12 form-group'>
+                <button class='btn btn-primary d-block mx-auto'>Modifier</button>
+            </div>
+        </form>
+    </div>
+    <div class='section'>
+        <h4>Mes listes</h4>
+        <a href="{{path_for('afficherMesListes')}}" class='btn btn-primary' title='Voir mes listes'><i class="far fa-arrow-alt-circle-right pr-1"></i>Accéder à mes listes</a>
     </div>
 {% endblock %}

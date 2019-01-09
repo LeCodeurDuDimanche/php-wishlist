@@ -61,4 +61,23 @@ $(document).ready((e) => {
             method : "DELETE"
         });
     });
+
+    //Validation
+    $(".follow-input").keyup(function(e){
+        let elem = $(e.delegateTarget);
+        elem.attr("value", elem.val());
+    });
+    $(".follow-input").each(function(){
+        let elem = $(this);
+        elem.attr("value", elem.val());
+    });
+    $("#mdp_conf").keyup(function(e){
+        let elem = $(e.delegateTarget);
+        let orig = $("#" + elem.data('target'));
+
+        if (elem.val() != orig.val())
+            elem[0].setCustomValidity("Le mot de passe doit correspondre");
+        else
+            elem[0].setCustomValidity("");
+    });
 });

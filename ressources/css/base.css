@@ -53,3 +53,14 @@ footer, nav{
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.section{
+    border: 1px solid lightgray;
+    padding: 1rem;
+    margin: .3rem .1rem;
+    border-radius: 5px;
+}
+
+input:not([value=""]):invalid~.text-feedback{
+    color: #dc3545 !important;
+}
