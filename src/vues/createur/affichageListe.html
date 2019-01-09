@@ -85,7 +85,7 @@
         </div>
         <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
     </div>
-    <div class='my-2'>
+    <div class='my-3'>
         <p><strong>Confidentialité : </strong> Cette liste est
         {% if liste.estPublique %}
             <span class='alert alert-success p-2 ml-1'>
@@ -100,10 +100,12 @@
         {% endif %}
         </p>
     </div>
+    {% block details %}
     <div class='mt-5'>
         <span class='mr-2'>Pour plus d'informations sur la liste, cliquez ici :</span>
         <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
     </div>
+    {% endblock details %}
 {% endblock %}
 
 {% block scripts %}

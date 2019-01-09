@@ -33,6 +33,9 @@ footer, nav{
 .extensible.e-120:hover:after{
     max-width: 120px;
 }
+.extensible.e-250:hover:after{
+    max-width: 250px;
+}
 
 .btn-social{
     border-radius: 3px;

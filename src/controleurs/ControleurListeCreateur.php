@@ -111,6 +111,7 @@
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
         $url = Utils::getFilteredPost($request, "url");
+        $img = Utils::getFilteredPost($request, "img");
         $prix = Utils::getFilteredPost($request, "tarif");
         //pas besoin de filtrer le token
         $token = $args['id'];
@@ -118,19 +119,26 @@
         $files = $request->getUploadedFiles();
         $file = isset($files["customFile"]) ? $files["customFile"] : null;
 
-        if ($titre && $descrip && $prix && $file && !$file->getError())
+        if ($titre && $descrip && $prix && ($file && !$file->getError() || $img))
         {
-            $filename = $file->getClientFilename();
-            //Sanitize filename
-            $filename = basename($filename);
-            //Check nom unique
+            if ($file && !$file->getError())
+            {
+                $filename = $file->getClientFilename();
+                //Sanitize filename
+                $filename = basename($filename);
+                //Check nom unique
+                $fullFilename = $app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename;
+                $file->moveTo($fullFilename);
 
-            $file->moveTo($app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename);
+                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/$fullFilename";
+            }
+            else
+                $filename = $img;
 
             $item = new Item();
             $item->titre = $titre;
             $item->desc = $descrip;
-            $item->img = $name;
+            $item->img = $filename;
             $item->url = $url;
             $item->tarif = $prix;
             $liste = Liste::where("tokenCreateur", "=", $token)->first();
