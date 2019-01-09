@@ -117,20 +117,20 @@
         $token = $args['id'];
 
         $files = $request->getUploadedFiles();
-        $file = isset($files["customFile"]) ? $files["customFile"] : null;
-
-        if ($titre && $descrip && $prix && ($file && !$file->getError() || $img))
+        $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
+        if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
         {
             if ($file && !$file->getError())
             {
-                $filename = $file->getClientFilename();
-                //Sanitize filename
-                $filename = basename($filename);
+                $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
+                $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
                 //Check nom unique
-                $fullFilename = $app->rootDir . DIRECTORY_SEPARATOR . "ressources" . DIRECTORY_SEPARATOR ."uploaded" .DIRECTORY_SEPARATOR . $filename;
+                $relativeFilename = "ressources/uploaded/$filename";
+                $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
+
                 $file->moveTo($fullFilename);
 
-                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/$fullFilename";
+                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
             }
             else
                 $filename = $img;
@@ -209,5 +209,14 @@
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
  	}
+
+    public function afficherMesListes($request, $response, $args){
+        if(Authentification::getUtilisateur()->estConnecte()){
+            $meslistes = Authentification::mesListes()->get();
+            return $this->view->render($response, "createur/affichageMesListes.html", compact("meslistes"));
+        } else {
+            
+        }
+    }
 
  }
