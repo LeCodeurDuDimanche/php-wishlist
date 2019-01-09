@@ -42,7 +42,7 @@
 	 				{{it.desc}}
 	 			</td>
 	 			<td>
-	 				<img src="{{base_url()}}/ressources/img/{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+	 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
 	 			</td>
 	 			<td>
 	 				{{it.tarif}}
@@ -61,7 +61,7 @@
 	 		</tr>
 	 		{% endfor %}
 			<tr>
-				<td colspan='4' class='text-center'>
+				<td colspan='5' class='text-center'>
 						<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Ajouter un item'><i class='fas fa-plus'></i></a>
 				</td>
 			</tr>

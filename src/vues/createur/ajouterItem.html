@@ -13,7 +13,7 @@
         </div>
     {% endif %}
     <h1 class='text-center'>Ajouter un item</h1>
-    <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST" enctype="mutlipart/form-data">
+    <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST" enctype="multipart/form-data">
         <div class='form-group'>
             <label for='nom'>Titre de l'item</label>
             <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' required>
@@ -35,8 +35,8 @@
             </div>
         
             <div id='image-upload' class="custom-file">
-              <input type="file" class="custom-file-input" name="customFile" id="customFile">
-              <label class="custom-file-label" for="customFile">Choose file</label>
+              <input type="file" class="custom-file-input" name="fichierImg" id="fichierImg">
+              <label class="custom-file-label" for="fichierImg">Choose file</label>
             </div>
             <div id='image-url' style='display:none'>
                 <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">

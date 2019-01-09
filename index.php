@@ -72,11 +72,13 @@ $app->group("/liste", function() use ($app){
     $app->post('/c{id}/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
     $app->post('/c{id}/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem');
 
+    $app->get('/meslistes', ControleurListeCreateur::class.":afficherMesListes")->setName("afficherMesListes");
+
 });
 
 //Liste participant
 $app->group("/liste", function() use ($app){
-    $app->get('/publiques[/page{numPage}]', ControleurAccueil::class.":afficherListesPubliques")->setName('listesPubliques');
+    $app->get('/publiques[/page{numPage:[0-9]+}]', ControleurAccueil::class.":afficherListesPubliques")->setName('listesPubliques');
     $app->get('/p{token}', ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
     $app->get('/p{token}/details', ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
     $app->get('/p{token}/details/item/{idItem}', ControleurItem::class.":afficherItem")->setName('afficherItem');
@@ -93,6 +95,7 @@ $app->group("/compte", function() use ($app, $requireAnon, $requireLogged){
 
     $app->post("/login", ControleurUser::class . ":login")->setName("login")->add($requireAnon);
     $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte")->add($requireAnon);
+
 });
 
 $app->run();

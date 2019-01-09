@@ -53,4 +53,12 @@ $(document).ready((e) => {
             twttr.widgets.createShareButton(elem.data("url"), elem[0], {text: elem.data("text"), dnt: true, size: "large", hashtags: "mywishlist", showCount: "false"});
         }
     });
+
+    //Suppression listes
+    $("#supprimer-liste").click(function(e) {
+        let elem = $(e.delegateTarget);
+        $.ajax(elem.data("url"), {
+            method : "DELETE"
+        });
+    });
 });
