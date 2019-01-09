@@ -46,10 +46,12 @@ namespace mywishlist\controleurs;
         global $app;
 
         $user = Utils::getFilteredPost($request, "user_new");
+        $prenom = Utils::getFilteredPost($request, "prenom");
+        $nom = Utils::getFilteredPost($request, "nom");
         $mdp = $request->getParsedBodyParam("mdp", null);
         $mdpConf = $request->getParsedBodyParam("mdp_conf", null);
 
-        if ($user === null || $mdp === null || $mdpConf == null)
+        if ($user === null || $prenom == null || $nom == null || $mdp === null || $mdpConf == null)
             throw new Exception("Données invalides");
 
         if ($mdp !== $mdpConf)
@@ -58,7 +60,7 @@ namespace mywishlist\controleurs;
             return Utils::redirect($response, "afficherLogin");
         }
 
-        $id = Authentification::creerCompte($user, $mdp);
+        $id = Authentification::creerCompte($user, $prenom, $nom, $mdp);
         if ($id === -1)
         {
             Flash::flash("erreur", "Impossible de créer un compte");
