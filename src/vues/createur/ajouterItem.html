@@ -5,13 +5,6 @@
 
 {% block content %}
     <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
-
-    {% if "erreur" is flashed %}
-        <div class='alert alert-danger text-center'>
-            <i class='fa fa-exclamation-triangle mr-2'></i>
-            <span>{{get_data("erreur")}}</span>
-        </div>
-    {% endif %}
     <h1 class='text-center'>Ajouter un item</h1>
     <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST" enctype="multipart/form-data">
         <div class='form-group'>
@@ -33,7 +26,7 @@
               <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
               <label class="form-check-label" for="inlineRadio2">Url</label>
             </div>
-        
+
             <div id='image-upload' class="custom-file">
               <input type="file" class="custom-file-input" name="fichierImg" id="fichierImg">
               <label class="custom-file-label" for="fichierImg">Choose file</label>
@@ -46,7 +39,7 @@
                 <input id='url' name='url' class='form-control' type='text'>
         </div>
         </div>
-        
+
         <div class='form-group'>
             <label for='tarif'>Tarif</label>
             <input id='tarif' name='tarif' class='form-control' type='number' value="0.0"required>

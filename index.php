@@ -95,6 +95,10 @@ $app->group("/compte", function() use ($app, $requireAnon, $requireLogged){
     $app->post("/login", ControleurUser::class . ":login")->setName("login")->add($requireAnon);
     $app->post("/nouveau", ControleurUser::class . ":creer")->setName("creerCompte")->add($requireAnon);
 
+    $app->put("", ControleurUser::class . ":modifier")->setName("modifierCompte")->add($requireLogged);
+    $app->delete("", ControleurUser::class . ":supprimer")->setName("supprimerCompte")->add($requireLogged);
+    $app->put("/modiferMdp", ControleurUser::class . ":modifierMdp")->setName("modifierMdp")->add($requireLogged);
+
 });
 
 $app->run();

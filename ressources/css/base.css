@@ -1,22 +1,20 @@
 
+/* Conteneur principal de la page */
 .main-container{
     min-height: 80vh;
     background: white;
     opacity: .95;
 }
 
-.wrapper{
-}
-
+/* Header et footer */
 nav{
     background: #fed;
 }
-
 footer, nav{
     min-height: 10vh;
 }
 
-
+/* Permet de rendre un élément hoverable, affichant son titre après son contenu actuel avec animation */
 .extensible{
     padding-left: 15px!important;
 }
@@ -29,7 +27,6 @@ footer, nav{
     transition: max-width .6s;
     margin: 0 0 -5px 8px;
 }
-
 .extensible.e-120:hover:after{
     max-width: 120px;
 }
@@ -37,19 +34,33 @@ footer, nav{
     max-width: 250px;
 }
 
+/* Permet d'ajuster un bouton à la taille des boutons sociaux (large) */
 .btn-social{
     border-radius: 3px;
     height: 28px;
     line-height: 18px;
 }
 
+/* Permet de centrer des éléments en les espaçant de 10 px */
 .centered-bar{
     display: flex;
     justify-content: center;
     width: 100%;
 }
-
 .centered-bar>*{
     margin-left: 5px;
     margin-right: 5px;
+}
+
+/* Section individuelle */
+.section{
+    border: 1px solid lightgray;
+    padding: 1rem;
+    margin: .3rem .1rem;
+    border-radius: 5px;
+}
+
+/* Texte de feedback sous les inputs invalides */
+input:not([value=""]):invalid~.text-feedback{
+    color: #dc3545 !important;
 }

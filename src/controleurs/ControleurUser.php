@@ -1,11 +1,14 @@
 <?php
 namespace mywishlist\controleurs;
 
+use mywishlist\models\Utilisateur;
+
  class ControleurUser extends Controleur{
 
      public function afficherCompte($request, $response, $args)
      {
-         return $this->view->render($response, "compte/compte.html");
+         $user = Authentification::getUtilisateur();
+         return $this->view->render($response, "compte/compte.html", compact("user"));
      }
 
     public function afficherLogin($request, $response, $args)
@@ -15,21 +18,20 @@ namespace mywishlist\controleurs;
 
     public function deconnecter($request, $response, $args)
     {
-        global $app;
-
         Authentification::deconnexion();
         return Utils::redirect($response, "afficherLogin");
     }
 
     public function login($request, $response, $args)
     {
-        global $app;
-
         $user = $request->getParsedBodyParam("user", null);
         $mdp = $request->getParsedBodyParam("mdp", null);
 
         if ($user === null || $mdp === null)
-            throw new Exception("Données invalides");
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+            return Utils::redirect($response, "afficherLogin");
+        }
 
         $res = Authentification::connexion($user, $mdp);
         if (! $res)
@@ -43,8 +45,6 @@ namespace mywishlist\controleurs;
 
     public function creer($request, $response, $args)
     {
-        global $app;
-
         $user = Utils::getFilteredPost($request, "user_new");
         $prenom = Utils::getFilteredPost($request, "prenom");
         $nom = Utils::getFilteredPost($request, "nom");
@@ -52,11 +52,26 @@ namespace mywishlist\controleurs;
         $mdpConf = $request->getParsedBodyParam("mdp_conf", null);
 
         if ($user === null || $prenom == null || $nom == null || $mdp === null || $mdpConf == null)
-            throw new Exception("Données invalides");
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+            return Utils::redirect($response, "afficherLogin");
+        }
+
+        if (Utilisateur::where("pseudo", "=", $user)->count())
+        {
+            Flash::flash("erreur", "Le pseudo $user n'est pas disponible");
+            return Utils::redirect($response, "afficherLogin");
+        }
 
         if ($mdp !== $mdpConf)
         {
             Flash::flash("erreur", "Le mot de passe et sa confirmation ne correspondent pas");
+            return Utils::redirect($response, "afficherLogin");
+        }
+
+        if (! preg_match("/(?=.*\d)(?=.*[a-zA-Z]).{6,}/", $mdp))
+        {
+            Flash::flash("erreur", "Le mot de passe doit faire au moins 6 caractères et contenir 1 chiffre et 1 lettre");
             return Utils::redirect($response, "afficherLogin");
         }
 
@@ -68,5 +83,67 @@ namespace mywishlist\controleurs;
         }
         else
             return Utils::redirect($response, "compte");
+    }
+
+    public function modifier($request, $response, $args)
+    {
+        $pseudo = Utils::getFilteredPost($request, "pseudo");
+        $prenom = Utils::getFilteredPost($request, "prenom");
+        $nom = Utils::getFilteredPost($request, "nom");
+
+        if ($pseudo === null || $prenom == null || $nom == null)
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+            return Utils::redirect($response, "compte");
+        }
+
+        if ($pseudo !== Authentification::getNomUtilisateur() && Utilisateur::where("pseudo", "=", $pseudo)->count())
+        {
+            Flash::flash("erreur", "Le pseudo $pseudo n'est pas disponible");
+            return Utils::redirect($response, "compte");
+        }
+
+        $user = Authentification::getUtilisateur();
+        $user->pseudo = $pseudo;
+        $user->prenom = $prenom;
+        $user->nom = $nom;
+        $user->save();
+
+        Flash::flash("message", "Modification enregistrée");
+        return Utils::redirect($response, "compte");
+    }
+
+    public function modifierMdp($request, $response, $args)
+    {
+        $mdp = $request->getParsedBodyParam("mdp", null);
+        $mdpNew = $request->getParsedBodyParam("mdp_new", null);
+        $mdpConf = $request->getParsedBodyParam("mdp_conf", null);
+
+        if ($mdpNew == null || $mdp === null || $mdpConf == null)
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+            return Utils::redirect($response, "compte");
+        }
+
+        if ($mdpNew !== $mdpConf)
+        {
+            Flash::flash("erreur", "Le mot de passe et sa confirmation ne correspondent pas");
+            return Utils::redirect($response, "compte");
+        }
+
+        if (! preg_match("/(?=.*\d)(?=.*[a-zA-Z]).{6,}/", $mdpNew))
+        {
+            Flash::flash("erreur", "Le mot de passe doit faire au moins 6 caractères et contenir 1 chiffre et 1 lettre");
+            return Utils::redirect($response, "compte");
+        }
+
+        if (!Authentification::modifierMotDePasse($mdp, $mdpNew))
+        {
+            Flash::flash("erreur", "Le pseudo $user n'est pas disponible");
+            return Utils::redirect($response, "compte");
+        }
+
+        Flash::flash("message", "Modification enregistrée");
+        return Utils::redirect($response, "compte");
     }
 }
