@@ -13,33 +13,35 @@
                 session_start();
         }
 
-        public static function creerCompte(string $nom, string $mdp) : int
+        public static function creerCompte(string $pseudo, string $nom, string $prenom, string $mdp) : int
         {
             static::init();
 
             $u = new Utilisateur();
+            $u->pseudo = $pseudo;
             $u->nom = $nom;
+            $u->prenom= $prenom;
             $u->mdp = password_hash($mdp, PASSWORD_DEFAULT);
 
             if (! $u->save())
                 return -1;
 
-            $_SESSION['user'] = array( "id" => $u->id, "nom" => $u->nom);
+            $_SESSION['user'] = array( "id" => $u->id, "pseudo" => $u->pseudo);
 
             return $u->id;
         }
 
-        public static function connexion(string $nom, string $mdp) : bool
+        public static function connexion(string $pseudo, string $mdp) : bool
         {
             if (static::estConnecte())
                 return true;
 
             static::init();
 
-            $user = Utilisateur::where("nom", "=", $nom)->first();
+            $user = Utilisateur::where("pseudo", "=", $pseudo)->first();
             if ($user != null && password_verify($mdp, $user->mdp))
             {
-                $_SESSION['user'] = array( "id" => $user->id, "nom" => $user->nom);
+                $_SESSION['user'] = array( "id" => $user->id, "pseudo" => $user->pseudo);
                 return true;
             }
 
@@ -55,12 +57,18 @@
         public static function getNomUtilisateur() : string
         {
             static::init();
-            return $_SESSION['user']['nom'];
+            if (!static::estConnecte())
+                return "";
+
+            return $_SESSION['user']['pseudo'];
         }
 
         public static function getIdUtilisateur() : int
         {
             static::init();
+            if (!static::estConnecte())
+                return -1;
+
             return intval($_SESSION['user']['id']);
         }
 

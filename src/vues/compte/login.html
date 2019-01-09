@@ -17,7 +17,7 @@
 <h2 class='text-center mb-4'>Connexion au compte</h2>
 <form class='form-row' action="{{path_for("login")}}" method="POST">
     <div class='col-12 col-md-4 form-group'>
-        <label for='user'>Nom</label>
+        <label for='user'>Nom d'utilisateur</label>
         <input id='user' name='user' class='form-control' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user"])}}' required>
     </div>
     <div class='col-12 col-md-4 form-group'>
@@ -31,9 +31,17 @@
 <h2 class='text-center m-4'>Pas encore de compte ?</h2>
 <p class='m-2'>Créez un compte maintenant pour faciliter votre utilisation de My Wish List et bénéficier de plusieurs avantages !</p>
 <form class='form-row' action="{{path_for("creerCompte")}}" method="POST">
-    <div class='col-12 col-md-12 form-group'>
+    <div class='col-12 col-md-4 form-group'>
         <label for='user_new'>Nom d'utilisateur</label>
         <input id='user_new' name='user_new' class='form-control' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user_new"])}}' required>
+    </div>
+    <div class='col-12 col-md-4 form-group'>
+        <label for='prenom'>Prénom</label>
+        <input id='prenom' name='prenom' class='form-control' type='text' placeholder="Votre prénom" value='{{get_data(["form", "prenom"])}}' required>
+    </div>
+    <div class='col-12 col-md-4 form-group'>
+        <label for='nom'>Nom</label>
+        <input id='nom' name='nom' class='form-control' type='text' placeholder="Votre nom de famille" value='{{get_data(["form", "nom"])}}' required>
     </div>
     <div class='col-12 col-md-6 form-group'>
         <label for='mdp_new'>Mot de passe</label>
