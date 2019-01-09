@@ -10,7 +10,7 @@ class ControleurItem extends Controleur{
 		$item = $this->recuperItem($request, $response, $args);
 
 		if($item->reservePar != null){
-			return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
+			return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
 		}
 
 		return $this->view->render($response, "reserverItem.html", compact("item"));
@@ -31,7 +31,7 @@ class ControleurItem extends Controleur{
 			$_SESSION['nomReservation'] = $item->reservePar;
 		}
 
-		return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
+		return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
 	}
 
 	private function recuperItem($request, $response, $args){
