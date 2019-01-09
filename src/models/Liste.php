@@ -17,7 +17,12 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 
 	public function createur()
 	{
-		return $this->user_id ? Utilisateur::where("id", "=", $this->user_id)->first()->nom : $this->createur;
+		if ($this->user_id)
+		{
+			$user = Utilisateur::where("id", "=", $this->user_id)->first();
+			return $user->prenom . " " . $user->nom;
+		}
+		return $this->createur;
 	}
 
 }
