@@ -36,6 +36,25 @@
         <div class='wrapper py-5' data-background='{{base_url()}}/ressources/img/bg1.jpg'>
     		<div class='container main-container p-5'>
     			<div class='content'>
+                    {% block alerts %}
+                        {% if "erreur" is flashed %}
+                            <div class='alert alert-danger alert-dismissible fade show mx-auto text-center my-3'>
+                                <i class='fa fa-exclamation-triangle'></i>
+                                <span class='px-2'>{{ get_data("erreur")}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                            </div>
+                        {% elseif "message" is flashed %}
+                            <div class='alert alert-success alert-dismissible fade show mx-auto text-center my-3'>
+                                <i class='fa fa-check'></i>
+                                <span class='px-2'>{{ get_data("message")}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
     				{% block content %}
     				{% endblock %}
     			</div>
