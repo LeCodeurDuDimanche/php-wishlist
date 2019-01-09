@@ -5,6 +5,7 @@
  use mywishlist\models\Liste;
  use mywishlist\models\Item;
  use Slim\Exception\NotFoundException;
+ use Illuminate\Support\Collection;
 
  class ControleurListeCreateur extends Controleur{
 
@@ -214,12 +215,33 @@
  	}
 
     public function afficherMesListes($request, $response, $args){
-        if(Authentification::getUtilisateur()->estConnecte()){
-            $meslistes = Authentification::mesListes()->get();
-            return $this->view->render($response, "createur/affichageMesListes.html", compact("meslistes"));
-        } else {
-            
+        
+       
+        if(Authentification::estConnecte()){
+            $user = Authentification::getUtilisateur();
+            $meslistes = $user->listesCrees()->get();
         }
+        else
+            $meslistes = new Collection();
+        
+        foreach ($_COOKIE as $name => $val)
+        {
+            if (strpos($name, "liste") === 0)
+            {
+                $id = intval(substr($name, 5));
+                $liste = Liste::find($id);
+                if ($liste !== null && $liste->tokenCreateur == $val)
+                {
+                    $meslistes->push($liste);
+                }
+            }
+        }
+
+        $meslistes->sortByDesc("created_at");
+
+        $meslistes = $meslistes->all();
+        
+        return $this->view->render($response, "affichageMesListes.html", compact("meslistes"));
     }
 
  }

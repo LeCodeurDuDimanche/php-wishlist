@@ -10,7 +10,7 @@ class Utilisateur extends \illuminate\Database\Eloquent\Model{
 
 	public function listesCrees()
 	{
-		return $this->hasMany(Liste::class);
+		return $this->hasMany(Liste::class, "user_id");
 	}
 
 }
