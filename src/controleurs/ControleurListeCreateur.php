@@ -59,7 +59,7 @@
         $liste->save();
 
         //ajout d'un cokkie qui a une duree de vie de 2 mois après l'expiration 
-        setcookie("liste".$liste->id, $tokenCreateur, create_date($liste->expiration)->getTimestamp() + 3600*24*60);
+        setcookie("liste".$liste->id, $liste->tokenCreateur, $liste->expiration->getTimestamp() + 3600*24*60);
 
         return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
      }
