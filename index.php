@@ -65,6 +65,7 @@ $app->group("/liste", function() use ($app){
     $app->get('/c{id}/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe");
     $app->put('/c{id}/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe");
 
+    $app->delete('/c{id}', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
 
     $app->get('/c{id}/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
     //methode put
