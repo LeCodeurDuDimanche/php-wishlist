@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block titre %}{{parent()}} - Listes publiques{% endblock %}
+
+{% block content %}
+   <div class='row'>
+        <div class="col-12 col-md-6">
+            <a href="{{path_for('accueil')}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
+        </div>
+    </div>
+
+    <div class="list-group">
+    {% for liste in listes %}
+      <a href="{{base_url()}}/liste/p{{liste.tokenParticipant}}" class="list-group-item list-group-item-action flex-column align-items-start active">
+        <div class="d-flex justify-content-between">
+          <h3 class="mb-1">{{liste.titre}}</h3>
+          <small>3 days ago</small>
+        </div>
+        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        <small>Donec id elit non mi porta.</small>
+      </a>
+    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -54,7 +54,7 @@
 	 				{% if it.reserverPar == NULL %}
 	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
 	 				{% else %}
-	 					<i> Réserver par : </i>{{it.reserverPar}}
+	 					<i> Réservé par : </i>{{it.reservePar}}
 	 				{% endif %}
 	 			</td>
 	 		</tr>

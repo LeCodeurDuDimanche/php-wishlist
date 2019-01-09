@@ -8,7 +8,7 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey = 'id';
 	
 
-    protected $fillable = ['id' , "liste_id", "titre", "desc", "url", "tarif", "img"," updated_at", "created_at"];
+    protected $fillable = ['id' , "liste_id", "titre", "desc", "url", "tarif", "img","reservePar","updated_at", "created_at"];
 
 	public function liste()
 	{

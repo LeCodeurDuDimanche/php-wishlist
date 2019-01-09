@@ -9,7 +9,7 @@ class ControleurItem extends Controleur{
 	public function afficherFormulaireReservation($request, $response, $args){
 		$item = $this->recuperItem($request, $response, $args);
 
-		if($item->reserverPar != null){
+		if($item->reservePar != null){
 			return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
 		}
 
@@ -25,10 +25,10 @@ class ControleurItem extends Controleur{
 	public function reserverItem($request, $response, $args){
 		$item = $this->recuperItem($request, $response, $args);
 
-		if($item->reserverPar == NULL){
-			$item->reserverPar =  Utils::getFilteredPost($request, "nom");
+		if($item->reservePar == NULL){
+			$item->reservePar =  Utils::getFilteredPost($request, "nom");
 			$item->save();
-			$_SESSION['nomReservation'] = $item->reserverPar;
+			$_SESSION['nomReservation'] = $item->reservePar;
 		}
 
 		return Utils::redirect($response, "listeParticipantDetails", ["token" => $tokenListe]);
