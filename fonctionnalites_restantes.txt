@@ -1,6 +1,12 @@
 Ajouter une page 404 custom
 Faire footer et header
 Ajouter reserveParUser
+Respecter les methodes put/delete pour modif/suppr
+Coder suppression liste
+Restreindre accès liste participant
+Restreindre accès liste créateur au seul créateur
+Verifier toutes les fonctionnalites sur arche
+Verifier les liens
 
 Création de liste:
 i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
@@ -12,14 +18,6 @@ n 3 Ajouter une image par upload POST /liste/{id_edit}/item/{num}/ajouterImage/u
 Participation à une liste:
 s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
-
-
-Compte:
- w 2 Modifier son compte GET /compte et PUT /compte/modifier
- x 2 Modifier son mot de passe PUT /compte/modifier
-
-Accueil:
-z 3 Afficher les liste publiques GET /liste/publiques
 
  Controleurs:
     ListeCreateur(a, b, c, d, h, k, l)
