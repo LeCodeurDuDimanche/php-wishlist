@@ -104,7 +104,7 @@ use mywishlist\models\Utilisateur;
         }
 
         $user = Authentification::getUtilisateur();
-        $user->user = $pseudo;
+        $user->pseudo = $pseudo;
         $user->prenom = $prenom;
         $user->nom = $nom;
         $user->save();
