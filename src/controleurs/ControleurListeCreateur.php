@@ -165,7 +165,7 @@
          $prix = Utils::getFilteredPost($request, "tarif");
         $token = $args['id'];
 
-        if ($titre && $descrip && $url && $img && $prix)
+        if ($titre && $descrip && $img && $prix)
         {
             $item = Item::where('id', '=', intval($args['num']))->first();
             if ($item === null)
@@ -180,7 +180,7 @@
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
-            return Utils::redirect($response, "formulaireModificationItem", ["id" => $args['id']]);
+            return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
         }
 
      }
@@ -215,15 +215,15 @@
  	}
 
     public function afficherMesListes($request, $response, $args){
-        
-       
+
+
         if(Authentification::estConnecte()){
             $user = Authentification::getUtilisateur();
             $meslistes = $user->listesCrees()->get();
         }
         else
             $meslistes = new Collection();
-        
+
         foreach ($_COOKIE as $name => $val)
         {
             if (strpos($name, "liste") === 0)
@@ -240,7 +240,7 @@
         $meslistes->sortByDesc("created_at");
 
         $meslistes = $meslistes->all();
-        
+
         return $this->view->render($response, "affichageMesListes.html", compact("meslistes"));
     }
 
