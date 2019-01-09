@@ -5,6 +5,7 @@
  use mywishlist\models\Liste;
  use mywishlist\models\Item;
  use Slim\Exception\NotFoundException;
+ use Illuminate\Support\Collection;
 
  class ControleurListeCreateur extends Controleur{
 
@@ -58,7 +59,7 @@
 
         $liste->save();
 
-        //ajout d'un cokkie qui a une duree de vie de 2 mois après l'expiration 
+        //ajout d'un cokkie qui a une duree de vie de 2 mois après l'expiration
         setcookie("liste".$liste->id, $liste->tokenCreateur, $liste->expiration->getTimestamp() + 3600*24*60);
 
         return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
@@ -164,7 +165,7 @@
          $prix = Utils::getFilteredPost($request, "tarif");
         $token = $args['id'];
 
-        if ($titre && $descrip && $url && $img && $prix)
+        if ($titre && $descrip && $img && $prix)
         {
             $item = Item::where('id', '=', intval($args['num']))->first();
             if ($item === null)
@@ -179,7 +180,7 @@
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
-            return Utils::redirect($response, "formulaireModificationItem", ["id" => $args['id']]);
+            return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
         }
 
      }
@@ -214,12 +215,33 @@
  	}
 
     public function afficherMesListes($request, $response, $args){
-        if(Authentification::getUtilisateur()->estConnecte()){
-            $meslistes = Authentification::mesListes()->get();
-            return $this->view->render($response, "createur/affichageMesListes.html", compact("meslistes"));
-        } else {
-            
+
+
+        if(Authentification::estConnecte()){
+            $user = Authentification::getUtilisateur();
+            $meslistes = $user->listesCrees()->get();
         }
+        else
+            $meslistes = new Collection();
+
+        foreach ($_COOKIE as $name => $val)
+        {
+            if (strpos($name, "liste") === 0)
+            {
+                $id = intval(substr($name, 5));
+                $liste = Liste::find($id);
+                if ($liste !== null && $liste->tokenCreateur == $val)
+                {
+                    $meslistes->push($liste);
+                }
+            }
+        }
+
+        $meslistes->sortByDesc("created_at");
+
+        $meslistes = $meslistes->all();
+
+        return $this->view->render($response, "affichageMesListes.html", compact("meslistes"));
     }
 
  }

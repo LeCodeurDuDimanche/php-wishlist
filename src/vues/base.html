@@ -16,19 +16,23 @@
     <body>
 		{% block header %}
 		<nav class="navbar justify-content-center navbar-light">
-		  <div class='col-4'></div>
-		  <a class="navbar-brand col-4 text-center" href="{{ path_for('accueil') }}"><h1>My Wish List</h1></a>
+		  <div class='col-4 d-none d-md-block'></div>
+		  <a class="navbar-brand col-12 col-sm-6 col-md-4 text-center" href="{{ path_for('accueil') }}"><h1>My Wish List</h1></a>
           <div class='col'>
-              <ul class='navbar-nav align-items-end'>
-                  <li class="nav-item">
+              <ul class='navbar-nav justify-content-end flex-row'>
+                  <li class="nav-item mx-1">
                       {% if est_connecte() %}
-                        <a class='btn btn-primary' href='{{ path_for('compte') }}'><i class='fas fa-user'></i><span class='ml-2'>{{ get_username() }}</span></a>
+                        <a class='btn btn-primary' href='{{ path_for('compte') }}' title='Accès à mon espace client'><i class='fas fa-user'></i><span class='d-none d-lg-inline ml-2'>{{ get_username() }}</span></a>
                       {% else %}
-                        <a class='btn btn-primary' href='{{ path_for('afficherLogin') }}'><i class='fa fa-sign-in-alt'></i><span class='d-none d-md-inline ml-2'>Se connecter</span></a>
+                        <a class='btn btn-primary' href='{{ path_for('afficherLogin') }}' title='Se connecter'><i class='fa fa-sign-in-alt'></i><span class='d-none d-lg-inline ml-2'>Se connecter</span></a>
                       {% endif %}
+                  </li>
+                  <li class="nav-item mx-1">
+                    <a class="text-center btn btn-primary" href="{{ path_for('afficherMesListes') }}" title='Accéder à mes listes'><i class="fas fa-list-ul"></i><span class='d-none d-lg-inline ml-2'>Mes listes</span></a>
                   </li>
              </ul>
         </div>
+
 		</nav>
 		{% endblock %}
 
@@ -36,6 +40,25 @@
         <div class='wrapper py-5' data-background='{{base_url()}}/ressources/img/bg1.jpg'>
     		<div class='container main-container p-5'>
     			<div class='content'>
+                    {% block alerts %}
+                        {% if "erreur" is flashed %}
+                            <div class='alert alert-danger alert-dismissible fade show mx-auto text-center my-3'>
+                                <i class='fa fa-exclamation-triangle'></i>
+                                <span class='px-2'>{{ get_data("erreur")}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                            </div>
+                        {% elseif "message" is flashed %}
+                            <div class='alert alert-success alert-dismissible fade show mx-auto text-center my-3'>
+                                <i class='fa fa-check'></i>
+                                <span class='px-2'>{{ get_data("message")}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
     				{% block content %}
     				{% endblock %}
     			</div>

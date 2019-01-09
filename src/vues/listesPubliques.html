@@ -12,7 +12,7 @@
     <div class="list-group">
 
     {% for liste in listes %}
-      <a href="{{base_url()}}/liste/p{{liste.tokenParticipant}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
+      <a href="{{path_for('listeParticipant', {token:liste.tokenParticipant})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
         <div class="d-flex justify-content-center">
           <h3 class="mb-1">{{liste.titre}}</h3>
         </div>

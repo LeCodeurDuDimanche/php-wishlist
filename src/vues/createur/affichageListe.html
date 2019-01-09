@@ -31,20 +31,6 @@
 {% endblock %}
 
 {% block content %}
-
-
-    {% if "message" is flashed %}
-        <div class='alert alert-success w-100 text-center'>
-            <i class='fa fa-check mr-2'></i>
-            <span>{{get_data("message")}}</span>
-        </div>
-    {% elseif "erreur" is flashed %}
-        <div class='alert alert-danger w-100 text-center'>
-            <i class='fa fa-exclamation-triangle mr-2'></i>
-            <span>{{get_data("erreur")}}</span>
-        </div>
-    {% endif %}
-
     <div class='row mb-2'>
         <div class='col-12 col-sm-8'>
             <h1 class='d-block d-sm-none text-center'>{{liste.titre}}</h1>

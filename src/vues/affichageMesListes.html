@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block titre %}{{parent()}} - MesListes{% endblock %}
+{% block css %}
+	{{parent()}}
+{% endblock %}
+
+{% block content %}
+
+
+{% if meslistes is not empty %}
+	<h3 class='mt-3 text-center'><strong>Voici toutes vos listes</strong></h3>
+		{% for l in meslistes %}
+
+			<a href="{{path_for('listeCreateur', {id : l.tokenCreateur})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
+		        <div class="d-flex justify-content-center">
+		          <h3 class="mb-1">{{l.titre}}</h3>
+		        </div>
+		        <p class="mb-2 mt-2">
+		            {{l.desc}}
+		        </p>
+		        <div class='row'>
+		        	<small class='col-6'>
+			            <i>
+			                Créée par : {{l.createur}}<br>
+			                Expire {{l.expiration|time_diff(false)}}
+			            </i>
+			        </small>
+		 			<div class='col-6 d-flex justify-content-center'>
+		 				{% if liste.estPublique %}
+			            <div class='alert alert-success p-2 ml-1'>
+			                <strong>Publique</strong>
+			                <i class='fa fa-lock-open ml-1'></i>
+			            </div>
+				        {% else %}
+				            <div class='alert alert-dark p-2 ml-1'>
+				                <strong>Privée</strong>
+				                <i class='fa fa-lock ml-1'></i>
+				            </div>
+				        {% endif %}
+				    </div>
+			   </div>
+	       </a>
+		{% endfor %}
+	
+	{% endif %}
+{% endblock %}
+
+
+

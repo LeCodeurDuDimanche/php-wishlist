@@ -13,7 +13,7 @@
                 session_start();
         }
 
-        public static function creerCompte(string $pseudo, string $nom, string $prenom, string $mdp) : int
+        public static function creerCompte(string $pseudo, string $prenom, string $nom, string $mdp) : int
         {
             static::init();
 
@@ -38,13 +38,30 @@
 
             static::init();
 
-            $user = Utilisateur::where("pseudo", "=", $pseudo)->first();
-            if ($user != null && password_verify($mdp, $user->mdp))
+            $user = static::verifierMdp($pseudo, $mdp);
+            if ($user)
             {
                 $_SESSION['user'] = array( "id" => $user->id, "pseudo" => $user->pseudo);
                 return true;
             }
 
+            return false;
+        }
+
+        private static function verifierMdp(string $pseudo, string $mdp)
+        {
+            $user = Utilisateur::where("pseudo", "=", $pseudo)->first();
+            return ($user != null && password_verify($mdp, $user->mdp)) ? $user : null;
+        }
+
+        public static function modifierMotDePasse(string $mdpOld, string $mdpNew) : bool
+        {
+            $user = static::verifierMdp(static::getNomUtilisateur(), $mdpOld);
+            if ($user)
+            {
+                $user->mdp = \password_hash($mdpNew, PASSWORD_DEFAULT);
+                return $user->save();
+            }
             return false;
         }
 
@@ -72,7 +89,7 @@
             return intval($_SESSION['user']['id']);
         }
 
-        public static function getUtilisateur() : Utilisateur
+        public static function getUtilisateur()
         {
             if (!static::estConnecte())
                 return null;
