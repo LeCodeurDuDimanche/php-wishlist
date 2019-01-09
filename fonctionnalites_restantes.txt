@@ -1,9 +1,8 @@
 Ajouter une page 404 custom
 Faire footer et header
-Ajouter reserveParUser 
+Ajouter reserveParUser
 
 Création de liste:
-e 2 Voir les items selectionnes, sans voir qui les a selectionne GET /liste/{id_edit}/item/{num}
 i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 k 3 Voir les messages associés aux cadeaux GET /liste/{id}/messages

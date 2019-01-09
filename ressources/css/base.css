@@ -64,3 +64,12 @@ footer, nav{
 input:not([value=""]):invalid~.text-feedback{
     color: #dc3545 !important;
 }
+
+/* utils */
+.absolute{
+    position: absolute;
+}
+
+.relative{
+    position: relative;
+}
