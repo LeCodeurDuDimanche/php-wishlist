@@ -11,6 +11,15 @@ namespace mywishlist\controleurs;
     }
 
     public function afficherListesPubliques($request, $response, $args){
+    	$nbParPage = 20;
+
+    	$numPage = 1;
+    	if($args['numPage'] !== null){
+    		$numPage = intval($args['numPage']);
+    	}
+
+    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip($numPage-1*$nbParPage)->get();
+
     	return $this->view->render($response, "listesPubliques.html", compact("listes"));
     }
 }

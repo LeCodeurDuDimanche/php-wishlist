@@ -10,16 +10,21 @@
     </div>
 
     <div class="list-group">
+
     {% for liste in listes %}
-      <a href="{{base_url()}}/liste/p{{liste.tokenParticipant}}" class="list-group-item list-group-item-action flex-column align-items-start active">
-        <div class="d-flex justify-content-between">
+      <a href="{{base_url()}}/liste/p{{liste.tokenParticipant}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
+        <div class="d-flex justify-content-center">
           <h3 class="mb-1">{{liste.titre}}</h3>
-          <small>3 days ago</small>
         </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small>Donec id elit non mi porta.</small>
+        <p class="mb-1">
+            {{liste.desc}}
+        </p>
+        <p class="mt-2">
+            <i>Créée par : {{liste.createur}}</i>
+        </p>
       </a>
     {% endfor %}
+
     </div>
 
 {% endblock %}
