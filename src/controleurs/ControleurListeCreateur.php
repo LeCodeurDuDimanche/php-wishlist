@@ -6,6 +6,8 @@
  use mywishlist\models\Item;
  use Slim\Exception\NotFoundException;
  use Illuminate\Support\Collection;
+ use Psr\Http\Message\ServerRequestInterface;
+ use Psr\Http\Message\ResponseInterface;
 
  class ControleurListeCreateur extends Controleur{
 
@@ -18,9 +20,8 @@
          return $token;
      }
 
-     private static function recupererListe($request, $response, $args)
+     private static function recupererListe($request, $response, $tokenCreateur)
      {
-        $tokenCreateur = $args['id'];
    		$liste = Liste::where("tokenCreateur", "=", $tokenCreateur)->first();
         if ($liste === null)
             throw new NotFoundException($request, $response);
@@ -59,8 +60,8 @@
 
         $liste->save();
 
-        //ajout d'un cokkie qui a une duree de vie de 2 mois après l'expiration
-        setcookie("liste".$liste->id, $liste->tokenCreateur, $liste->expiration->getTimestamp() + 3600*24*60);
+        //ajout d'un cookie qui a une duree de vie de 2 mois après l'expiration
+        Utils::setListeCookie($liste);
 
         return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
      }
@@ -80,7 +81,7 @@
 
         $expiration = new \DateTime($expiration);
 
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
         $liste->titre = $nom;
         $liste->desc = $desc;
         $liste->expiration = $expiration;
@@ -96,14 +97,14 @@
 
      public function afficherFormulaireModification($request, $response, $args)
      {
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
 
         return $this->view->render($response, "createur/affichageFormulaireModification.html", compact("liste"));
      }
 
      public function afficherFormulaireAjoutItem($request, $response, $args)
      {
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
 
         return $this->view->render($response, "createur/ajouterItem.html", compact("liste"));
      }
@@ -195,27 +196,26 @@
 
 	 public function afficherModifItemListe($request, $response, $args)
      {
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
 
         $item = Item::where('id', '=', $args['num'])->first();
         return $this->view->render($response, "createur/modifierItem.html", compact("liste", "item"));
      }
 
  	public function afficherListe($request, $response, $args){
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
 
  		return $this->view->render($response, "createur/affichageListe.html", compact("liste"));
  	}
 
  	public function afficherListeAvecDetails($request, $response, $args){
-        $liste = self::recupererListe($request, $response, $args);
+        $liste = self::recupererListe($request, $response, $args['id']);
 
  		$listeIt = $liste->items()->get();
  		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
  	}
 
     public function afficherMesListes($request, $response, $args){
-
 
         if(Authentification::estConnecte()){
             $user = Authentification::getUtilisateur();
@@ -224,24 +224,59 @@
         else
             $meslistes = new Collection();
 
-        foreach ($_COOKIE as $name => $val)
-        {
-            if (strpos($name, "liste") === 0)
-            {
-                $id = intval(substr($name, 5));
-                $liste = Liste::find($id);
-                if ($liste !== null && $liste->tokenCreateur == $val)
-                {
-                    $meslistes->push($liste);
-                }
-            }
-        }
+        $idListesCookies = Utils::getValidListesCookie();
+        foreach($idListesCookies as $id)
+            $meslistes->push(Liste::find($id));
 
         $meslistes->sortByDesc("created_at");
 
         $meslistes = $meslistes->all();
 
         return $this->view->render($response, "affichageMesListes.html", compact("meslistes"));
+    }
+
+    /**
+    * Permet de filtrer les non createurs de la liste
+    */
+    public static function checkCreateurMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+    {
+        global $app;
+        $route = $request->getAttribute('route');
+        $token = $route->getArgument('id');
+        $liste = self::recupererListe($request, $response, $token);
+        $estCreateur = false;
+
+        //Check user_id et connecter
+        if ($liste->user_id)
+        {
+            if (Authentification::getIdUtilisateur() != $liste->user_id)
+            {
+                if (Authentification::estConnecte())
+                    $data = ["erreur" => "Cette liste ne vous appartient pas, vous pouvez y participer si le créateur vous donne le lien de partage"];
+                else
+                    $data = ["avertissement" => "Cette liste appartient à un utilisateur. Connectez-vous pour y accéder, si la liste vous appartient."];
+
+                return $app->getContainer()->view->render($response, "createur/affichageListeErreur.html", $data);
+            }
+        }
+        else
+        {
+            //Sinon check cookies
+            if (!in_array($liste->id, Utils::getValidListesCookie()))
+            {
+                //Si une requete GET avec le nom a été envoyé, on check le nom
+                if ($request->getQueryParam("createur", null) === $liste->createur)
+                {
+                    //Si on est bien le créateur, on remet le cookie
+                    Utils::setListeCookie($liste);
+                }
+                else {
+                    return $app->getContainer()->view->render($response, "createur/affichageListeErreur.html", ["form" => true, "avertissement"=> "Nous n'avons pas réussi à vous authentifier, veuillez indiquer votre nom pour prouver que c'est bien votre liste"]);
+                }
+            }
+        }
+
+        return $next($request, $response);
     }
 
  }

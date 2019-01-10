@@ -3,8 +3,7 @@ Faire footer et header
 Ajouter reserveParUser
 Respecter les methodes put/delete pour modif/suppr
 Coder suppression liste
-Restreindre accès liste participant
-Restreindre accès liste créateur au seul créateur
+Ajouter bouton ajouter liste dans mes listes
 Verifier toutes les fonctionnalites sur arche
 Verifier les liens
 

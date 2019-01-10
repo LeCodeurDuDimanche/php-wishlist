@@ -3,6 +3,7 @@
 
     use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
+    use mywishlist\models\Liste;
 
     class Utils{
 
@@ -46,6 +47,47 @@
         {
             $data = $request->getParsedBodyParam($key, null);
             return $data === null ? null : self::sanitize($data);
+        }
+
+        /**
+        * Permet d'ajouter ou de modifier le cookie de liste pour la liste $liste
+        */
+        public static function setListeCookie(Liste $liste)
+        {
+            $data = ["token" => $liste->tokenCreateur, "createur" => $liste->createur];
+            setcookie("liste".$liste->id, json_encode($data), date_create($liste->expiration)->getTimestamp() + 3600*24*60);
+        }
+
+        /**
+        * Permet de retourner les donnes du cookie de liste pour la liste d'id $id, null si malformé ou absent
+        */
+        public static function getListeCookie(int $id)
+        {
+            return isset($_COOKIE["liste$id"]) ? json_decode($_COOKIE["liste$id"]) : null;
+        }
+
+        /**
+        * Retourne un tableau des id des liste valide contenues dans les cookies utilisateurs
+        */
+        public static function getValidListesCookie() : array
+        {
+            $listesValides = [];
+            foreach ($_COOKIE as $name => $val)
+            {
+                if (strpos($name, "liste") === 0)
+                {
+                    $id = intval(substr($name, 5));
+                    $liste = Liste::find($id);
+                    $data = json_decode($val);
+                    if ($liste !== null && $data !== null && //Id et valeur du cookie correct
+                        isset($data->token) && $liste->tokenCreateur === $data->token //Token createur correct
+                        && $liste->user_id === null && isset($data->createur) && $liste->createur === $data->createur) //Liste n'appartenant pas a un compte et nom createur correct
+                    {
+                        array_push($listesValides, $liste->id);
+                    }
+                }
+            }
+            return $listesValides;
         }
 
         /**
