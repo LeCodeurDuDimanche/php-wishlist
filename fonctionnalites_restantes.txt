@@ -1,11 +1,9 @@
 Ajouter une page 404 custom
 Faire footer et header
 Ajouter reserveParUser
-Respecter les methodes put/delete pour modif/suppr
 Coder suppression liste
 Ajouter bouton ajouter liste dans mes listes
-Verifier toutes les fonctionnalites sur arche
-Verifier les liens
+Ajout liste publique/prive a la creation de liste
 
 Création de liste:
 i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
@@ -18,11 +16,9 @@ Participation à une liste:
 s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
 
- Controleurs:
-    ListeCreateur(a, b, c, d, h, k, l)
-    ItemCreateur(e, f, g, i, j, m, n)
-    ListeParticipant(o, p, t)
-    ItemParticipant(q, r, s)
-    Authentification(u, v, x)
-    Compte(u, w, x)
-    Accueil(y, z)
+VALIDATION : 
+    Respecter les methodes put/delete pour modif/suppr
+    Upload webetu
+    Verification html par w3c
+    Verifier toutes les fonctionnalites sur arche
+    Verifier les liens
