@@ -58,4 +58,33 @@
  		</tbody>
  	</table>
 	<h3 class='my-4'>Messages publics</h3>
+		{% for m in liste.messages %}
+			<div class="list-group-item flex-column align-items-start mt-4">
+				  <div class="mb-1">{{m.texte}}</div>
+				<p class="mb-2 mt-2 text-muted font-italic">
+					Par {{m.createur}} {{m.created_at|time_diff()}}
+				</p>
+		   </div>
+		{% endfor %}
+		<div>
+			<h4 class='mt-4 mb-2'>Ajouter un message à la liste</h4>
+			<form action='{{path_for("ajouterMessagePublic", {token: liste.tokenParticipant})}}' method='POST' class='form-row'>
+				{% if est_connecte() %}
+					<input type='hidden' name='createur' value='{{get_user_nomprenom()}}'>
+				{% else %}
+					<div class='col-12 col-sm-6 form-group'>
+						<label for='createur'>Votre nom</label>
+						<input type='text' id='createur' name='createur' class='form-control' placeholder="Votre nom" {% if "nomReservation" is inSession %} value='{{session("nomReservation")}}' {% endif %}>
+					</div>
+				{% endif %}
+
+				<div class='col-12 col-sm-6 form-group'>
+					<label for='message'>Message</label>
+					<textarea type='text' id='message' name='message' class='form-control' placeholder="Votre message"></textarea>
+				</div>
+				<div class='col-12 form-group'>
+					<button class='btn btn-primary mx-auto d-block'>Ajouter le message</button>
+				</div>
+			</form>
+		</div>
 {% endblock %}

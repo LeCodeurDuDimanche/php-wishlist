@@ -117,7 +117,7 @@
 
 	<h3 class='mt-5'>Contributeurs</h3>
 	{% set contributeurs = listeIt.groupBy("reservePar") %}
-	{% if contributeurs is not empty %}
+	{% if liste.estExpiree() and contributeurs is not empty %}
 		<ul class='pl-0'>
 			{% for contrib, items in contributeurs if contrib %}
 				<li class='ml-5'>
@@ -142,8 +142,17 @@
 		</div>
 	{% endif %}
 	<h3 class='mt-5'>Messages associés à la liste</h3>
-	<div class='alert alert-info text-center my-3'>
-		<i class='fa fa-info mr-2'></i>
-		Aucun message pour l'instant
-	</div>
+	{% for m in liste.messages %}
+		<div class="list-group-item flex-column align-items-start mt-4">
+			  <div class="mb-1">{{m.texte}}</div>
+			<p class="mb-2 mt-2 text-muted font-italic">
+				Par {{m.createur}} {{m.created_at|time_diff()}}
+			</p>
+	   </div>
+	  {% else %}
+		<div class='alert alert-info text-center my-3'>
+			<i class='fa fa-info mr-2'></i>
+			Aucun message pour l'instant
+		</div>
+	{% endfor %}
 {% endblock %}

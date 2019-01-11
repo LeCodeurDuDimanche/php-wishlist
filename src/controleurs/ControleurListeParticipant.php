@@ -3,6 +3,7 @@
  namespace mywishlist\controleurs;
 
  use mywishlist\models\Liste;
+ use mywishlist\models\MessagesListe;
  use Slim\Exception\NotFoundException;
  use Psr\Http\Message\ServerRequestInterface;
  use Psr\Http\Message\ResponseInterface;
@@ -25,6 +26,35 @@
  		return $this->view->render($response, "participant/affichageListeDetails.html", ["liste" => $liste , "listeIt" => $listeIt]);
  	}
 
+    public function ajouterMessagePublic($request, $response, $args) {
+
+        $nom = Utils::getFilteredPost($request, "createur");
+        $texte = Utils::getFilteredPost($request, "message");
+
+        if ($nom === null || $texte === null ||
+            strlen($message) > 2048)
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+        }
+        else{
+            //Pas besoin de sanitize le token
+            $token = $args['token'];
+     		$liste = static::recupererListe($request, $response, $token);
+            $message = new MessagesListe();
+            $message->createur = $nom;
+            $message->liste_id = $liste->id;
+            $message->texte = $texte;
+            if ($message->save())
+            {
+                Flash::flash("message", "Message ajouté à la liste");
+            }
+            else {
+                Flash::flash("erreur", "Erreur à la création du message");
+            }
+        }
+ 		return Utils::redirect($response, "listeParticipantDetails", ['token' => $args['token']]);
+    }
+
  	private static function recupererListe($request, $response, $token){
  		$liste = Liste::where('tokenParticipant', '=', $token)->first();
  		if($liste === null)
@@ -40,7 +70,7 @@
     {
         $route = $request->getAttribute('route');
         $token = $route->getArgument('token');
-        $liste = static::recupererListe($request, $reponse, $token);
+        $liste = static::recupererListe($request, $response, $token);
 
         $estCreateur = false;
 

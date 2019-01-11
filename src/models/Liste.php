@@ -31,4 +31,9 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 		return $date->getTimestamp() <= time();
 	}
 
+	public function messages()
+	{
+		return $this->hasMany(MessagesListe::class);
+	}
+
 }
