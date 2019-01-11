@@ -22,7 +22,8 @@
               <ul class='navbar-nav justify-content-end flex-row'>
                   <li class="nav-item mx-1">
                       {% if est_connecte() %}
-                        <a class='btn btn-primary' href='{{ path_for('compte') }}' title='Accès à mon espace client'><i class='fas fa-user'></i><span class='d-none d-lg-inline ml-2'>{{ get_username() }}</span></a>
+                      <a class='btn btn-primary' href='{{ path_for('compte') }}' title='Accès à mon espace client'><i class='fas fa-user'></i><span class='d-none d-lg-inline ml-2'>{{ get_username() }}</span></a>
+                      <a class='btn btn-primary' href='{{ path_for('deconnexion') }}' title='Se déconnecter'><i class='fas fa-sign-out-alt'></i></a>
                       {% else %}
                         <a class='btn btn-primary' href='{{ path_for('afficherLogin') }}' title='Se connecter'><i class='fa fa-sign-in-alt'></i><span class='d-none d-lg-inline ml-2'>Se connecter</span></a>
                       {% endif %}
