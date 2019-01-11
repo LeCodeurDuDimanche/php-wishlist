@@ -55,7 +55,8 @@
         public static function setListeCookie(Liste $liste)
         {
             $data = ["token" => $liste->tokenCreateur, "createur" => $liste->createur];
-            setcookie("liste".$liste->id, json_encode($data), date_create($liste->expiration)->getTimestamp() + 3600*24*60);
+            $date = $liste->expiration instanceof \DateTime ? $liste->expiration : date_create($liste->expiration);
+            setcookie("liste".$liste->id, json_encode($data), $date->getTimestamp() + 3600*24*60);
         }
 
         /**

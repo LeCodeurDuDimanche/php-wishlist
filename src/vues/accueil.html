@@ -5,7 +5,7 @@
 {% block content %}
     <div class='row'>
         <div class='col-12 text-justify py-3'>
-            <h2 class='text-center mb-3'>My whishlist, plus t'en mets, plus t'en as !</h2>
+            <h1 class='text-center mb-5'>My Whish List, plus t'en mets, plus t'en as !</h1>
             <p>
                 Finis les noëls et les anniversaires gachés par des cadeaux décevants, fini la traditionnelle argenterie aux mariages qui finira sa vie dans les placards.
             </p>
@@ -21,10 +21,15 @@
             <img src="{{base_url()}}/ressources/img/famille.jpg" class='w-100 h-100' alt="My Wish List permet de faire des cadeaux à toute la famille, tout le monde est heureux !">
         </div>
         <div class='col-6 p-4 text-justify'>
-            <h2 class='mb-3'>Rejoignez la communauté !</h2>
-            <div>
+            <h2>Rejoignez la communauté !</h2>
+            <div class='mt-4'>
                 <p>Créez une nouvelle liste de souhaits pour Noël, pour votre anniversaire ou autre évènement spécial, afin que vos amis sachent ce qui vous plairait vraiment</p>
                 <a href="{{path_for('formulaireCreerListe')}}" class='btn btn-primary d-block mx-auto'>Créer une liste</a>
+            </div>
+            {% if not est_connecte() %}<div class='mt-4'>
+                <p>Créez un compte afin de retrouver vos listes sur tous vos appareils et pour gagner du temps</p>
+                <a href="{{path_for('afficherLogin')}}#creerCompte" class='btn btn-primary d-block mx-auto'>Créer un compte</a>
+            {% endif %}
             </div>
         </div>
     </div>
