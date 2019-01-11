@@ -26,8 +26,16 @@ Troubleshooting :
     La page indique "Le fichier [...]/index.php n'existe pas"
         => Décommenter et mettre à jour la valeur de RewriteBase dans le fichier .htaccess
             nano .htaccess
+
     Erreur 500 : RuntimeException, unable to create the cache directory
         => Donner les droits d'accès au serveur web au répertoire src/cache
+
+    Les images des items des données de test ne s'affichent pas correctement
+        => Modifier la variable $path_to_root dans le fichier src/Migration/{timestamp}_liste_table_migration3.php.
+            Elle doit être egale au chemin depuis la racine serveur jusqu'à la racine du projet
+            Ensuite éxécuter
+                php vendor/robmorgan/phinx/bin/phinx rollback -c src/Migration/config.php
+                php vendor/robmorgan/phinx/bin/phinx migrate -c src/Migration/config.php
 
 
 Remarques :
