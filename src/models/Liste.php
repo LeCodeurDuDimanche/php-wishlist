@@ -20,7 +20,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 		if ($this->user_id)
 		{
 			$user = Utilisateur::where("id", "=", $this->user_id)->first();
-			return $user->prenom . " " . $user->nom;
+			return $user ? $user->prenom . " " . $user->nom : "";
 		}
 		return $this->createur;
 	}
