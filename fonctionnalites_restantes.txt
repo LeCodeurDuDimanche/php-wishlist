@@ -5,8 +5,6 @@ Création de liste:
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
 
-Participation à une liste:
-t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
 
 VALIDATION :
     Respecter les methodes put/delete pour modif/suppr
