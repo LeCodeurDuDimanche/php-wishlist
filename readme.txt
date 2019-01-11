@@ -18,10 +18,17 @@ Instructions d'installation :
     4. Exécuter les migrations afin de créer et remplir les tables avec des données de test
         php vendor/robmorgan/phinx/bin/phinx migrate -c src/Migration/config.php
         (ou, sous Linux uniquement : php vendor/bin/phinx migrate -c src/Migration/config.php)
-    5. Si besoin, mettre à jour le fichier .htaccess
-        nano .htaccess
-    6. Lancer un serveur, on peut lancer le serveur php integré :
+    5. Lancer un serveur, on peut lancer le serveur php integré :
         php -S localhost:8080
+
+Troubleshooting :
+
+    La page indique "Le fichier [...]/index.php n'existe pas"
+        => Décommenter et mettre à jour la valeur de RewriteBase dans le fichier .htaccess
+            nano .htaccess
+    Erreur 500 : RuntimeException, unable to create the cache directory
+        => Donner les droits d'accès au serveur web au répertoire src/cache
+
 
 Remarques :
     En local, les urls de partage ne sont disponible que depuis l'ordinateur local. De plus, le widget de partage Facebook ne marchera pas.
