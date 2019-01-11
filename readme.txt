@@ -40,3 +40,4 @@ Troubleshooting :
 
 Remarques :
     En local, les urls de partage ne sont disponible que depuis l'ordinateur local. De plus, le widget de partage Facebook ne marchera pas.
+    Si vous avez un blocage de publicité ou de cookies traceurs (firefox), les boutons des réseaux sociaux n'apparaitront pas
