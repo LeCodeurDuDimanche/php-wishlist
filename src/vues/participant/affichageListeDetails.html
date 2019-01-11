@@ -1,16 +1,12 @@
-{% extends "base.html" %}
-{% block titre %}{{parent()}} - ListeDetaille{% endblock %}
-{% block css %}
-	{{parent()}}
-{% endblock %}
-
-
+{% extends "participant/affichageListe.html" %}
+{% block titre %}{{parent()}} - Détails{% endblock %}
 
 {% block content %}
-	<h1>{{liste.titre}}</h1>
-    <p>{{liste.desc}}</p>
-    <p><i>Expire le : {{liste.expiration}}</i></p>
-
+	<a href='{{path_for("listeParticipant", {token : liste.tokenParticipant})}}' class='btn btn-primary mb-4 extensible e-250' title="Afficher moins d'informations"><i class='fa fa-arrow-left'></i></a>
+	{{parent()}}
+{% endblock %}
+{% block details %}
+	<h3 class='my-4'>Souhaits de {{liste.createur}}</h3>
  	<table class="table table-striped">
  		<thead>
 	 		<tr>
@@ -41,7 +37,7 @@
 	 				{{it.desc}}
 	 			</td>
 	 			<td>
-	 				<img src="{{base_url()}}/ressources/img/{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+	 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
 	 			</td>
 	 			<td>
 	 				{{it.tarif}}
@@ -51,18 +47,15 @@
 
 	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
 
-	 				{% if it.reservePar == NULL %}
+	 				{% if it.reservePar == NULL and not liste.estExpiree() %}
 	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
 	 				{% else %}
-	 					<i> Réservé par : </i>{{it.reservePar}}
+	 					<i> Réservé par : </i>{{it.reservePar ?? "Personne n'a reservé cet item"}}
 	 				{% endif %}
 	 			</td>
 	 		</tr>
 	 		{% endfor %}
- 		</tbody>	
-
+ 		</tbody>
  	</table>
-
-
- 	
+	<h3 class='my-4'>Messages publics</h3>
 {% endblock %}
