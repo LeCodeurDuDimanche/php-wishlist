@@ -32,6 +32,14 @@
             <input id='expiration' name='expiration' class='form-control' type='date' min='{{"now"|date('Y-m-d')}}' value='{{get_data(["form", "expiration"])}}' required />
         </div>
         <div class='form-group'>
+            <p>Confidentialite de la liste</p>
+            <div class="btn-group options" data-target='conf' role="group" aria-label="Choix de la confidentialité">
+              <button type="button" class="btn btn-dark" data-val='privée'><i class='fa fa-lock mr-2'></i>Liste privée</button>
+              <button type="button" class="btn btn-success disabled" data-val='publique'><i class='fa fa-lock-open mr-2'></i>Liste publique</button>
+            </div>
+            <input type='hidden' id='conf' name='confidentialite' value='privée' required>
+        </div>
+        <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value='Créer'>
         </div>
     </form>

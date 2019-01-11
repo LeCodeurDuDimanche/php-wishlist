@@ -40,8 +40,9 @@
          $expiration = $request->getParsedBodyParam("expiration", null);
          $user_id = $request->getParsedBodyParam("userId", null);
          $createur = Utils::getFilteredPost($request, "createur");
+         $confidentialite = Utils::getFilteredPost($request, "confidentialite");
 
-         if ($nom == null || $desc == null || $expiration == null || ($createur == null && $user_id == null))
+         if ($nom == null || $desc == null || $expiration == null || $confidentialite == null || ($createur == null && $user_id == null))
         {
             Flash::flash("erreur", "Des données sont manquantes");
             return Utils::redirect($response, "afficherFormulaireCreation");
@@ -58,6 +59,7 @@
         $liste->titre = $nom;
         $liste->desc = $desc;
         $liste->expiration = $expiration;
+        $liste->estPublique = $confidentialite === "publique";
         $liste->user_id = $user_id === null ? null : intval($user_id);
         $liste->createur = $createur;
         $liste->tokenCreateur = $this->generateToken();
@@ -79,9 +81,9 @@
          $expiration = $request->getParsedBodyParam("expiration", null);
 
          if ($nom == null || $desc == null || $conf == null || $expiration == null ||
-            !Utils::isValidDate($expiration) || !in_array($conf, ["publique", "privee"]))
+            !Utils::isValidDate($expiration) || !in_array($conf, ["publique", "privée"]))
         {
-            Flash::flash("erreur", "Des données sont manquantes");
+            Flash::flash("erreur", "Des données sont manquantes ou invalides");
         }
         else {
             $expiration = new \DateTime($expiration);
@@ -102,7 +104,7 @@
             }
         }
 
-        return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
+        return Utils::redirect($response, "listeCreateur", ["id" => $args['id']]);
      }
 
      public function supprimerListe($request, $response, $args){

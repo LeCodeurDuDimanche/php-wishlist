@@ -57,15 +57,13 @@
         </div>
         <div class='form-group'>
             <p>Confidentialite de la liste</p>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="publique" name="confidentialite" class="custom-control-input" value="publique" {% if liste.estPublique %} checked {% endif %}>
-              <label class="custom-control-label" for="publique">Liste publique</label>
+            <div class="btn-group options" data-target='conf' role="group" aria-label="Choix de la confidentialité">
+              <button type="button" class="btn btn-dark {% if liste.estPublique %} disabled {% endif %}" data-val='privée'><i class='fa fa-lock mr-2'></i>Liste privée</button>
+              <button type="button" class="btn btn-success {% if not liste.estPublique %} disabled {% endif %}" data-val='publique'><i class='fa fa-lock-open mr-2'></i>Liste publique</button>
             </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id='privee' name="confidentialite" class="custom-control-input" value="privee" {% if not liste.estPublique %} checked {% endif %}>
-              <label class="custom-control-label" for="privee">Liste privée</label>
-            </div>
+            <input type='hidden' id='conf' name='confidentialite' value='{{ liste.estPublique ? "publique" : "privée"}}' required>
         </div>
+        
         <div class='form-group'>
             <button class='btn btn-primary d-block mx-auto'>Valider</button>
         </div>

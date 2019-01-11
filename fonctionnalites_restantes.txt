@@ -1,14 +1,10 @@
 Faire footer et header
 Ajouter reserveParUser
-Coder suppression liste
-Ajout liste publique/prive a la creation de liste
 
 Création de liste:
-i 3 Ajouter une image à un item POST /liste/{id_edit}/item/{num}/editer/ajouterImage
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 k 3 Voir les messages associés aux cadeaux GET /liste/{id}/messages
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
-n 3 Ajouter une image par upload POST /liste/{id_edit}/item/{num}/ajouterImage/upload
 
 Participation à une liste:
 s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver

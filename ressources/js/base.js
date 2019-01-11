@@ -93,4 +93,18 @@ $(document).ready((e) => {
         else
             elem[0].setCustomValidity("");
     });
+
+    //Faire un simil-radio button avec des btn-group
+    $(".btn-group.options .btn").click(function(e){
+        let btn = $(e.delegateTarget);
+        let parent = btn.closest(".btn-group.options");
+        let val = btn.data("val");
+        let input = $("#" + parent.data("target"));
+
+        //On set la valeur
+        input.val(val);
+        //On set le focus sur le bouton
+        parent.children(".btn").addClass("disabled");
+        btn.removeClass("disabled");
+    });
 });
