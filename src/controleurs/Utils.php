@@ -162,6 +162,9 @@
         */
         public static function notFound(ServerRequestInterface $request, ResponseInterface $response) {
             global $app;
+            //On met a jour les donnees flash
+            Flash::next();
+
             return $app->getContainer()->view->render($response, "erreur404.html")->withStatus(404);
         }
     }
