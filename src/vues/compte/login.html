@@ -5,7 +5,7 @@
 {% block content %}
 <div class='row'>
     <div class="col-12 col-md-6">
-        <a href="{{path_for('accueil')}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
+        <a href="{{path_for('accueil')}}" class='btn btn-primary extensible e-120' title="Accueil"><i class='fa fa-arrow-left'></i></a>
     </div>
 </div>
 <div class='section mt-3'>
@@ -24,7 +24,7 @@
         </div>
     </form>
 </div>
-<div class='section mt-3'>
+<div id='creerCompte' class='section mt-3'>
     <h2 class='text-center m-4'>Pas encore de compte ?</h2>
     <p class='m-2'>Créez un compte maintenant pour faciliter votre utilisation de My Wish List et bénéficier de plusieurs avantages !</p>
     <form class='form-row' action="{{path_for("creerCompte")}}" method="POST">
