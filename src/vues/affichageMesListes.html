@@ -41,9 +41,20 @@
 			   </div>
 	       </a>
 		{% endfor %}
-	
+	{% else %}
+		<div class='alert alert-info text-center w-100 my-2'>
+			<i class='fa fa-info mr-2'></i>
+			<span>Vous n'avez pas encore créé de liste !</span>
+		</div>
 	{% endif %}
+
+	<div class='section my-2'>
+		<div>Créez une liste de souhait pour que vos proches puissent vous faire plaisir !</div>
+		<div class='w-100 d-flex mt-2'>
+			<a class='btn btn-primary text-light' href='{{path_for('formulaireCreerListe')}}' title='Créer une liste'>
+				<i class='fa fa-plus mr-2'></i>
+				Créer une liste
+			</a>
+		</div>
+	</div>
 {% endblock %}
-
-
-
