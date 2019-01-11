@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titre %}{{parent()}} - MesListes{% endblock %}
+{% block css %}
+	{{parent()}}
+{% endblock %}
+
+{% block content %}
+
+	{% if erreur is defined %}
+		<div class='alert alert-danger mx-auto text-center my-3'>
+			<i class='fa fa-exclamation-triangle'></i>
+			<span class='px-2'>{{ erreur }}</span>
+		</div>
+		<div>Impossible de voir la liste <a href='{{path_for('accueil')}}'>retour à l'accueil</a></div>
+	{% elseif avertissement is defined %}
+		<div class='alert alert-warning alert-dismissible fade show mx-auto text-center my-3'>
+			<i class='fa fa-exclamation-triangle'></i>
+			<span class='px-2'>{{ avertissement}}</span>
+		</div>
+	{% endif %}
+	{% if form is defined and form %}
+		<form method='GET' class='form-row'>
+			<div class='col-12 col-sm-6 form-group'>
+				<label for='createur'>Votre nom (tel que vous l'avez entré lors de la création de la liste)</label>
+				<input type='text' class='form-control' id='createur' name='createur' placeholder='Votre nom'>
+			</div>
+			<div class='col-12 col-sm-6 form-group d-flex align-items-end'>
+				<button class='btn btn-primary d-block mx-auto'>Valider</button>
+			</div>
+		</form>
+	{% endif %}
+{% endblock %}

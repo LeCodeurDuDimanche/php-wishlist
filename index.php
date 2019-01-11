@@ -56,21 +56,26 @@ $app->get('/', ControleurAccueil::class.":afficherAccueil")->setName('accueil');
 $app->group("/liste", function() use ($app){
     $app->get('/creer', ControleurListeCreateur::class.":afficherFormulaireCreation")->setName("formulaireCreerListe");
     $app->post('/creer', ControleurListeCreateur::class.":creerListe")->setName("creerListe");
-    $app->get('/c{id}', ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
-    $app->get('/c{id}/details', ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
 
-    $app->get('/c{id}/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
-    $app->post('/c{id}/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
+    //Routes necessitant une auth
+    $app->group("/c{id}", function() use($app){
+        $app->get("", ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
+        $app->get('/details', ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
 
-    $app->get('/c{id}/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe");
-    $app->put('/c{id}/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe");
+        $app->get('/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
+        $app->post('/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
 
     $app->delete('/c{id}', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
+        $app->get('/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe");
+        $app->put('/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe");
 
-    $app->get('/c{id}/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
-    //methode put
-    $app->post('/c{id}/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
-    $app->post('/c{id}/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem');
+
+
+        $app->get('/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
+        //methode put
+        $app->post('/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
+        $app->delete('/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem');
+    })->add(ControleurListeCreateur::class."::checkCreateurMiddleware");
 
     $app->get('/meslistes', ControleurListeCreateur::class.":afficherMesListes")->setName("afficherMesListes");
 
@@ -79,11 +84,14 @@ $app->group("/liste", function() use ($app){
 //Liste participant
 $app->group("/liste", function() use ($app){
     $app->get('/publiques[/page{numPage:[0-9]+}]', ControleurAccueil::class.":afficherListesPubliques")->setName('listesPubliques');
-    $app->get('/p{token}', ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
-    $app->get('/p{token}/details', ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
-    $app->get('/p{token}/details/item/{idItem}', ControleurItem::class.":afficherItem")->setName('afficherItem');
-    $app->get('/p{token}/details/item/{idItem}/reserver', ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
-    $app->post('/p{token}/details/item/{idItem}/reserver', ControleurItem::class.":reserverItem")->setName('reserverItem');
+
+    $app->group("/p{token}", function() use ($app){
+        $app->get("", ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
+        $app->get('/details', ControleurListeParticipant::class.":afficherListeAvecDetails")->setName('listeParticipantDetails');
+        $app->get('/details/item/{idItem}', ControleurItem::class.":afficherItem")->setName('afficherItem');
+        $app->get('/details/item/{idItem}/reserver', ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
+        $app->post('/details/item/{idItem}/reserver', ControleurItem::class.":reserverItem")->setName('reserverItem');
+    })->add(ControleurListeParticipant::class."::checkNonCreateurMiddleware");
 });
 
 //compte

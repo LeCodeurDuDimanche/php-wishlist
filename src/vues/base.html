@@ -49,6 +49,14 @@
                                    <span aria-hidden="true">&times;</span>
                                  </button>
                             </div>
+                        {% elseif "avertissement" is flashed %}
+                            <div class='alert alert-warning alert-dismissible fade show mx-auto text-center my-3'>
+                                <i class='fa fa-exclamation-triangle'></i>
+                                <span class='px-2'>{{ get_data("avertissement")}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                            </div>
                         {% elseif "message" is flashed %}
                             <div class='alert alert-success alert-dismissible fade show mx-auto text-center my-3'>
                                 <i class='fa fa-check'></i>

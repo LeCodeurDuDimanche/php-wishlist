@@ -68,6 +68,7 @@
 		 				<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
 		 				*/-->
 		 				<form action="{{path_for('supprimerItem', {id : liste.tokenCreateur, num : it.id})}}" method="POST">
+							<input type='hidden' name='_METHOD' value='DELETE'>
 		 					<button onclick="return confirm('Cet item sera supprimé définitivement')" class='btn btn-primary' title="supprimer"><i class="fas fa-trash-alt"></i></button>
 		 				</form>
 					</div>
