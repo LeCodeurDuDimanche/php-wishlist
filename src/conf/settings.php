@@ -53,6 +53,7 @@ return [
 
         return $view;
     },
+    'notFoundHandler' => Utils::class . "::notFound",
     'settings' => [
         'displayErrorDetails' => true,
     ],

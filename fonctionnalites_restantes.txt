@@ -1,8 +1,6 @@
-Ajouter une page 404 custom
 Faire footer et header
 Ajouter reserveParUser
 Coder suppression liste
-Ajouter bouton ajouter liste dans mes listes
 Ajout liste publique/prive a la creation de liste
 
 Création de liste:
@@ -16,7 +14,7 @@ Participation à une liste:
 s 2 Saisir un message au créateur dans le formulaire de réservation d'un item /item/{id}/reserver
 t 3 Ajouter un message public à une liste (afficher dans le détails de la liste) /liste/{id}/ajouterMessage
 
-VALIDATION : 
+VALIDATION :
     Respecter les methodes put/delete pour modif/suppr
     Upload webetu
     Verification html par w3c

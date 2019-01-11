@@ -155,4 +155,12 @@
                 $time->formatLocalized($format) :
                 strftime($format, (new \DateTime($time))->getTimestamp());
         }
+
+        /**
+        * Affiche une page d'erreur personalisee
+        */
+        public static function notFound(ServerRequestInterface $request, ResponseInterface $response) {
+            global $app;
+            return $app->getContainer()->view->render($response, "erreur404.html")->withStatus(404);
+        }
     }
