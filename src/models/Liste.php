@@ -27,8 +27,8 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 
 	public function estExpiree() : bool
 	{
-		$date = $liste->expiration instanceof \DateTime ? $liste->expiration : date_create($liste->expiration);
-		return $date->diff(new \DateTime())->invert === 0;
+		$date = $this->expiration instanceof \DateTime ? $this->expiration : date_create($this->expiration);
+		return $date->getTimestamp() <= time();
 	}
 
 }
