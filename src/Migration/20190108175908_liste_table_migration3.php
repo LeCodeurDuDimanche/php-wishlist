@@ -49,9 +49,9 @@ class ListeTableMigration3 extends Migration
         });
 
 
-        Liste::create([ "id" => 1,	"createur" => "Jean", "titre" => 'Pour fêter le bac !',"desc" =>'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	"expiration" =>'2018-06-27', "tokenCreateur" =>	'nosecure1', "tokenParticipant" =>    'token11']);
-        Liste::create(["id" => 2,	"createur" => "Michel Henri", "titre"=> 'Liste de mariage d\'Alice et Bob',"desc" => 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	"expiration" =>'2018-06-30',"tokenCreateur" => 'toekn21',"tokenParticipant" =>    'token22']);
-        Liste::create(["id" => 3,	"user_id" => 1,"titre" =>	'C\'est l\'anniversaire de Charlie', "desc" =>	'Pour lui préparer une fête dont il se souviendra :)',	"expiration" =>'2017-12-12',"tokenCreateur" =>	'token31', "tokenParticipant" =>    'token32']);
+        Liste::create([ "id" => 1,	"createur" => "Jean", "titre" => 'Pour fêter le bac !',"desc" =>'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	"expiration" =>'2019-06-27', "tokenCreateur" =>	'nosecure1', "tokenParticipant" =>    'token11']);
+        Liste::create(["id" => 2,	"createur" => "Michel Henri", "titre"=> 'Liste de mariage d\'Alice et Bob',"desc" => 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	"expiration" =>'2018-06-30', "created_at" => 1525132800, "tokenCreateur" => 'toekn21',"tokenParticipant" =>    'token22']);
+        Liste::create(["id" => 3,	"user_id" => 1,"titre" =>	'C\'est l\'anniversaire de Charlie', "desc" =>	'Pour lui préparer une fête dont il se souviendra :)',	"expiration" =>'2019-12-12',"tokenCreateur" =>	'token31', "tokenParticipant" =>    'token32']);
 
     }
 
