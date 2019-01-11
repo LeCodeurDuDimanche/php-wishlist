@@ -18,7 +18,11 @@ namespace mywishlist\controleurs;
     		$numPage = intval($args['numPage']);
     	}
 
-    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip($numPage-1*$nbParPage)->get();
+        $maxPage = 1 + (Liste::where("estPublique", "=", "1")->count() - 1) / $nbParPage;
+
+        $numPage = $numPage > $maxPage ? $maxPage : $numPage;
+
+    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get();
 
     	return $this->view->render($response, "listesPubliques.html", compact("listes"));
     }
