@@ -11,9 +11,17 @@
     </div>
     <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
     <form action="{{path_for('reserverItem', {token : item.liste.tokenParticipant, idItem : item.id})}}" method="POST">
+        {% if est_connecte() %}
+            <input name='nom' type='hidden' value='{{get_username()}}' required>
+        {% else %}
+            <div class='form-group'>
+                <label for='nom'>Votre nom :</label>
+                <input id='nom' name='nom' class='form-control' type='text' placeholder='Votre nom' {% if "nomReservation" is inSession %} value='{{session("nomReservation")}}' {% endif %} required>
+            </div>
+        {% endif %}
         <div class='form-group'>
-            <label for='nom'>Votre nom :</label>
-            <input id='nom' name='nom' class='form-control' type='text' placeholder='Votre nom' {% if "nomReservation" is inSession %} value='{{session("nomReservation")}}' {% endif %} required>
+            <label for='message'>Vous pouvez ajouter un message que le créateur verra après expiration de la liste</label>
+            <textarea id='message' name='message' class='form-control' type='text' placeholder='Message pour le créateur de la liste'></textarea>
         </div>
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value='Réserver'>

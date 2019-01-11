@@ -25,10 +25,26 @@ class ControleurItem extends Controleur{
 	public function reserverItem($request, $response, $args){
 		$item = $this->recuperItem($request, $response, $args);
 
-		if($item->reservePar == NULL){
-			$item->reservePar =  Utils::getFilteredPost($request, "nom");
+        $nom = Utils::getFilteredPost($request, "nom");
+        $message = Utils::getFilteredPost($request, "message");
+
+        if ($nom === null)
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+        }
+        else if ($item->reservePar != null)
+        {
+            Flash::flash("erreur", "L'item est déjà reservé par $item->reservePar.");
+        }
+        else {
+
+			$item->reservePar = $nom;
+            if ($message !== null)
+                $item->message = $message;
 			$item->save();
 			$_SESSION['nomReservation'] = $item->reservePar;
+
+            Flash::flash("message", "Réservation effectuée");
 		}
 
 		return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
