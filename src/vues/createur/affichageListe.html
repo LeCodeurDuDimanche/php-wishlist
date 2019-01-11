@@ -2,7 +2,7 @@
 
 {% block titre %}{{parent()}} - {{liste.titre}}{% endblock %}
 
-{% set url = path_for('listeParticipant', {token: liste.tokenParticipant}) %}
+{% set url = constant("HOSTNAME") ~ path_for('listeParticipant', {token: liste.tokenParticipant}) %}
 {% set text = "Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" %}
 
 
@@ -37,7 +37,7 @@
             <h1 class='d-none d-sm-block'>{{liste.titre}}</h1>
         </div>
         <div class='col-12 col-sm-4 justify-content-center align-items-center d-flex'>
-            <a href="{{path_for("formulaireModifListe" ,{id: liste.tokenCreateur})}}" class='btn btn-primary mr-1'>
+            <a href="{{liste.estExpiree() ? "#" : path_for("formulaireModifListe" ,{id: liste.tokenCreateur})}}" class='btn btn-primary mr-1 {{liste.estExpiree() ? "disabled" : ""}}' title="{{liste.estExpiree() ? "Impossible d'éditer une liste expirée" : "Modifier la liste"}}">
                 <i class='far fa-edit'></i>
                 <span class='d-inline d-sm-none d-md-inline'>Éditer</span>
             </a>

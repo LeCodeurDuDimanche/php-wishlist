@@ -118,6 +118,13 @@
      {
         $liste = self::recupererListe($request, $response, $args['id']);
 
+        //On ne peut pas modifier une liste expiree
+        if ($liste->estExpiree())
+        {
+            Flash::flash("erreur", "Impossible de modifier une liste expirée");
+            return Utils::redirect($response, "listeCreateur", ["id" => $args['id']]);
+        }
+
         return $this->view->render($response, "createur/affichageFormulaireModification.html", compact("liste"));
      }
 

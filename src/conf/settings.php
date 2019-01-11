@@ -10,6 +10,7 @@ use mywishlist\controleurs\Flash;
 use mywishlist\controleurs\Utils;
 
 setlocale(LC_TIME, 'fr', "fr_FR", "fr.utf8", "fr_FR.utf8", "fr_FR.utf-8");
+define("HOSTNAME", (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]");
 
 return [
     'view' => function ($c) {
