@@ -60,7 +60,17 @@
         <p><strong>Description : </strong> {{liste.desc ?? "Aucune description"}}</p>
     </div>
     <div>
-        <p><strong>Expiration : </strong>Cette liste de souhait expire le {{format_date(liste.expiration)}}, soit <strong>{{liste.expiration|time_diff(false)}}</strong>.</p>
+        <p>
+            <strong>Expiration : </strong>
+            {% if liste.estExpiree() %}
+                <span class='alert alert-info p-2 ml-2'>
+                    <i class='fa fa-info-circle ml-1 mr-2'></i>
+                    Cette liste a expiré <strong>{{liste.expiration|time_diff(false)}}</strong>
+                </span>
+            {% else %}
+                Cette liste de souhait expire le {{format_date(liste.expiration)}}, soit <strong>{{liste.expiration|time_diff(false)}}</strong>.
+            {% endif %}
+        </p>
     </div>
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage : </strong></label>

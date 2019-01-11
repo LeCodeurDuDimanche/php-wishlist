@@ -231,7 +231,17 @@
         $liste = self::recupererListe($request, $response, $args['id']);
 
  		$listeIt = $liste->items()->get();
- 		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt"));
+
+        $nbContrib = $listeIt->keyBy('reservePar')->count();
+        $nbItems = $listeIt->count();
+        $prixTotal = $listeIt->sum('tarif');
+
+        $valeursStats = [
+                ["val" => $nbContrib, "text" => "$nbContrib contributeurs", "bg" => "success"],
+                ["val" => $nbItems, "text" => $nbItems . ($nbItems > 1 ? " items" : " item"), "bg" => "warning"],
+                ["val" => $prixTotal / 20, "text" => "Prix total de $prixTotal €", "bg" => "info"]
+            ];
+ 		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt", "valeursStats"));
  	}
 
     public function afficherMesListes($request, $response, $args){

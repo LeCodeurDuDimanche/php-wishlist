@@ -15,7 +15,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 		return $this->hasMany(Item::class);
 	}
 
-	public function createur()
+	public function createur() : string
 	{
 		if ($this->user_id)
 		{
@@ -23,6 +23,12 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 			return $user->prenom . " " . $user->nom;
 		}
 		return $this->createur;
+	}
+
+	public function estExpiree() : bool
+	{
+		$date = $liste->expiration instanceof \DateTime ? $liste->expiration : date_create($liste->expiration);
+		return $date->diff(new \DateTime())->invert === 0;
 	}
 
 }

@@ -64,9 +64,6 @@
 	 			<td>
 	 				<div class='d-flex'>
 						<a href="{{path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary mr-2' title='Modifier'><i class="fas fa-pen"></i></a>
-		 				<!--
-		 				<a href="{{path_for('formulaireAjouterItem', {id : liste.tokenCreateur, num : listeIt.id})}}" class='btn btn-primary' title='Supprimer'><i class="fas fa-trash-alt"></i></a>
-		 				*/-->
 		 				<form action="{{path_for('supprimerItem', {id : liste.tokenCreateur, num : it.id})}}" method="POST">
 							<input type='hidden' name='_METHOD' value='DELETE'>
 		 					<button onclick="return confirm('Cet item sera supprimé définitivement')" class='btn btn-primary' title="supprimer"><i class="fas fa-trash-alt"></i></button>
@@ -103,13 +100,8 @@
 			</div>
 		</div>
 		<div class='col-12 py-4'>
-			{% set valeurs = [
-				{val: listeIt.keyBy('reservePar').count() -1, text : (listeIt.keyBy('reservePar').count() -1) ~ " contributeurs", bg: "success"},
-				{val: listeIt.count(), text: listeIt.count() ~ (listeIt.count() > 1 ? " items" : " item"), bg: "warning"},
-				{val: listeIt.sum('tarif') / 20, text: "Prix total de " ~ listeIt.sum('tarif') ~ " €", bg: "info"}
-				] %}
-			{% set max = max(valeurs) %}
-			{% for val in valeurs|sort %}
+			{% set max = max(valeursStats) %}
+			{% for val in valeursStats|sort %}
 				<div class='row'>
 					<div class='col-6 col-sm-4 col-md-3'><strong>{{val.text}}</strong></div>
 					<div class='col'>
