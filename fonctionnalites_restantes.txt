@@ -12,7 +12,7 @@ t 3 Ajouter un message public à une liste (afficher dans le détails de la list
 
 VALIDATION :
     Respecter les methodes put/delete pour modif/suppr
-    Upload webetu
+    Tester webetu
     Verification html par w3c
     Verifier toutes les fonctionnalites sur arche
     Verifier les liens
