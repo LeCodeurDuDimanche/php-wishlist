@@ -253,8 +253,7 @@
 
     public function afficherMesListes($request, $response, $args){
 
-        if(Authentification::estConnecte()){
-            $user = Authentification::getUtilisateur();
+        if($user = Authentification::getUtilisateur()){
             $meslistes = $user->listesCrees()->get();
         }
         else
