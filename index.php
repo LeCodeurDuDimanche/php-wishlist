@@ -65,7 +65,7 @@ $app->group("/liste", function() use ($app){
         $app->get('/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
         $app->post('/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
 
-    $app->delete('/c{id}', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
+        $app->delete('', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
         $app->get('/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe");
         $app->put('/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe");
 
