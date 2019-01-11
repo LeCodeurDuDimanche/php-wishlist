@@ -41,10 +41,15 @@
          $user_id = $request->getParsedBodyParam("userId", null);
          $createur = Utils::getFilteredPost($request, "createur");
 
-         if ($nom == null || $desc == null || $expiration == null || ($createur == null && $user_id == null) ||
-            !Utils::isValidDate($expiration))
+         if ($nom == null || $desc == null || $expiration == null || ($createur == null && $user_id == null))
         {
-            throw new Exception("Données invalides");
+            Flash::flash("erreur", "Des données sont manquantes");
+            return Utils::redirect($response, "afficherFormulaireCreation");
+        }
+        else if (!Utils::isValidDate($expiration))
+        {
+            Flash::flash("erreur", "La date d'expiration a un format invalide. Il doit être AAAA-MM-JJ");
+            return Utils::redirect($response, "afficherFormulaireCreation");
         }
 
         $expiration = new \DateTime($expiration);
@@ -76,23 +81,35 @@
          if ($nom == null || $desc == null || $conf == null || $expiration == null ||
             !Utils::isValidDate($expiration) || !in_array($conf, ["publique", "privee"]))
         {
-            throw new Exception("Données invalides");
+            Flash::flash("erreur", "Des données sont manquantes");
+        }
+        else {
+            $expiration = new \DateTime($expiration);
+
+            $liste = self::recupererListe($request, $response, $args['id']);
+            $liste->titre = $nom;
+            $liste->desc = $desc;
+            $liste->expiration = $expiration;
+            $liste->estPublique = $conf === "publique";
+
+            if (! $liste->save())
+                Flash::flash("erreur", "Impossible de modifier la liste");
+            else {
+                Flash::flash("message", "Modification réussie");
+
+                //Mise à jour du cookie de liste (possible changement de la date d'expiration)
+                Utils::setListeCookie($liste);
+            }
         }
 
-        $expiration = new \DateTime($expiration);
-
-        $liste = self::recupererListe($request, $response, $args['id']);
-        $liste->titre = $nom;
-        $liste->desc = $desc;
-        $liste->expiration = $expiration;
-        $liste->estPublique = $conf === "publique";
-
-        if (! $liste->save())
-            Flash::flash("erreur", "Impossible de modifier la liste");
-        else
-            Flash::flash("message", "Modification réussie");
-
         return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
+     }
+
+     public function supprimerListe($request, $response, $args){
+        $liste = self::recupererListe($request, $response, $args['id']);
+        $liste->delete();
+        Flash::flash("message", "Suppression réussie");
+        return $response;
      }
 
      public function afficherFormulaireModification($request, $response, $args)

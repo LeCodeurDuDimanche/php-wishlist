@@ -10,6 +10,7 @@
     class Flash {
 
         private static $flashedData;
+        private static $validated = false;
 
         /**
         *    Fonction d'initialisation interne
@@ -109,8 +110,12 @@
         public static function next()
         {
             self::init();
-            $_SESSION['flash'] = self::$flashedData;
-            self::$flashedData = [];
+            if (!self::$validated)
+            {
+                $_SESSION['flash'] = self::$flashedData;
+                self::$flashedData = [];
+                self::$validated = true;
+            }
         }
 
         /**
