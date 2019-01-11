@@ -14,7 +14,7 @@ namespace mywishlist\controleurs;
     	$nbParPage = 20;
 
     	$numPage = 1;
-    	if($args['numPage'] !== null){
+    	if(isset($args['numPage']) && $args['numPage'] !== null){
     		$numPage = intval($args['numPage']);
     	}
 
