@@ -1,5 +1,7 @@
 Faire footer et header
 Ajouter reserveParUser
+ajouter pagination dans listesPubliques
+ajotuer pagination dans message
 
 Création de liste:
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
