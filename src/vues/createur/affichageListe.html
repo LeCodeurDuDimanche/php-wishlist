@@ -2,7 +2,7 @@
 
 {% block titre %}{{parent()}} - {{liste.titre}}{% endblock %}
 
-{% set url = base_url() ~ path_for('listeParticipant', {token: liste.tokenParticipant}) %}
+{% set url = path_for('listeParticipant', {token: liste.tokenParticipant}) %}
 {% set text = "Voici ma liste de souhait faite sur My Wish List, vous pouvez y participer !" %}
 
 
