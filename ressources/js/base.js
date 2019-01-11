@@ -64,7 +64,12 @@ $(document).ready((e) => {
     $("#supprimer-liste").click(function(e) {
         let elem = $(e.delegateTarget);
         $.ajax(elem.data("url"), {
-            method : "DELETE"
+            method : "DELETE",
+            complete: function(data, s){
+                let redirect = elem.data("redirect-url");
+                if (s === 'success' && redirect)
+                    document.location = redirect;
+            }
         });
     });
 
