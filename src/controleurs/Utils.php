@@ -55,7 +55,16 @@
         public static function setListeCookie(Liste $liste)
         {
             $data = ["token" => $liste->tokenCreateur, "createur" => $liste->createur];
+
+            /* On recupere la date depuis expiration, qui peut etre une chaine ('AAAA-MM-JJ')
+            * ou une instance de Carbon\Carbon (qui étend DateTime) suivant que la liste ait ete sauvegardee ou non
+            */
             $date = $liste->expiration instanceof \DateTime ? $liste->expiration : date_create($liste->expiration);
+            //Si la date calculee est dans le passee, on prend la date d'aujourd'hui
+            $now = new \DateTime();
+            if ($date->getTimestamp() < $now->getTimestamp())
+                $date = $now;
+                
             setcookie("liste".$liste->id, json_encode($data), $date->getTimestamp() + 3600*24*60);
         }
 
