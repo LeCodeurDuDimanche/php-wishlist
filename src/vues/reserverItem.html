@@ -12,7 +12,7 @@
     <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
     <form action="{{path_for('reserverItem', {token : item.liste.tokenParticipant, idItem : item.id})}}" method="POST">
         {% if est_connecte() %}
-            <input name='nom' type='hidden' value='{{get_username()}}' required>
+            <input name='nom' type='hidden' value='{{get_user_nomprenom()}}' required>
         {% else %}
             <div class='form-group'>
                 <label for='nom'>Votre nom :</label>

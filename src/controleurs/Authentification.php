@@ -80,6 +80,12 @@
             return $_SESSION['user']['pseudo'];
         }
 
+        public static function getNomPrenomUtilisateur() : string
+        {
+            $user = self::getUtilisateur();
+            return $user ? "$user->prenom $user->nom" : "";
+        }
+
         public static function getIdUtilisateur() : int
         {
             static::init();
