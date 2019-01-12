@@ -64,8 +64,8 @@
             $now = new \DateTime();
             if ($date->getTimestamp() < $now->getTimestamp())
                 $date = $now;
-                
-            setcookie("liste".$liste->id, json_encode($data), $date->getTimestamp() + 3600*24*60);
+
+            setcookie("liste".$liste->id, json_encode($data), $date->getTimestamp() + 3600*24*60, "/");
         }
 
         /**
