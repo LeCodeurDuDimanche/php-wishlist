@@ -195,8 +195,8 @@
         $url = Utils::getFilteredPost($request, "url");
         $img = Utils::getFilteredPost($request, "img");
         $prix = Utils::getFilteredPost($request, "tarif");
-        $token = $args['id']; 
-        //var_dump($img . "titre : ". $titre . $descrip . $url . $prix);die(); 
+        $token = $args['id'];
+        //var_dump($img . "titre : ". $titre . $descrip . $url . $prix);die();
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
         if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
@@ -216,7 +216,7 @@
             }
             else
                 $filename = $img;
-        
+
             $item = Item::where('id', '=', intval($args['num']))->first();
             if ($item === null)
                 throw new NotFoundException($request, $response);
@@ -309,7 +309,7 @@
             if (Authentification::getIdUtilisateur() != $liste->user_id)
             {
                 if (Authentification::estConnecte())
-                    $data = ["erreur" => "Cette liste ne vous appartient pas, vous pouvez y participer si le créateur vous donne le lien de partage"];
+                    $data = ["erreur" => "Cette liste ne vous appartient pas, vous pouvez y participer si le créateur vous donne le lien de partage. Connectez-vous au compte avec lequel vous avez créé cette liste si c'est la vôtre."];
                 else
                     $data = ["avertissement" => "Cette liste appartient à un utilisateur. Connectez-vous pour y accéder, si la liste vous appartient."];
 

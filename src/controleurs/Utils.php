@@ -54,7 +54,7 @@
         */
         public static function setListeCookie(Liste $liste)
         {
-            $data = ["token" => $liste->tokenCreateur, "createur" => $liste->createur];
+            $data = ["token" => $liste->tokenCreateur, "createur" => $liste->createur()];
 
             /* On recupere la date depuis expiration, qui peut etre une chaine ('AAAA-MM-JJ')
             * ou une instance de Carbon\Carbon (qui étend DateTime) suivant que la liste ait ete sauvegardee ou non
@@ -78,8 +78,9 @@
 
         /**
         * Retourne un tableau des id des liste valide contenues dans les cookies utilisateurs
+        * $includeUserLists doit être vrai si on veut aussi les listes appartenant à des utilisateurs
         */
-        public static function getValidListesCookie() : array
+        public static function getValidListesCookie($includeUserLists = false) : array
         {
             $listesValides = [];
             foreach ($_COOKIE as $name => $val)
@@ -91,7 +92,8 @@
                     $data = json_decode($val);
                     if ($liste !== null && $data !== null && //Id et valeur du cookie correct
                         isset($data->token) && $liste->tokenCreateur === $data->token //Token createur correct
-                        && $liste->user_id === null && isset($data->createur) && $liste->createur === $data->createur) //Liste n'appartenant pas a un compte et nom createur correct
+                        && ($includeUserLists || $liste->user_id === null)
+                        && isset($data->createur) && $liste->createur() === $data->createur) //Liste n'appartenant pas a un compte et nom createur correct
                     {
                         array_push($listesValides, $liste->id);
                     }
