@@ -8,28 +8,23 @@
     <h1 class='text-center'>Modification de l'item {{item.nom}}</h1>
     <form action="{{path_for("modifierItem", {id : liste.tokenCreateur, num : item.id})}}" method="POST" enctype="multipart/form-data">
         <div class='form-group'>
-            <label for='nom'>Titre de l'item</label>
+            <label for='nom'>Titre de l'item*</label>
             <input id='nom' name='nom' class='form-control' type='text' value="{{item.titre}}" required>
         </div>
         <div class='form-group'>
-            <label for='desc'>Description</label>
+            <label for='desc'>Description*</label>
             <textarea id='desc' name='desc' class='form-control' required>{{item.desc}}</textarea>
         </div>
 
-
+        <div class='form-group' style="display: none">
+            <input id='img' name='img' class='form-control' value="{{item.img}}" type='text'>
+        </div>
         <label for='image' class='form-label d-block'>Image</label>
 
             <div style="display: block;">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="choixChangement" id="Radio1" value="Conserver" >
-                    <label class="form-check-label mr-2" for="Radio1">Conserver l'image</label>
-                </div>
-                <div class='form-group'>
-                    <input id='img' name='img' class='form-control' type='text' value="{{item.img}}">
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="choixChangement" id="Radio2" value="Modifier" checked>
-                    <label class="form-check-label" for="Radio2">Modifier l'image</label>
+                    <input class="form-check-input" type="checkbox" name="choixChangement" id="checkbox" value="Modifier" checked >
+                    <label class="form-check-label" for="checkbox">Modifier l'image</label>
                 </div>      
             </div>           
                     <div style="display: inline-block;" id="secondeSerie">
@@ -37,7 +32,7 @@
                           <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" checked>
                           <label class="form-check-label" for="inlineRadio1">Upload</label>
                         </div>
-                        <div class="form-check form-check-inline" id="byUrl"    >
+                        <div class="form-check form-check-inline" id="byUrl">
                           <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
                           <label class="form-check-label" for="inlineRadio2">Url</label>
                         </div>
@@ -50,14 +45,14 @@
                             <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
                         </div>
 
-
+        
 
         <div class='form-group'>
             <label for='url'>Url</label>
-            <input id='url' name='url' class='form-control' value="{{item.url}}" type='texte'>
+            <input id='url' name='url' class='form-control' value="{{item.url}}" type='text'>
         </div>
         <div class='form-group'>
-            <label for='tarif'>Tarif</label>
+            <label for='tarif'>Tarif*</label>
             <input id='tarif' name='tarif' class='form-control' type='number' value="{{item.tarif}}"required>
         </div>
         <div class='form-group'>
@@ -65,4 +60,7 @@
         </div>
 
     </form>
+    <small>
+        <p>* : Champ obligatoire</p>
+    </small>
 {% endblock %}

@@ -28,24 +28,24 @@ $(document).ready((e) => {
     $("input[name=choixChangement]").change(function(e){
         let elem = $(e.delegateTarget);
 
-        let val = elem.val();
-
-        let deuxieme = $("#secondeSerie");
+        let checkbox = $("#checkbox");
+        let url = $("#byUrl");
+        let upload = $("#byUpload");
         let inputupload = $("#image-upload");
         let inputurl = $("#image-url");
-
-        if (val === "Modifier")
+        if (checkbox.is(":checked"))
         {
-            deuxieme.stop(true).fadeIn();
-            inputupload.stop(true).delay(400).fadeIn();
-            if(inputurl.is(":visible"))
-                inputurl.stop(true).delay(400).fadeIn();
-        }
-        else if (val === "Conserver")
-        {
-            deuxieme.stop(true).fadeOut();
-            inputupload.stop(true).fadeOut();
-            inputurl.stop(true).fadeOut();
+            upload.stop(true).fadeIn();
+            url.stop(true).fadeIn();
+            inputupload.stop(true).fadeIn();
+        } else {
+            if(inputupload.is(":visible"))
+                inputupload.stop(true).fadeOut();
+            else if (inputurl.is(":visible"))
+                inputurl.stop(true).fadeOut();
+            upload.stop(true).fadeOut();
+            url.stop(true).fadeOut();
+            
         }
         
 

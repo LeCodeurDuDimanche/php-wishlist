@@ -144,37 +144,42 @@
         $url = Utils::getFilteredPost($request, "url");
         $img = Utils::getFilteredPost($request, "img");
         $prix = Utils::getFilteredPost($request, "tarif");
-        var_dump($img);
         //pas besoin de filtrer le token
         $token = $args['id'];
-        $files = $request->getUploadedFiles();
-        $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
-        if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
-        {
-            if ($file && !$file->getError())
+        if($img == ""){
+
+            $files = $request->getUploadedFiles();
+            $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
+            if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
             {
-                $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
-                $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
-                //Check nom unique
-                $relativeFilename = "ressources/uploaded/$filename";
-                $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
+                if ($file && !$file->getError())
+                {
+                    $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
+                    $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
+                    //Check nom unique
+                    $relativeFilename = "ressources/uploaded/$filename";
+                    $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
 
-                $file->moveTo($fullFilename);
+                    $file->moveTo($fullFilename);
 
-                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
-            }
-            else
-                $filename = $img;
-            $item = new Item();
-            $item->titre = $titre;
-            $item->desc = $descrip;
-            $item->img = $filename;
-            $item->url = $url;
-            $item->tarif = $prix;
-            $liste = Liste::where("tokenCreateur", "=", $token)->first();
-            $item->liste_id = $liste->id;
-            $item->save();
-            return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+                    $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
+                }
+                else
+                    $filename = $img;
+        } else {
+            $filename = $img;
+        }
+        var_dump($filename);die();
+        $item = new Item();
+        $item->titre = $titre;
+        $item->desc = $descrip;
+        $item->img = $filename;
+        $item->url = $url;
+        $item->tarif = $prix;
+        $liste = Liste::where("tokenCreateur", "=", $token)->first();
+        $item->liste_id = $liste->id;
+        $item->save();
+        return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
 
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
