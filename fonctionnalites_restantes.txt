@@ -1,4 +1,4 @@
-Faire footer et header
+Faire footer
 Ajouter reserveParUser
 ajouter pagination dans listesPubliques
 ajotuer pagination dans message
