@@ -14,3 +14,6 @@ VALIDATION :
     Verification html par w3c
     Verifier toutes les fonctionnalites sur arche
     Verifier les liens
+
+Responsive:
+    Lien de partage + confidentialite dans listeCreateur
