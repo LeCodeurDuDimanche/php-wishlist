@@ -144,9 +144,9 @@
         $url = Utils::getFilteredPost($request, "url");
         $img = Utils::getFilteredPost($request, "img");
         $prix = Utils::getFilteredPost($request, "tarif");
+        var_dump($img);
         //pas besoin de filtrer le token
         $token = $args['id'];
-
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
         if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
@@ -165,7 +165,6 @@
             }
             else
                 $filename = $img;
-
             $item = new Item();
             $item->titre = $titre;
             $item->desc = $descrip;
@@ -185,22 +184,40 @@
 
      public function modifierItem($request, $response, $args)
      {
-         $titre = Utils::getFilteredPost($request, "nom");
-         $descrip = Utils::getFilteredPost($request, "desc");
-         $url = Utils::getFilteredPost($request, "url");
-         $img = Utils::getFilteredPost($request, "image");
-         $prix = Utils::getFilteredPost($request, "tarif");
-        $token = $args['id'];
-
-        if ($titre && $descrip && $img && $prix)
+        global $app;
+        $titre = Utils::getFilteredPost($request, "nom");
+        $descrip = Utils::getFilteredPost($request, "desc");
+        $url = Utils::getFilteredPost($request, "url");
+        $img = Utils::getFilteredPost($request, "img");
+        $prix = Utils::getFilteredPost($request, "tarif");
+        $token = $args['id']; 
+        //var_dump($img . "titre : ". $titre . $descrip . $url . $prix);die(); 
+        $files = $request->getUploadedFiles();
+        $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
+        if ($titre && $descrip && $prix && (($file && !$file->getError()) || $img))
         {
+
+            if ($file && !$file->getError())
+            {
+                $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
+                $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
+                //Check nom unique
+                $relativeFilename = "ressources/uploaded/$filename";
+                $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
+
+                $file->moveTo($fullFilename);
+
+                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
+            }
+            else
+                $filename = $img;
+        
             $item = Item::where('id', '=', intval($args['num']))->first();
             if ($item === null)
                 throw new NotFoundException($request, $response);
-
             $item->titre = $titre;
             $item->desc = $descrip;
-            $item->img = $img;
+            $item->img = $filename;
             $item->url = $url;
             $item->tarif = $prix;
             $item->save();

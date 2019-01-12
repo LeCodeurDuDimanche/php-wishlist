@@ -12,18 +12,45 @@ $(document).ready((e) => {
     	let url = $("#image-url");
     	let upload = $("#image-upload");
 
-    	if (val === "Url" && upload.is(":visible"))
+    	if (val === "Url" /*&& upload.is(":visible")*/)
     	{
     		upload.stop(true).fadeOut();
     		url.stop(true).delay(400).fadeIn();
     	}
-    	else if (val === "Upload" && url.is(":visible"))
+    	else if (val === "Upload" /*&& url.is(":visible")*/)
     	{
     		url.stop(true).fadeOut();
     		upload.stop(true).delay(400).fadeIn();
     	}
 
     });
+
+    $("input[name=choixChangement]").change(function(e){
+        let elem = $(e.delegateTarget);
+
+        let val = elem.val();
+
+        let deuxieme = $("#secondeSerie");
+        let inputupload = $("#image-upload");
+        let inputurl = $("#image-url");
+
+        if (val === "Modifier")
+        {
+            deuxieme.stop(true).fadeIn();
+            inputupload.stop(true).delay(400).fadeIn();
+            if(inputurl.is(":visible"))
+                inputurl.stop(true).delay(400).fadeIn();
+        }
+        else if (val === "Conserver")
+        {
+            deuxieme.stop(true).fadeOut();
+            inputupload.stop(true).fadeOut();
+            inputurl.stop(true).fadeOut();
+        }
+        
+
+    });
+
 
     //Permet de copier le lien de partage dans le presse-papier
     $("#copy-link,#url-partage").click(function(e) {
