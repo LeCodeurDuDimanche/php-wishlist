@@ -59,22 +59,24 @@ $app->group("/liste", function() use ($app){
 
     //Routes necessitant une auth
     $app->group("/c{id}", function() use($app){
+
+        $checkNonPerimee = ControleurListeCreateur::class . "::checkNonPerimeeMiddleware";
+
         $app->get("", ControleurListeCreateur::class.":afficherListe")->setName('listeCreateur');
         $app->get('/details', ControleurListeCreateur::class.":afficherListeAvecDetails")->setName('listeCreateurDetails');
 
-        $app->get('/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem");
-        $app->post('/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem");
+        $app->get('/creerItem', ControleurListeCreateur::class.":afficherFormulaireAjoutItem")->setName("formulaireAjouterItem")->add($checkNonPerimee);
+        $app->post('/creerItem', ControleurListeCreateur::class.":ajouterItem")->setName("ajouterItem")->add($checkNonPerimee);
 
-        $app->delete('', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
-        $app->get('/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe");
-        $app->put('/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe");
+        $app->delete('', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe")->add($checkNonPerimee);
+        $app->get('/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe")->add($checkNonPerimee);
+        $app->put('/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe")->add($checkNonPerimee);
 
 
 
-        $app->get('/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem");
-        //methode put
-        $app->post('/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem");
-        $app->delete('/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem');
+        $app->get('/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem")->add($checkNonPerimee);
+        $app->put('/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem")->add($checkNonPerimee);
+        $app->delete('/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem')->add($checkNonPerimee);
     })->add(ControleurListeCreateur::class."::checkCreateurMiddleware");
 
     $app->get('/meslistes', ControleurListeCreateur::class.":afficherMesListes")->setName("afficherMesListes");

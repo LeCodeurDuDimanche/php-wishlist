@@ -7,6 +7,7 @@
     <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Retour'><i class="fas fa-arrow-left"></i></a>
     <h1 class='text-center'>Modification de l'item {{item.nom}}</h1>
     <form action="{{path_for("modifierItem", {id : liste.tokenCreateur, num : item.id})}}" method="POST" enctype="multipart/form-data">
+        <input type='hidden' name='_METHOD' value='PUT'>
         <div class='form-group'>
             <label for='nom'>Titre de l'item*</label>
             <input id='nom' name='nom' class='form-control' type='text' value="{{item.titre}}" required>
@@ -25,8 +26,8 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" name="choixChangement" id="checkbox" value="Modifier" checked >
                     <label class="form-check-label" for="checkbox">Modifier l'image</label>
-                </div>      
-            </div>           
+                </div>
+            </div>
                     <div style="display: inline-block;" id="secondeSerie">
                        <div class="form-check form-check-inline" id="byUpload">
                           <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" checked>
@@ -45,7 +46,7 @@
                             <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
                         </div>
 
-        
+
 
         <div class='form-group'>
             <label for='url'>Url</label>

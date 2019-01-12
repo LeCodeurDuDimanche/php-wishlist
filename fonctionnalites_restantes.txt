@@ -13,7 +13,6 @@ m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/cree
 
 
 VALIDATION :
-    Respecter les methodes put/delete pour modif/suppr
     Tester webetu
     Verification html par w3c
     Verifier toutes les fonctionnalites sur arche
