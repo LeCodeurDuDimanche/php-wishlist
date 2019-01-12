@@ -118,13 +118,6 @@
      {
         $liste = self::recupererListe($request, $response, $args['id']);
 
-        //On ne peut pas modifier une liste expiree
-        if ($liste->estExpiree())
-        {
-            Flash::flash("erreur", "Impossible de modifier une liste expirée");
-            return Utils::redirect($response, "listeCreateur", ["id" => $args['id']]);
-        }
-
         return $this->view->render($response, "createur/affichageFormulaireModification.html", compact("liste"));
      }
 
@@ -334,6 +327,25 @@
         }
 
         return $next($request, $response);
+    }
+
+    /**
+    * Permet d'interdire la modification d'une liste expirée
+    */
+    public static function checkNonPerimeeMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+    {
+        $route = $request->getAttribute('route');
+        $token = $route->getArgument('id');
+        $liste = self::recupererListe($request, $response, $token);
+        //On ne peut pas modifier une liste expiree
+        if ($liste->estExpiree())
+        {
+            Flash::flash("erreur", "Impossible de modifier une liste expirée");
+            return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+        }
+
+        return $next($request, $response);
+
     }
 
  }
