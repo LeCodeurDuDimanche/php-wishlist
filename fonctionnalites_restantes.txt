@@ -7,6 +7,9 @@ supprimer items + messages liste  + supprimer image item
 ajouter suppression image items
 ajouter check url (+ url img) item
 
+Bugs:
+    sur portable, après avoir crée une liste avec un compte et déco on peut accéder à la liste participation
+
 Création de liste:
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
