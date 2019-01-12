@@ -47,7 +47,7 @@ $(document).ready((e) => {
             url.stop(true).fadeOut();
             
         }
-        
+
 
     });
 
@@ -133,5 +133,41 @@ $(document).ready((e) => {
         //On set le focus sur le bouton
         parent.children(".btn").addClass("disabled");
         btn.removeClass("disabled");
+    });
+
+    //Check pseudo unique
+    $(".check-pseudo").keyup(function(e){
+        let elem = $(e.delegateTarget);
+        let feedback = $(elem.data("feedback"));
+        if (elem.val().length == 0)
+        {
+            feedback.text("");
+        }
+
+    });
+    $(".check-pseudo").change(function (e) {
+        let elem = $(e.delegateTarget);
+        let feedback = $(elem.data("feedback"));
+        let val = elem.val();
+
+        if (val && val != elem.data('initial'))
+        {
+            fetch(elem.data("url") + val)
+            .then(res => res.json())
+            .then(data => {
+
+                feedback.text(data.message);
+                elem[0].setCustomValidity(data.erreur === false ? "" : "Ce pseudo est indisponible");
+            })
+            .catch(err => {
+                console.err(err);
+                feedback.text("");
+            });
+
+        }
+        else {
+            feedback.text("");
+            elem[0].setCustomValidity("");
+        }
     });
 });

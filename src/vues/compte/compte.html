@@ -19,7 +19,8 @@
             <input type='hidden' name='_METHOD' value='PUT' required>
             <div class='col-12 col-sm-4 form-group'>
                 <label class='form-label' for='pseudo'>Nom d'utilisateur</label>
-                <input id='pseudo' name='pseudo' class='form-control' type='text' value="{{user.pseudo}}" placeholder="Nom d'utilisateur" required>
+                <input id='pseudo' name='pseudo' class='form-control follow-input check-pseudo' data-feedback='#feedback-pseudo' data-url='{{path_for("estPseudoDisponible", {pseudo: ""})}}' data-initial='{{user.pseudo}}' type='text' value="{{user.pseudo}}" placeholder="Nom d'utilisateur" required>
+                <small id='feedback-pseudo' class='text-success text-feedback'></small>
             </div>
             <div class='col-12 col-sm-4 form-group'>
                 <label class='form-label' for='pseudo'>Nom</label>

@@ -30,7 +30,8 @@
     <form class='form-row' action="{{path_for("creerCompte")}}" method="POST">
         <div class='col-12 col-md-4 form-group'>
             <label for='user_new'>Nom d'utilisateur</label>
-            <input id='user_new' name='user_new' class='form-control' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user_new"])}}' required>
+            <input id='user_new' name='user_new' class='form-control follow-input check-pseudo' data-feedback='#feedback-user' data-url='{{path_for("estPseudoDisponible", {pseudo: ""})}}' type='text' placeholder="Nom d'utilisateur" value='{{get_data(["form", "user_new"])}}' required>
+            <small id='feedback-user' class='text-success text-feedback'></small>
         </div>
         <div class='col-12 col-md-4 form-group'>
             <label for='prenom'>Prénom</label>

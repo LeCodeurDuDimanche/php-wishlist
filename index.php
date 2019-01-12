@@ -99,6 +99,7 @@ $app->group("/liste", function() use ($app){
 $app->group("/compte", function() use ($app, $requireAnon, $requireLogged){
 
     $app->get("", ControleurUser::class . ":afficherCompte")->setName("compte")->add($requireLogged);
+    $app->get("/pseudoDisponible/{pseudo:[a-zA-Z0-9_\-]*}", ControleurUser::class . ":estPseudoDisponible")->setName("estPseudoDisponible");
     $app->get("/login", ControleurUser::class . ":afficherLogin")->setName("afficherLogin")->add($requireAnon);
     $app->get("/deconnexion", ControleurUser::class . ":deconnecter")->setName("deconnexion")->add($requireLogged);
 

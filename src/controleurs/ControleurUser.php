@@ -146,4 +146,19 @@ use mywishlist\models\Utilisateur;
         Flash::flash("message", "Modification enregistrée");
         return Utils::redirect($response, "compte");
     }
+
+    public function estPseudoDisponible($request, $response, $args)
+    {
+        $pseudo = $args["pseudo"];
+        if (! $pseudo)
+            $ret = ["erreur" => true, "message" => "Aucun pseudo spécifié"];
+        else {
+            $dispo = Utilisateur::where("pseudo", "=", $pseudo)->count() > 0;
+            if ($dispo)
+                $ret = ["erreur" => true, "message" => "Le pseudo est déjà utilisé"];
+            else
+                $ret = ["erreur" => false, "message" => "Pseudo disponible"];
+        }
+        return $response->withJson($ret);
+    }
 }
