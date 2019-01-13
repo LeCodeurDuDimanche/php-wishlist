@@ -36,4 +36,14 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 		return $this->hasMany(MessagesListe::class);
 	}
 
+	public function delete()
+	{
+		foreach($this->items as $item)
+			$item->delete();
+		foreach($this->messages as $message)
+			$message->delete();
+			
+		parent::delete();
+	}
+
 }

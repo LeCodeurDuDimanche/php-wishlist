@@ -13,4 +13,13 @@ class Utilisateur extends \illuminate\Database\Eloquent\Model{
 		return $this->hasMany(Liste::class, "user_id");
 	}
 
+	/*
+	public function delete()
+	{
+		foreach($this->listesCrees as $liste)
+			$liste->delete();
+
+		parent::delete();
+	}*/
+
 }

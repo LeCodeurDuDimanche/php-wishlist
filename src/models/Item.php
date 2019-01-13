@@ -14,4 +14,12 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	{
 		return $this->belongsTo(Liste::class);
 	}
+
+
+
+	public function delete()
+	{
+		//Supprimer image si uploadée			
+		parent::delete();
+	}
 }

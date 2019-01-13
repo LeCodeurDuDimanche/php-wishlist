@@ -3,7 +3,6 @@ Ajouter reserveParUser
 ajouter pagination dans listesPubliques
 ajotuer pagination dans message
 checker type img + taille (serveur + client)
-supprimer items + messages liste  + supprimer image item
 ajouter suppression image items
 ajouter check url (+ url img) item
 
