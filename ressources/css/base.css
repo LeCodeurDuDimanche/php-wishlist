@@ -73,3 +73,8 @@ input:not([value=""]):invalid~.text-feedback{
 .relative{
     position: relative;
 }
+
+/* Custom file input text */
+.custom-file-label::after {
+  content: "Parcourir";
+}

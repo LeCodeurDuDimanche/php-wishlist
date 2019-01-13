@@ -45,7 +45,7 @@ $(document).ready((e) => {
                 inputurl.stop(true).fadeOut();
             upload.stop(true).fadeOut();
             url.stop(true).fadeOut();
-            
+
         }
 
 
@@ -169,5 +169,25 @@ $(document).ready((e) => {
             feedback.text("");
             elem[0].setCustomValidity("");
         }
+    });
+
+    //Custom file input
+    $(".custom-file-input").change(function(e){
+        let input = $(e.delegateTarget);
+        let output = input.parent().children(".custom-file-label");
+
+        let files = input.prop("files");
+        let str = "";
+        for (f of files)
+        {
+            str += f.name + ", ";
+        }
+        if (str.length >= 2)
+            str = str.slice(0, str.length - 2);
+
+        if (str.length)
+            output.text(str);
+        else
+            output.text("Sélectionnez une image...");
     });
 });
