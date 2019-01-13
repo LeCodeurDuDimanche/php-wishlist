@@ -117,7 +117,7 @@
 
 	<h3 class='mt-5'>Contributeurs</h3>
 	{% set contributeurs = listeIt.groupBy("reservePar") %}
-	{% if liste.estExpiree() and contributeurs is not empty %}
+	{% if liste.estExpiree() %}
 		<ul class='pl-0'>
 			{% for contrib, items in contributeurs if contrib %}
 				<li class='ml-5'>
