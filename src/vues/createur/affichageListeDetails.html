@@ -63,10 +63,11 @@
 	 			</td>
 	 			<td>
 	 				<div class='d-flex'>
-						<a href="{{liste.estExpiree() ? "#" : path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary mr-2 {{liste.estExpiree() ? "disabled" : ""}}' title='Modifier'><i class="fas fa-pen"></i></a>
+						{% set disabled = liste.estExpiree() or it.reservePar is not null %}
+						<a href="{{disabled ? "#" : path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary mr-2 {{disabled? "disabled" : ""}}' title='Modifier'><i class="fas fa-pen"></i></a>
 		 				<form action="{{path_for('supprimerItem', {id : liste.tokenCreateur, num : it.id})}}" method="POST">
 							<input type='hidden' name='_METHOD' value='DELETE'>
-		 					<button {% if liste.estExpiree() %} type='button' {% else %} onclick="return confirm('Cet item sera supprimé définitivement')" {% endif %} class='btn btn-primary {{liste.estExpiree() ? "disabled" : ""}}' title="Supprimer"><i class="fas fa-trash-alt"></i></button>
+		 					<button {% if disabled %} type='button' {% else %} onclick="return confirm('Cet item sera supprimé définitivement')" {% endif %} class='btn btn-primary {{disabled ? "disabled" : ""}}' title="Supprimer"><i class="fas fa-trash-alt"></i></button>
 		 				</form>
 					</div>
 	 			</td>

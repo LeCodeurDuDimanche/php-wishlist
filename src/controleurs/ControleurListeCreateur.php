@@ -359,4 +359,27 @@
 
     }
 
+    /**
+    * Permet d'interdire la modification d'un item reserve
+    */
+    public static function checkNonReserveMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+    {
+        $route = $request->getAttribute('route');
+        $token = $route->getArgument('id');
+        $liste = self::recupererListe($request, $response, $token);
+
+        $numItem = intval($route->getArgument('num'));
+        $item = Item::where('id', '=', $numItem)->first();
+
+        //On ne peut pas modifier une liste expiree
+        if ($item->reservePar !== null)
+        {
+            Flash::flash("erreur", "Impossible de modifier ou de supprimer un item reservé");
+            return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+        }
+
+        return $next($request, $response);
+
+    }
+
  }
