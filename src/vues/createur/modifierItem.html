@@ -17,40 +17,38 @@
             <textarea id='desc' name='desc' class='form-control' required>{{item.desc}}</textarea>
         </div>
 
-        <div class='form-group' style="display: none">
-            <input id='img' name='img' class='form-control' value="{{item.img}}" type='text'>
-        </div>
-        <label for='image' class='form-label d-block'>Image</label>
-
+        <div class='form-group'>
+            <label for='image' class='form-label d-block'>Image</label>
         <!--<div style="display: block;">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" name="choixChangement" id="checkbox" value="Modifier" checked >
                 <label class="form-check-label" for="checkbox">Modifier l'image</label>
             </div>
         </div>-->
-        <div style="display: inline-block;" id="secondeSerie">
-           <div class="form-check form-check-inline" id="byUpload">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" checked>
-              <label class="form-check-label" for="inlineRadio1">Upload</label>
+            <div style="display: inline-block;" id="secondeSerie">
+                <div class="form-check form-check-inline" id="none">
+                  <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio3" value="Aucun" checked>
+                  <label class="form-check-label" for="inlineRadio3">Pas de modification - Image actuelle</label>
+                </div>
+               <div class="form-check form-check-inline" id="byUpload">
+                  <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload">
+                  <label class="form-check-label" for="inlineRadio1">Depuis les fichiers</label>
+                </div>
+                <div class="form-check form-check-inline" id="byUrl">
+                  <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
+                  <label class="form-check-label" for="inlineRadio2">Avec un lien</label>
+                </div>
             </div>
-            <div class="form-check form-check-inline" id="byUrl">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
-              <label class="form-check-label" for="inlineRadio2">Url</label>
+            <div id='image-upload' class="custom-file" style='display:none'>
+              <input type="file" class="custom-file-input" name="fichierImg" id="fichierImg">
+              <label class="custom-file-label" for="fichierImg">Sélectionnez une image...</label>
             </div>
-            <div class="form-check form-check-inline" id="none">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio3" value="Aucun">
-              <label class="form-check-label" for="inlineRadio3">Pas de modification - Image actuelle</label>
+            <div id='image-url' style='display:none'>
+                <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
             </div>
-        </div>
-        <div id='image-upload' class="custom-file">
-          <input type="file" class="custom-file-input" name="fichierImg" id="fichierImg">
-          <label class="custom-file-label" for="fichierImg">Sélectionnez une image...</label>
-        </div>
-        <div id='image-url' style='display:none'>
-            <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
         </div>
         <div class='form-group'>
-            <label for='url'>Url</label>
+            <label for='url'>Lien vers une page qui détaille le produit, par exemple vers un site de e-commerce</label>
             <input id='url' name='url' class='form-control' value="{{item.url}}" type='text'>
         </div>
         <div class='form-group'>
@@ -58,7 +56,7 @@
             <input id='tarif' name='tarif' class='form-control' type='number' value="{{item.tarif}}"required>
         </div>
         <div class='form-group'>
-            <input type='submit' class='btn btn-primary mx-auto d-block' value="Ajouter">
+            <input type='submit' class='btn btn-primary mx-auto d-block' value="Modifier">
         </div>
 
     </form>

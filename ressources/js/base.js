@@ -12,42 +12,21 @@ $(document).ready((e) => {
     	let url = $("#image-url");
     	let upload = $("#image-upload");
 
-    	if (val === "Url" /*&& upload.is(":visible")*/)
+    	if (val === "Url")
     	{
     		upload.stop(true).fadeOut();
     		url.stop(true).delay(400).fadeIn();
     	}
-    	else if (val === "Upload" /*&& url.is(":visible")*/)
+    	else if (val === "Upload")
     	{
     		url.stop(true).fadeOut();
     		upload.stop(true).delay(400).fadeIn();
     	}
-
-    });
-
-    $("input[name=choixChangement]").change(function(e){
-        let elem = $(e.delegateTarget);
-
-        let checkbox = $("#checkbox");
-        let url = $("#byUrl");
-        let upload = $("#byUpload");
-        let inputupload = $("#image-upload");
-        let inputurl = $("#image-url");
-        if (checkbox.is(":checked"))
+        else if (val === "Aucun")
         {
-            upload.stop(true).fadeIn();
-            url.stop(true).fadeIn();
-            inputupload.stop(true).fadeIn();
-        } else {
-            if(inputupload.is(":visible"))
-                inputupload.stop(true).fadeOut();
-            else if (inputurl.is(":visible"))
-                inputurl.stop(true).fadeOut();
-            upload.stop(true).fadeOut();
-            url.stop(true).fadeOut();
-
+    		upload.stop(true).fadeOut();
+        	url.stop(true).fadeOut();
         }
-
 
     });
 
