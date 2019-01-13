@@ -144,7 +144,7 @@
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
 
-        if ($titre && $descrip && $prix && $choixImage && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img)))
+        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img)))
         {
             if ($choixImage === "Upload")
             {
@@ -186,6 +186,7 @@
 
         $token = $args['id'];
         $liste = self::recupererListe($request, $response, $token);
+
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
         $url = Utils::getFilteredPost($request, "url");
@@ -196,7 +197,7 @@
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
 
-        if ($titre && $descrip && $prix && $choixImage && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
+        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
         {
 
             if ($choixImage === "Upload")
