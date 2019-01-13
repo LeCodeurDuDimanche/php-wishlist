@@ -50,7 +50,7 @@ class ItemsTableMigration3 extends Migration
 
 
         $path_to_root = ".";
-        $url = "/$path_to_root/ressources/img/";
+        $url = "/$path_to_root/ressources/uploaded/";
 
         Item::create(["id" =>1,   "liste_id" => 2,"titre" =>   'Champagne',  "desc" =>   'Bouteille de champagne + flutes + jeux à gratter',"img" => $url . 'champagne.jpg',"url" =>   '',"tarif" =>20.00, "updated_at" => date("Y-m-d"), "created_at" => date("Y-m-d") ]);
         Item::create(["id" => 2, "liste_id" => 2, "titre" => 'Musique', "desc" => 'Partitions de piano à 4 mains', "img" => $url . 'musique.jpg', "url" => '', "tarif" => 0, "updated_at" => date("Y-m-d"), "created_at" => date("Y-m-d") ]);
