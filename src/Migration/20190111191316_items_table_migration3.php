@@ -49,7 +49,7 @@ class ItemsTableMigration3 extends Migration
         });
 
 
-        $path_to_root = "";
+        $path_to_root = ".";
         $url = "/$path_to_root/ressources/img/";
 
         Item::create(["id" =>1,   "liste_id" => 2,"titre" =>   'Champagne',  "desc" =>   'Bouteille de champagne + flutes + jeux à gratter',"img" => $url . 'champagne.jpg',"url" =>   '',"tarif" =>20.00, "updated_at" => date("Y-m-d"), "created_at" => date("Y-m-d") ]);
