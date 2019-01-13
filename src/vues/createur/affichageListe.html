@@ -63,7 +63,7 @@
         <p>
             <strong>Expiration : </strong>
             {% if liste.estExpiree() %}
-                <span class='alert alert-info p-2 ml-2'>
+                <span class='d-block d-sm-inline alert alert-info text-center p-2 ml-2'>
                     <i class='fa fa-info-circle ml-1 mr-2'></i>
                     Cette liste a expiré <strong>{{liste.expiration|time_diff(false)}}</strong>
                 </span>
@@ -74,12 +74,12 @@
     </div>
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage : </strong></label>
-        <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex w-75">
-          <input id ='url-partage' type='text' class="form-control" value="{{url}}" readonly>
-            <div class="input-group-append">
+        <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex align-items-center flex-column flex-sm-row">
+          <input id ='url-partage' type='text' class="form-control d-block" style='min-width:200px' value="{{url}}" readonly>
+            <div class="input-group-append mt-1 mt-sm-0">
               <button id='copy-link' class="input-group-btn btn btn-primary"><i class='fa fa-copy'></i><span class='ml-2'>Copier</span></button>
             </div>
-              <div class="input-group-append">
+              <div class="input-group-append mt-1 mt-sm-0">
                 <button id='share-link' class="input-group-btn btn btn-success" data-toggle="modal" data-target="#modal-social"><i class='fa fa-share'></i><span class='ml-2'>Partager</span></button>
               </div>
         </div>
@@ -88,12 +88,12 @@
     <div class='my-3'>
         <p><strong>Confidentialité : </strong> Cette liste est
         {% if liste.estPublique %}
-            <span class='alert alert-success p-2 ml-1'>
+            <span class='d-block text-center d-sm-inline alert alert-success p-2 ml-1'>
                 <strong>publique</strong>
                 <i class='fa fa-lock-open ml-1 mt-3'></i>
             </span>
         {% else %}
-            <span class='alert alert-dark p-2 ml-1'>
+            <span class='d-block text-center d-sm-inline alert alert-dark p-2 ml-1'>
                 <strong>privée</strong>
                 <i class='fa fa-lock ml-1 mt-3'></i>
             </span>

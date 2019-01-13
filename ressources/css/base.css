@@ -48,8 +48,7 @@ footer, header{
     width: 100%;
 }
 .centered-bar>*{
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px;
 }
 
 /* Section individuelle */

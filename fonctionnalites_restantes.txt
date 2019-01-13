@@ -1,8 +1,6 @@
 Faire footer
 Ajouter reserveParUser
-ajotuer pagination dans message
 checker type img + taille (serveur + client)
-ajouter suppression image items
 ajouter check url (+ url img) item
 
 Création de liste:
@@ -15,6 +13,3 @@ VALIDATION :
     Verification html par w3c
     Verifier toutes les fonctionnalites sur arche
     Verifier les liens
-
-Responsive:
-    Lien de partage + confidentialite dans listeCreateur

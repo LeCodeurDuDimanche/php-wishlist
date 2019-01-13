@@ -14,8 +14,8 @@
 
     <div>
         <p class='my-5 text-center' style='font-size :1.5rem'>Cette page ou liste n'existe pas ou a été supprimée.</p>
-        <p class='my-5 text-center'><img src="{{base_url()}}/ressources/img/404.jpg"></p>
-        <div class='centered-bar'>
+        <p class='my-5 text-center'><img class='w-50 d-block mx-auto' src="{{base_url()}}/ressources/img/404.jpg"></p>
+        <div class='centered-bar flex-column flex-md-row'>
             <a class='btn btn-outline-primary' href="{{path_for('accueil')}}">Retour à l'accueil</a>
             <a class='btn btn-outline-primary' href="javascript:history.back()">Page précédente</a>
             <a class='btn btn-outline-primary' href="{{path_for('afficherMesListes')}}">Retour vers mes listes</a>
