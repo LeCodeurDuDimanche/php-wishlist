@@ -184,6 +184,8 @@
      {
         global $app;
 
+        $token = $args['id'];
+        $liste = self::recupererListe($request, $response, $token);
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
         $url = Utils::getFilteredPost($request, "url");
@@ -226,7 +228,7 @@
             $item->tarif = $prix;
             $item->save();
             Flash::flash("message", "Item modifié");
-            return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
+            return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
             return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
