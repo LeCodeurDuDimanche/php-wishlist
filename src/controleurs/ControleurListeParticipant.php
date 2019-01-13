@@ -74,8 +74,9 @@
 
         $estCreateur = false;
 
-        //On check les cookies (sans les listes crees par un utilisateur connecte)
-        $estCreateur = in_array($liste->id, Utils::getValidListesCookie(false));
+        //On check les cookies (avec les listes crees par un utilisateur connecte seulement si on n'est pas connecte)
+        $estConnect = Authentification::estConnecte();
+        $estCreateur = in_array($liste->id, Utils::getValidListesCookie($estConnecte));
         //On check les listes de l'Utilisateur
         if ($user = Authentification::getUtilisateur())
             $estCreateur = $estCreateur || $user->listesCrees->where("id", "=", $liste->id)->count() > 0;
