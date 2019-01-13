@@ -62,7 +62,7 @@
 			<div class="list-group-item flex-column align-items-start mt-4">
 				  <div class="mb-1">{{m.texte}}</div>
 				<p class="mb-2 mt-2 text-muted font-italic">
-					Par {{m.createur}} {{m.created_at|time_diff()}}
+					Par {{m.createur}} {% if m.user_id is not null %} ({{m.auteur().pseudo}}) {% endif %} {{m.created_at|time_diff()}}
 				</p>
 		   </div>
 		{% endfor %}

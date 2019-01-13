@@ -18,10 +18,15 @@ class MessagesListe extends \Illuminate\Database\Eloquent\Model{
 	{
 		if ($this->user_id)
 		{
-			$user = Utilisateur::where("id", "=", $this->user_id)->first();
+			$user = Utilisateur::find($this->user_id);
 			return $user ? $user->prenom . " " . $user->nom : "";
 		}
 		return $this->createur;
+	}
+
+	public function auteur()
+	{
+		return Utilisateur::find($this->user_id);
 	}
 
 }
