@@ -31,6 +31,13 @@
 {% endblock %}
 
 {% block content %}
+    {% if liste.estExpiree() %}
+        <div class='alert alert-info text-center my-2'>
+            <i class='fa fa-info mr-2'></i>
+            <span>
+                La liste est expirée, elle ne peut donc plus être modifiée. Vous pouvez maintenant voir les noms et messages des personnes ayant réservé des items.</span>
+        </div>
+    {% endif %}
     <div class='row mb-2'>
         <div class='col-12 col-sm-8'>
             <h1 class='d-block d-sm-none text-center'>{{liste.titre}}</h1>
