@@ -11,19 +11,19 @@ namespace mywishlist\controleurs;
     }
 
     public function afficherListesPubliques($request, $response, $args){
-    	$nbParPage = 20;
+    	$nbParPage = 2;
 
     	$numPage = 1;
     	if(isset($args['numPage']) && $args['numPage'] !== null){
     		$numPage = intval($args['numPage']);
     	}
 
-        $maxPage = 1 + (Liste::where("estPublique", "=", "1")->count() - 1) / $nbParPage;
+        $maxPage = intval(1 + (Liste::where("estPublique", "=", "1")->count() - 1) / $nbParPage);
 
         $numPage = $numPage > $maxPage ? $maxPage : $numPage;
 
     	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get();
 
-    	return $this->view->render($response, "listesPubliques.html", compact("listes"));
+    	return $this->view->render($response, "listesPubliques.html", compact("listes", "numPage", "maxPage"));
     }
 }

@@ -33,6 +33,22 @@
         </div>
     {% endfor %}
 
+    {% if listes is not empty %}
+    <nav class='d-flex mt-4 justify-content-center' aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item {% if numPage == 1 %} disabled {% endif %}">
+                <a class="page-link" href="{{ numPage > 1 ? path_for("listesPubliques", {numPage : numPage - 1}) : "#"}}" {% if numPage == 1 %} tabindex='-1' {% endif %}">Précédent</a>
+            </li>
+            {% for i in 1..maxPage %}
+                <li class="page-item"><a class="page-link {{i == numPage ? "active" : ""}}" href="{{path_for("listesPubliques", {numPage : i})}}">{{i}}</a></li>
+            {% endfor %}
+            <li class="page-item {% if numPage == maxPage %} disabled {% endif %}">
+                <a class="page-link" href="{{ numPage < maxPage ? path_for("listesPubliques", {numPage : numPage + 1}) : "#"}}" {% if numPage == maxPage %} tabindex='-1' {% endif %}">Suivant</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+
     </div>
 
 {% endblock %}

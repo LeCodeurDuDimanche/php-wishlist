@@ -1,6 +1,5 @@
 Faire footer
 Ajouter reserveParUser
-ajouter pagination dans listesPubliques
 ajotuer pagination dans message
 checker type img + taille (serveur + client)
 ajouter suppression image items
