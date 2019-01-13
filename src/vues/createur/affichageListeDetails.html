@@ -12,7 +12,7 @@
 
 		<a href="{{liste.estExpiree() ? "#" : path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120 {{liste.estExpiree() ? "disabled" : ""}}' title='Ajouter un item'><i class='fas fa-plus'></i></a>
  	{% else %}
-	<table class="table table-striped table-responsive">
+	<table class="table table-striped">
  		<thead>
 	 		<tr>
 	 			<th>
@@ -141,18 +141,20 @@
 			Vous verrez cette section à l'expiration de la liste
 		</div>
 	{% endif %}
-	<h3 class='mt-5'>Messages associés à la liste</h3>
-	{% for m in liste.messages %}
-		<div class="list-group-item flex-column align-items-start mt-4">
-			  <div class="mb-1">{{m.texte}}</div>
-			<p class="mb-2 mt-2 text-muted font-italic">
-				Par {{m.createur}} {{m.created_at|time_diff()}}
-			</p>
-	   </div>
-	  {% else %}
-		<div class='alert alert-info text-center my-3'>
-			<i class='fa fa-info mr-2'></i>
-			Aucun message pour l'instant
-		</div>
-	{% endfor %}
+	{# Les messages publics ne sont pas visible par le créateur
+		<h3 class='mt-5'>Messages associés à la liste</h3>
+		{% for m in liste.messages %}
+			<div class="list-group-item flex-column align-items-start mt-4">
+				  <div class="mb-1">{{m.texte}}</div>
+				<p class="mb-2 mt-2 text-muted font-italic">
+					Par {{m.createur}} {{m.created_at|time_diff()}}
+				</p>
+		   </div>
+		  {% else %}
+			<div class='alert alert-info text-center my-3'>
+				<i class='fa fa-info mr-2'></i>
+				Aucun message pour l'instant
+			</div>
+		{% endfor %}
+	#}
 {% endblock %}
