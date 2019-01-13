@@ -41,6 +41,10 @@ footer, header{
     line-height: 18px;
 }
 
+.table{
+    overflow-x: auto;
+}
+
 /* Permet de centrer des éléments en les espaçant de 10 px */
 .centered-bar{
     display: flex;
