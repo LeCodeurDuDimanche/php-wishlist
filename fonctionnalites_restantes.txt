@@ -1,14 +1,20 @@
 checker type img + taille (serveur + client)
 ajouter check url (+ url img) item
-Ajout validation liste (pas d'url de partage, ni de visualisation a part le createur si non validee)
+Redirect après login
 
 Création de liste:
 j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
 
+3 Validation de liste (pas d'url de partage, ni de visualisation a part le createur si non validee)
+3 Supprimer une image d'un items
+3 Tri des listes publiques par date d'expiration decroissante
+3 Afficher tous les createurs de liste publiques
+3 Ajouter des listes par token au Compte
+3 REcherche de liste publique (auteur et date)
 
 VALIDATION :
-    Tester webetu
     Verification html par w3c
-    Verifier toutes les fonctionnalites sur arche
-    Verifier les liens
+
+Description de toutes les fonctionnalites faites
+Tableau de bord
