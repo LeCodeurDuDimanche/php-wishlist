@@ -27,6 +27,9 @@
 	 			<th>
 	 				Tarif
 	 			</th>
+	 			<th>
+	 				Url
+	 			</th>
 				<th>
 					Réservé
 				</th>
@@ -51,7 +54,14 @@
 	 				{{it.tarif}}
 	 			</td>
 				<td>
-	 				{% if it.reservePar is not null %}
+	 				{% if it.url is null or it.url is empty %}
+						<div class='text-muted'>Aucun lien</div>
+					{% else %}
+						<a href="{{it.url|url_encode}}" target='_blank'>{{it.url}}</a>
+					{% endif %}
+	 			</td>
+				<td>
+	 				{% if it.estReserve() %}
 						<div class='alert alert-success text-center m-0'>
 							<i class='fa fa-check'></i>
 						</div>
@@ -63,7 +73,7 @@
 	 			</td>
 	 			<td>
 	 				<div class='d-flex'>
-						{% set disabled = liste.estExpiree() or it.reservePar is not null %}
+						{% set disabled = liste.estExpiree() or it.estReserve() %}
 						<a href="{{disabled ? "#" : path_for('formulaireModifItem', {id : liste.tokenCreateur, num : it.id})}}" class='btn btn-primary mr-2 {{disabled? "disabled" : ""}}' title='Modifier'><i class="fas fa-pen"></i></a>
 		 				<form action="{{path_for('supprimerItem', {id : liste.tokenCreateur, num : it.id})}}" method="POST">
 							<input type='hidden' name='_METHOD' value='DELETE'>
@@ -74,7 +84,7 @@
 	 		</tr>
 	 		{% endfor %}
 			<tr>
-				<td colspan='6' class='text-center'>
+				<td colspan='7' class='text-center'>
 						<a href="{{liste.estExpiree() ? "#" : path_for('formulaireAjouterItem', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120 {{liste.estExpiree() ? "disabled" : ""}}' title='Ajouter un item'><i class='fas fa-plus'></i></a>
 				</td>
 			</tr>
@@ -86,7 +96,7 @@
 	<div class='row my-3'>
 		<div class='col-12 col-sm-6'>
 			<div>Progression des réservations de la liste</div>
-			{% set progression = listeIt.count() ? (listeIt.where('reservePar', '!=', null).count() / (listeIt.count() ? listeIt.count() : 1)) * 100 : 0 %}
+			{% set progression = listeIt.count() ? (nbItemsReserves / (listeIt.count() ? listeIt.count() : 1)) * 100 : 0 %}
 			<div class="progress relative">
 			  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 			  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
@@ -117,12 +127,12 @@
 	</div>
 
 	<h3 class='mt-5'>Contributeurs</h3>
-	{% set contributeurs = listeIt.groupBy("reservePar") %}
+	{% set contributeurs = listeIt.groupBy("reservePar").concat(listeIt.groupBy("reserveParUser")) %}
 	{% if liste.estExpiree() %}
 		<ul class='pl-0'>
-			{% for contrib, items in contributeurs if contrib %}
+			{% for items in contributeurs if contrib %}
 				<li class='ml-5'>
-					{{contrib}}
+					{{items[0].reservePar()}}
 					<ul>
 						{% for it in items %}
 							<li>A offert "{{it.titre}}" {% if it.message is defined %} avec le message suivant : {{it.message}} {% endif %}

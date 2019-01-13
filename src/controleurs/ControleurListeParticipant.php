@@ -41,7 +41,12 @@
             $token = $args['token'];
      		$liste = static::recupererListe($request, $response, $token);
             $message = new MessagesListe();
-            $message->createur = $nom;
+
+            if (Authentification::estConnecte())
+                $message->user_id = Authentification::getIdUtilisateur();
+            else
+                $message->createur = $nom;
+                
             $message->liste_id = $liste->id;
             $message->texte = $texte;
             if ($message->save())

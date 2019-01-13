@@ -265,25 +265,30 @@
 
  		$listeIt = $liste->items()->get();
 
-        $nbContrib = $listeIt->keyBy('reservePar')->count();
+        $nbContrib = $listeIt->keyBy('reserverParUser')->count() + $listeIt->keyBy('reservePar')->count();
         $nbItems = $listeIt->count();
         $prixTotal = $listeIt->sum('tarif');
+        $nbItemsReserves = $listeIt->filter(function($it) {return $it->estReserve();})->count();
+
 
         $valeursStats = [
                 ["val" => $nbContrib, "text" => "$nbContrib contributeurs", "bg" => "success"],
                 ["val" => $nbItems, "text" => $nbItems . ($nbItems > 1 ? " items" : " item"), "bg" => "warning"],
                 ["val" => $prixTotal / 20, "text" => "Prix total de $prixTotal €", "bg" => "info"]
             ];
- 		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt", "valeursStats"));
+ 		return $this->view->render($response, "createur/affichageListeDetails.html", compact("liste", "listeIt", "valeursStats", "nbItemsReserves"));
  	}
 
     public function afficherMesListes($request, $response, $args){
 
         if($user = Authentification::getUtilisateur()){
-            $meslistes = $user->listesCrees()->get();
+            $meslistes = $user->listesCrees;
+            $listeParticipation = $user->listeParticipation;
         }
-        else
+        else {
             $meslistes = new Collection();
+            $listeParticipation = new Collection();
+        }
 
         $idListesCookies = Utils::getValidListesCookie();
         foreach($idListesCookies as $id)
@@ -292,6 +297,7 @@
         $meslistes->sortByDesc("created_at");
 
         $meslistes = $meslistes->all();
+
 
         return $this->view->render($response, "affichageMesListes.html", compact("meslistes"));
     }
@@ -371,8 +377,8 @@
         $numItem = intval($route->getArgument('num'));
         $item = Item::where('id', '=', $numItem)->first();
 
-        //On ne peut pas modifier une liste expiree
-        if ($item->reservePar !== null)
+        //On ne peut pas modifier un item reserve
+        if ($item->estReserve())
         {
             Flash::flash("erreur", "Impossible de modifier ou de supprimer un item reservé");
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);

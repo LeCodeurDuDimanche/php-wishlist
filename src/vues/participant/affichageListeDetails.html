@@ -47,10 +47,10 @@
 
 	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
 
-	 				{% if it.reservePar == NULL and not liste.estExpiree() %}
+	 				{% if not it.estReserve() and not liste.estExpiree() %}
 	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
 	 				{% else %}
-	 					<i> Réservé par : </i>{{it.reservePar ?? "Personne n'a reservé cet item"}}
+	 					<i> Réservé par : </i>{{it.reservePar() ?? "Personne n'a reservé cet item"}}
 	 				{% endif %}
 	 			</td>
 	 		</tr>

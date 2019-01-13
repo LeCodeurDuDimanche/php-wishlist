@@ -37,9 +37,10 @@ class MessagesListeTableMigration extends Migration
          $this->schema->dropIfExists("messagesListe");
          $this->schema->create("messagesListe", function(Blueprint $table){
              $table->increments('id');
-             $table->string('texte');
-             $table->string('createur', 2048);
+             $table->string('texte', 2048);
              $table->integer('liste_id')->unsigned();
+             $table->string('createur')->nullable();
+             $table->integer('user_id')->unsigned()->nullable();
              $table->timestamps();
          });
      }

@@ -1,4 +1,3 @@
-Ajouter reserveParUser
 checker type img + taille (serveur + client)
 ajouter check url (+ url img) item
 Ajout validation liste (pas d'url de partage, ni de visualisation a part le createur si non validee)

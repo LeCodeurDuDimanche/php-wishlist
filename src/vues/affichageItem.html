@@ -18,20 +18,20 @@
 	<p>
 		<strong>Lien externe :</strong>
 		{% if item.url is not null and item.url is not empty %}
-			<a href="{{item.url|url_encode}}">{{item.url}}</a>
+			<a href="{{item.url|url_encode}}" terget='_blank'>{{item.url}}</a>
 		{% else %}
 			<span class='text-muted'>Aucun lien ajouté</span>
 		{% endif %}
 	</p>
 	<p><b>Prix : {{item.tarif}} euros</b></p>
  	<p>
-		{% if item.reservePar is null %}
+		{% if not item.estReserve() %}
  		<div>
 			<span class='mr-4'>Disponible :</span>
 			<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : item.id})}}" class='btn btn-primary e-120' title='Reserver'>Reserver</a>
 		</div>
 		{% else %}
- 			<i>Déjà réservé par {{item.reservePar}}.</i>
+ 			<i>Déjà réservé par {{item.reservePar()}}.</i>
  		{% endif %}
  	</p>
 

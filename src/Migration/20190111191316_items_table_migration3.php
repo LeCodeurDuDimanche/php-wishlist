@@ -45,6 +45,7 @@ class ItemsTableMigration3 extends Migration
             $table->string('message')->nullable();
             $table->float('tarif');
             $table->string('reservePar')->nullable();
+            $table->string('reserveParUser')->nullable();
             $table->timestamps();
         });
 

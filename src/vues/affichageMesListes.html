@@ -14,47 +14,92 @@
 	</div>
 </div>
 <hr class='my-5'>
+	<h3 class='mb-5 text-center'><strong>Vos listes</strong></h3>
+	{% for l in meslistes %}
 
-{% if meslistes is not empty %}
-	<h3 class='mb-5 text-center'><strong>Voici toutes vos listes</strong></h3>
-		{% for l in meslistes %}
-
-			<a href="{{path_for('listeCreateur', {id : l.tokenCreateur})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
-		        <div class="d-flex justify-content-center">
-		          <h3 class="mb-1">{{l.titre}}</h3>
-		        </div>
-		        <p class="mb-2 mt-2">
-		            {{l.desc}}
-		        </p>
-		        <div class='row'>
-		        	<small class='col-6'>
-			            <i>
-			                Créée par : {{l.createur}}<br>
-			                Expire {{l.expiration|time_diff(false)}}
-			            </i>
-			        </small>
-		 			<div class='col-6 d-flex justify-content-center flex-row'>
-		 				{% if l.estPublique %}
-			            <div class='alert alert-success p-2 ml-1'>
-			                <strong>Publique</strong>
-			                <i class='fa fa-lock-open ml-1'></i>
+		<a href="{{path_for('listeCreateur', {id : l.tokenCreateur})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
+	        <div class="d-flex justify-content-center">
+	          <h3 class="mb-1">{{l.titre}}</h3>
+	        </div>
+	        <p class="mb-2 mt-2">
+	            {{l.desc}}
+	        </p>
+	        <div class='row'>
+	        	<small class='col-6'>
+		            <i>
+		                Créée par : {{l.createur}}<br>
+		                Expire {{l.expiration|time_diff(false)}}
+		            </i>
+		        </small>
+	 			<div class='col-6 d-flex justify-content-center flex-row'>
+	 				{% if l.estPublique %}
+		            <div class='alert alert-success p-2 ml-1'>
+		                <strong>Publique</strong>
+		                <i class='fa fa-lock-open ml-1'></i>
+		            </div>
+			        {% else %}
+			            <div class='alert alert-dark p-2 ml-1'>
+			                <strong>Privée</strong>
+			                <i class='fa fa-lock ml-1'></i>
 			            </div>
-				        {% else %}
-				            <div class='alert alert-dark p-2 ml-1'>
-				                <strong>Privée</strong>
-				                <i class='fa fa-lock ml-1'></i>
-				            </div>
-				        {% endif %}
-				    </div>
-			   </div>
-	       </a>
-		{% endfor %}
+			        {% endif %}
+			    </div>
+		   </div>
+       </a>
+	   {% else %}
+			<div class='alert alert-info text-center w-100 my-2'>
+				<i class='fa fa-info mr-2'></i>
+				<span>Vous n'avez pas encore créé de liste !</span>
+			</div>
+ 		{% endfor %}
+
+	<hr class='my-5'>
+
+	<h3 class='mb-5 text-center'><strong>Listes auxquelles vous avez participé</strong></h3>
+	{% for l in listeParticipation %}
+
+		<a href="{{path_for('listeParticipant', {token : l.tokenParticipant})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
+	        <div class="d-flex justify-content-center">
+	          <h3 class="mb-1">{{l.titre}}</h3>
+	        </div>
+	        <p class="mb-2 mt-2">
+	            {{l.desc}}
+	        </p>
+	        <div class='row'>
+	        	<small class='col-6'>
+		            <i>
+		                Créée par : {{l.createur}}<br>
+		                Expire {{l.expiration|time_diff(false)}}
+		            </i>
+		        </small>
+	 			<div class='col-6 d-flex justify-content-center flex-row'>
+	 				{% if l.estPublique %}
+		            <div class='alert alert-success p-2 ml-1'>
+		                <strong>Publique</strong>
+		                <i class='fa fa-lock-open ml-1'></i>
+		            </div>
+			        {% else %}
+			            <div class='alert alert-dark p-2 ml-1'>
+			                <strong>Privée</strong>
+			                <i class='fa fa-lock ml-1'></i>
+			            </div>
+			        {% endif %}
+			    </div>
+		   </div>
+       </a>
 	{% else %}
-		<div class='alert alert-info text-center w-100 my-2'>
-			<i class='fa fa-info mr-2'></i>
-			<span>Vous n'avez pas encore créé de liste !</span>
-		</div>
-	{% endif %}
+		 {% if est_connecte() %}
+			<div class='alert alert-info text-center w-100 my-2'>
+				<i class='fa fa-info mr-2'></i>
+				<span>Vous n'avez pas encore participé à une liste</span>
+			</div>
+		{% else %}
+			<div class='alert alert-warning text-center w-100 my-2'>
+				<i class='fa fa-exclamation-triangle mr-2'></i>
+				<span>Cette fonctionnalité est reservée aux utilisateurs qui ont <a href='{{path_for("login")}}'>créé un compte</a></span>
+			</div>
+		{% endif %}
+	{% endfor %}
 
 	<hr class='my-5'>
 	<h3 class='text-center mb-5'><strong>Création de liste</strong></h3>

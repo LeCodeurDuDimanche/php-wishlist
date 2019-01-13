@@ -9,7 +9,7 @@ class ControleurItem extends Controleur{
 	public function afficherFormulaireReservation($request, $response, $args){
 		$item = $this->recuperItem($request, $response, $args);
 
-		if($item->reservePar != null){
+		if($item->estReserve()){
 			return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
 		}
 
@@ -32,17 +32,20 @@ class ControleurItem extends Controleur{
         {
             Flash::flash("erreur", "Des données sont manquantes");
         }
-        else if ($item->reservePar != null)
+        else if ($item->estReserve())
         {
-            Flash::flash("erreur", "L'item est déjà reservé par $item->reservePar.");
+            Flash::flash("erreur", "L'item est déjà reservé par " . $item->reservePar());
         }
         else {
+            //On reserve par user si connecte, par nom sinon
+            $user = Authentification::getUtilisateur();
+			$item->reserver($user ? $user : $nom);
 
-			$item->reservePar = $nom;
             if ($message !== null)
                 $item->message = $message;
+
 			$item->save();
-			$_SESSION['nomReservation'] = $item->reservePar;
+			$_SESSION['nomReservation'] = $item->reservePar();
 
             Flash::flash("message", "Réservation effectuée");
 		}

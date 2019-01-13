@@ -61,7 +61,8 @@
     <div class='section'>
         <h4 class='mb-3'>Mes listes</h4>
         {% set nbListes = user.listesCrees.all()|length %}
-        <div>Vous avez créé <strong>{{nbListes}}</string> liste{% if nbListes > 1 %}s{% endif %}</div>
+        {% set nbPartici = user.listesParticipation.all()|length %}
+        <div>Vous avez créé <strong>{{nbListes}}</strong> liste{% if nbListes > 1 %}s{% endif %} et participé à <strong>{{nbPartici}}</strong> liste{% if nbPartici > 1 %}s{% endif %}</div>
         <a href="{{path_for('afficherMesListes')}}" class='btn btn-outline-primary' title='Voir mes listes'><i class="far fa-arrow-alt-circle-right pr-1"></i>Accéder à mes listes</a>
     </div>
 {% endblock %}
