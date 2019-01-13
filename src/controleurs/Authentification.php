@@ -65,6 +65,18 @@
             return false;
         }
 
+        public static function supprimer(string $mdp)
+        {
+            $user = static::verifierMdp(static::getNomUtilisateur(), $mdp);
+            if ($user)
+            {
+                $user->delete();
+                self::deconnexion();
+                return true;
+            }
+            return false;
+        }
+
         public static function deconnexion()
         {
             static::init();

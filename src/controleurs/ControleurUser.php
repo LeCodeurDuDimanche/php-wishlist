@@ -161,4 +161,17 @@ use mywishlist\models\Utilisateur;
         }
         return $response->withJson($ret);
     }
+
+    public function supprimerCompte($request, $response, $args)
+    {
+
+        $mdp = Utils::getFilteredPost($request, "mdp");
+
+        if (Authentification::supprimer($mdp))
+            Flash::flash('message', 'Compte supprimé. Toutes les listes et message associés à ce compte on été supprimés.');
+        else
+            Flash::flash('erreur', 'Mot de passe incorrect');
+
+        return Utils::redirect($response, "compte");
+    }
 }
