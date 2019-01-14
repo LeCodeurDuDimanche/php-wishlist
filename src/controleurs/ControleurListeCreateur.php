@@ -216,6 +216,7 @@
                 $item->desc = $descrip;
                 $item->img = $filename;
                 $item->url = $url;
+                $item->imgLocale = $choixImage === "Upload";
                 $item->tarif = $prix;
                 $liste = Liste::where("tokenCreateur", "=", $token)->first();
                 $item->liste_id = $liste->id;
@@ -252,6 +253,9 @@
             if ($choixImage === "Upload")
             {
                 $filename = $this->imageUpload($request, $files["fichierImg"]);
+                if (!$filename)
+                    return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
+
             }
             else if ($choixImage == "Url")
                 $filename = $img;
@@ -273,7 +277,13 @@
                 $item->titre = $titre;
                 $item->desc = $descrip;
                 if ($filename)
+                {
+                    if ($item->imgLocale)
+                        $item->supprimerImage();
+
                     $item->img = $filename;
+                    $item->imgLocale = $choixImage === "Upload";
+                }
                 $item->url = $url;
                 $item->tarif = $prix;
                 $item->save();

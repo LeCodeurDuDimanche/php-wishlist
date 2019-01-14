@@ -41,6 +41,7 @@ class ItemsTableMigration3 extends Migration
             $table->string('titre');
             $table->string('desc', 2048);
             $table->string('img')->default('');
+            $table->boolean('imgLocale')->default(false);
             $table->string('url')->default('');
             $table->string('message')->nullable();
             $table->float('tarif');

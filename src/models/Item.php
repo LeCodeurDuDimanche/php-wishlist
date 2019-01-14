@@ -8,7 +8,7 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey = 'id';
 
 
-    protected $fillable = ['id' , "liste_id", "titre", "desc", "url", "tarif", "img","reservePar", "reserveParUser","updated_at", "created_at"];
+    protected $fillable = ['id' , "liste_id", "titre", "desc", "url", "tarif", "img", "imgLocale", "reservePar", "reserveParUser","updated_at", "created_at"];
 
 	public function liste()
 	{
@@ -19,20 +19,26 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 
 	public function delete()
 	{
-		//$this->supprimerImage();
+		$this->supprimerImage();
 		parent::delete();
 	}
 
 	public function supprimerImage()
 	{
-		//Todo: check if upload and then unlink
+		if ($this->img && $this->estLocale)
+		{
+			$file = $_SERVER["DOCUMENT_ROOT"] . $this->img;
+			if (\file_exists($file))
+			 	return unlink($file);
+		}
+		return false;
 	}
 
 	public function reserver($user) : bool
 	{
 		if ($this->liste->estExpiree())
 			return false;
-			
+
 		$this->reserveParUser = null;
 		$this->reservePar = null;
 		if ($user != null)
