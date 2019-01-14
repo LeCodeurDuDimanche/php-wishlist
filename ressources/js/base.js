@@ -67,7 +67,7 @@ $(document).ready((e) => {
     });
 
     //Permet d'envoyer une requete DELETE pour la suppression de la liste
-    $("#supprimer-liste").click(function(e) {
+    $("#supprimer-liste, #supprimer-image").click(function(e) {
         let elem = $(e.delegateTarget);
         $.ajax(elem.data("url"), {
             method : "DELETE",
@@ -78,6 +78,8 @@ $(document).ready((e) => {
             }
         });
     });
+
+   
 
     //Permet de mettre a jour l'attribut value des inputs en fonction de leur valeur réelle, pour que les styles css s'appliquent correctement
     $(".follow-input").keyup(function(e){
