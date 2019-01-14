@@ -75,12 +75,15 @@ $app->group("/liste", function() use ($app){
 
 
 
+
         $app->get('/item{num}/editer', ControleurListeCreateur::class.":afficherModifItemListe")->setName("formulaireModifItem")
             ->add($checkNonPerimee)->add($checkNonReserve);
         $app->put('/item{num}/editer', ControleurListeCreateur::class.":modifierItem")->setName("modifierItem")
             ->add($checkNonPerimee)->add($checkNonReserve);
         $app->delete('/item{num}', ControleurListeCreateur::class.":supprimerItem")->setName('supprimerItem')
             ->add($checkNonPerimee)->add($checkNonReserve);
+        $app->delete('/item{num}/suppressionImage', ControleurListeCreateur::class.":supprimerImage")->setName("supprimerImage")->add($checkNonReserve);
+
     })->add(ControleurListeCreateur::class."::checkCreateurMiddleware");
 
     $app->get('/meslistes', ControleurListeCreateur::class.":afficherMesListes")->setName("afficherMesListes");

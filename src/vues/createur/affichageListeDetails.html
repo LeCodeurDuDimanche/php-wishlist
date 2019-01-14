@@ -48,7 +48,16 @@
 	 				{{it.desc}}
 	 			</td>
 	 			<td>
-	 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+	 				{% if it.img is null or it.img is empty %}
+	 				<div class='text-muted'>Aucune image</div>
+            		{% else %}
+            		<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+	 				<button id='supprimer-image' data-url="{{path_for('supprimerImage', {id: liste.tokenCreateur, num : it.id})}}" data-redirect-url="{{path_for('listeCreateurDetails', {id: liste.tokenCreateur, num : it.id})}}" class='btn btn-primary mt-2'>
+	               	<i class='fas fa-trash'></i>
+	                <span class='d-inline d-sm-none d-md-inline'>Supprimer l'image</span>
+            		</button>
+            		
+            		{% endif %}
 	 			</td>
 	 			<td>
 	 				{{it.tarif}}

@@ -114,6 +114,8 @@
         return $response;
      }
 
+
+
      public function afficherFormulaireModification($request, $response, $args)
      {
         $liste = self::recupererListe($request, $response, $args['id']);
@@ -143,8 +145,7 @@
 
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
-
-        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img)))
+        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || ($choixImage === "Aucune" && !$img)))
         {
             if ($choixImage === "Upload")
             {
@@ -179,6 +180,15 @@
             return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
         }
     }
+
+    public function supprimerImage($request, $response, $args){
+        $item = Item::where('id', '=', intval($args['num']))->first();
+        $item->img = null;
+        $item->save();
+
+        Flash::flash("message", "Suppression réussie");
+        return $response;
+     }
 
      public function modifierItem($request, $response, $args)
      {
