@@ -57,7 +57,7 @@
      {
         return
             (strpos($url, "http://") === 0 || strpos($url, "https://") === 0)
-            && self::checkType($url, $type);
+            && file_exists($url);//self::checkType($url, $type);
      }
 
      public function afficherFormulaireCreation($request, $response, $args)
