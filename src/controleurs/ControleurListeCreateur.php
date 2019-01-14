@@ -238,6 +238,8 @@
         $item->img = null;
         $item->save();
 
+        $item->supprimerImage();
+
         Flash::flash("message", "Suppression réussie");
         return $response;
      }
