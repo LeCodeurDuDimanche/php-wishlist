@@ -28,28 +28,36 @@
         return $liste;
     }
 
+    private static function checkType($file, $type = 'all')
+    {
+       $finfo = finfo_open(FILEINFO_MIME_TYPE);
+       if (!$finfo)
+           return false;
+
+       $mime = finfo_file($finfo, $file);
+
+       finfo_close($finfo);
+       var_dump($mime);
+       if (!$mime)
+           return false;
+
+       if ($type !== "all")
+       {
+           if ($type === 'url')
+           {
+               return strpos($mime, "image/") === 0;
+           }
+           else
+               return false;
+       }
+       return true;
+    }
+
      private static function checkUrl($url, $type = 'all')
      {
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        if (!$finfo)
-            return false;
-
-        if ($type !== "all")
-        {
-            $mime = finfo_file($finfo, $url);
-            if (!$mime)
-                return false;
-
-            finfo_close($finfo);
-
-            if ($type === 'url')
-            {
-                return strpos($mime, "image/") === 0;
-            }
-            else
-                return false;
-        }
-        return true;
+        return
+            (strpos($url, "http://") === 0 || strpos($url, "https://") === 0)
+            && self::checkType($url, $type);
      }
 
      public function afficherFormulaireCreation($request, $response, $args)
@@ -158,12 +166,12 @@
      {
          global $app;
 
-         if ($file->getSize() < 2 * 1024 * 1024)
+         if ($file->getSize() > 2 * 1024 * 1024)
         {
             Flash::flash("erreur", "L'image doit faire moins de 2 Mo");
             return false;
         }
-        else if (!self::checkUrl($file->$file, "img"))
+        else if (!self::checkType($file->file, "img"))
         {
             Flash::flash("erreur", "Le fichier doit être une image valide");
             return false;
@@ -194,14 +202,22 @@
 
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
-        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || ($choixImage === "Aucune" && !$img)))
+        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null &&
+        (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || ($choixImage === "Aucun")))
         {
             if ($choixImage === "Upload")
             {
                 $filename = $this->imageUpload($request, $files["fichierImg"]);
+                if (!$filename)
+                {
+                    return Utils::redirect($response, "formulaireAjouterItem", ["id" => $token]);
+                }
+            }
+            else if ($choixImage == "Url"){
+                $filename = $img;
             }
             else {
-                $filename = $img;
+                $filename = null;
             }
 
             if ($choixImage == "Url" && !self::checkUrl($filename, "img"))
@@ -215,7 +231,8 @@
                 $item = new Item();
                 $item->titre = $titre;
                 $item->desc = $descrip;
-                $item->img = $filename;
+                if ($filename)
+                    $item->img = $filename;
                 $item->url = $url;
                 $item->imgLocale = $choixImage === "Upload";
                 $item->tarif = $prix;
@@ -224,13 +241,13 @@
                 $item->save();
 
                 Flash::flash("message", "Item ajouté");
+                return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
             }
-            return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
-
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
-            return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
         }
+        return Utils::redirect($response, "formulaireAjouterItem", ["id" => $args['id']]);
+
     }
 
     public function supprimerImage($request, $response, $args){
@@ -259,14 +276,16 @@
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
 
-        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
+        //var_dump($titre, $descrip, $prix, $choixImage, (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"));die();
+        if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null
+         && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
         {
 
             if ($choixImage === "Upload")
             {
                 $filename = $this->imageUpload($request, $files["fichierImg"]);
                 if (!$filename)
-                    return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
+                    return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
 
             }
             else if ($choixImage == "Url")
@@ -300,13 +319,12 @@
                 $item->tarif = $prix;
                 $item->save();
                 Flash::flash("message", "Item modifié");
+                return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
             }
-            return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");
-            return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
         }
-
+        return Utils::redirect($response, "formulaireModifItem", ["id" => $args['id'], "num" => $args['num']]);
      }
 
      public function supprimerItem($request, $response, $args){

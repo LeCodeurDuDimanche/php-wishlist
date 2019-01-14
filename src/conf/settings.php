@@ -12,6 +12,9 @@ use mywishlist\controleurs\Utils;
 setlocale(LC_TIME, 'fr', "fr_FR", "fr.utf8", "fr_FR.utf8", "fr_FR.utf-8");
 define("HOSTNAME", (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]");
 
+//Timeout pour les sockets (utilise dans la validation de liens)
+ini_set('default_socket_timeout', 2);
+
 return [
     'view' => function ($c) {
         $view = new Twig('src/vues', [

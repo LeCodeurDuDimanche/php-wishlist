@@ -9,25 +9,25 @@
     <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST" enctype="multipart/form-data">
         <div class='form-group'>
             <label for='nom'>Titre de l'item</label>
-            <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' required>
+            <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' value='{{get_data(["form", "nom"])}}' required>
         </div>
         <div class='form-group'>
             <label for='desc'>Description</label>
-            <textarea id='desc' name='desc' class='form-control' placeholder="Descriptif de l'item" required></textarea>
+            <textarea id='desc' name='desc' class='form-control' placeholder="Descriptif de l'item" required>{{get_data(["form", "desc"])}}</textarea>
         </div>
 
         <div class='form-group'>
             <label for='image' class='form-label d-block'>Image</label>
            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" checked>
+              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio1" value="Upload" {{get_data(["form", "choixImage"]) is null or get_data(["form", "choixImage"]) == "Upload" ? "checked" : ""}}>
               <label class="form-check-label" for="inlineRadio1">Depuis les fichiers</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url">
+              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio2" value="Url" {{get_data(["form", "choixImage"]) == "Url" ? "checked" : ""}}>
               <label class="form-check-label" for="inlineRadio2">Avec un lien</label>
             </div>
              <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio3" value="Aucun">
+              <input class="form-check-input" type="radio" name="choixImage" id="inlineRadio3" value="Aucun"  {{get_data(["form", "choixImage"]) == "Aucun" ? "checked" : ""}}>
               <label class="form-check-label" for="inlineRadio3">Aucune image</label>
             </div>
 
@@ -36,17 +36,17 @@
               <label class="custom-file-label" for="fichierImg">Sélectionnez une image...</label>
             </div>
             <div id='image-url' style='display:none'>
-                <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image">
+                <input id='img' name='img' class='form-control' type='text' placeholder="Lien vers l'image" value='{{get_data(["form", "img"])}}'>
             </div>
         </div>
         <div class='form-group'>
             <label for='url'>Lien vers une page qui détaille le produit, par exemple vers un site de e-commerce</label>
-            <input id='url' name='url' class='form-control' type='text'>
+            <input id='url' name='url' class='form-control' type='text' value='{{get_data(["form", "url"])}}' placeholder="Lien externe">
         </div>
 
         <div class='form-group'>
             <label for='tarif'>Tarif</label>
-            <input id='tarif' name='tarif' class='form-control' type='number' value="0.0"required>
+            <input id='tarif' name='tarif' class='form-control' type='number' value='{{get_data(["form", "tarif"])}}' step='0.1' required>
         </div>
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value="Ajouter">

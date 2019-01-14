@@ -1,7 +1,6 @@
 Redirect après login
 
 Création de liste:
-j 3 Modifier une image à un item POST /liste/{id_edit}/item/{num}/editer/modifierImage
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
 
 3 Validation de liste (pas d'url de partage, ni de visualisation a part le createur si non validee)
