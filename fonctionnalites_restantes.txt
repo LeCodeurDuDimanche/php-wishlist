@@ -1,5 +1,3 @@
-checker type img + taille (serveur + client)
-ajouter check url (+ url img) item
 Redirect après login
 
 Création de liste:

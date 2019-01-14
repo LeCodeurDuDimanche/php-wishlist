@@ -26,6 +26,30 @@
         if ($liste === null)
             throw new NotFoundException($request, $response);
         return $liste;
+    }
+
+     private static function checkUrl($url, $type = 'all')
+     {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        if (!$finfo)
+            return false;
+
+        if ($type !== "all")
+        {
+            $mime = finfo_file($finfo, $url);
+            if (!$mime)
+                return false;
+
+            finfo_close($finfo);
+
+            if ($type === 'url')
+            {
+                return strpos($mime, "image/") === 0;
+            }
+            else
+                return false;
+        }
+        return true;
      }
 
      public function afficherFormulaireCreation($request, $response, $args)
@@ -128,16 +152,41 @@
         return $this->view->render($response, "createur/ajouterItem.html", compact("liste"));
      }
 
+     public function imageUpload($request, $file)
+     {
+         global $app;
+
+         if ($file->getSize() < 2 * 1024 * 1024)
+        {
+            Flash::flash("erreur", "L'image doit faire moins de 2 Mo");
+            return false;
+        }
+        else if (!self::checkUrl($file->$file, "img"))
+        {
+            Flash::flash("erreur", "Le fichier doit être une image valide");
+            return false;
+        }
+
+         $ext = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
+         $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
+         //Check nom unique
+         $relativeFilename = "ressources/uploaded/$filename";
+         $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
+
+         $file->moveTo($fullFilename);
+
+         return "/" .$request->getUri()->getBasePath() . "/" . $relativeFilename;
+     }
+
      public function ajouterItem($request, $response, $args)
      {
-        global $app;
         $token = $args['id'];
         $liste = self::recupererListe($request, $response, $token);
 
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
-        $url = Utils::getFilteredPost($request, "url");
-        $img = Utils::getFilteredPost($request, "img");
+        $url = filter_var(Utils::getFilteredPost($request, "url"), FILTER_SANITIZE_URL);
+        $img = filter_var(Utils::getFilteredPost($request, "img"), FILTER_SANITIZE_URL);
         $prix = Utils::getFilteredPost($request, "tarif");
         $choixImage = Utils::getFilteredPost($request, "choixImage");
 
@@ -148,30 +197,32 @@
         {
             if ($choixImage === "Upload")
             {
-                $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
-                $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
-                //Check nom unique
-                $relativeFilename = "ressources/uploaded/$filename";
-                $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
-
-                $file->moveTo($fullFilename);
-
-                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
+                $filename = $this->imageUpload($request, $files["fichierImg"]);
             }
-            else
+            else {
                 $filename = $img;
+            }
 
-            $item = new Item();
-            $item->titre = $titre;
-            $item->desc = $descrip;
-            $item->img = $filename;
-            $item->url = $url;
-            $item->tarif = $prix;
-            $liste = Liste::where("tokenCreateur", "=", $token)->first();
-            $item->liste_id = $liste->id;
-            $item->save();
+            if ($choixImage == "Url" && !self::checkUrl($filename, "img"))
+            {
+                Flash::flash("erreur", "Le lien de l'image est invalide");
+            }
+            else if ($url && !self::checkUrl($url)) {
+                Flash::flash("erreur", "Le lien attaché à l'item est invalide");
+            }
+            else {
+                $item = new Item();
+                $item->titre = $titre;
+                $item->desc = $descrip;
+                $item->img = $filename;
+                $item->url = $url;
+                $item->tarif = $prix;
+                $liste = Liste::where("tokenCreateur", "=", $token)->first();
+                $item->liste_id = $liste->id;
+                $item->save();
 
-            Flash::flash("message", "Item ajouté");
+                Flash::flash("message", "Item ajouté");
+            }
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
 
         } else {
@@ -182,15 +233,13 @@
 
      public function modifierItem($request, $response, $args)
      {
-        global $app;
-
         $token = $args['id'];
         $liste = self::recupererListe($request, $response, $token);
 
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
-        $url = Utils::getFilteredPost($request, "url");
-        $img = Utils::getFilteredPost($request, "img");
+        $url = filter_var(Utils::getFilteredPost($request, "url"), FILTER_SANITIZE_URL);
+        $img = filter_var(Utils::getFilteredPost($request, "img"), FILTER_SANITIZE_URL);
         $prix = Utils::getFilteredPost($request, "tarif");
         $choixImage = Utils::getFilteredPost($request, "choixImage");
 
@@ -202,33 +251,34 @@
 
             if ($choixImage === "Upload")
             {
-                $ext = pathinfo($files["fichierImg"]->getClientFilename(), PATHINFO_EXTENSION);
-                $filename = strtr(base64_encode(random_bytes(24)), "+/", "-_") . "." . $ext;
-                //Check nom unique
-                $relativeFilename = "ressources/uploaded/$filename";
-                $fullFilename = $app->getContainer()->rootDir. "/$relativeFilename";
-
-                $file->moveTo($fullFilename);
-
-                $filename = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $request->getUri()->getBasePath() . "/" . $relativeFilename;
+                $filename = $this->imageUpload($request, $files["fichierImg"]);
             }
             else if ($choixImage == "Url")
                 $filename = $img;
             else
                 $filename = null;
 
-            $item = Item::where('id', '=', intval($args['num']))->first();
-            if ($item === null)
-                throw new NotFoundException($request, $response);
+            if ($choixImage == "Url" && !self::checkUrl($filename, "img"))
+            {
+                Flash::flash("erreur", "Le lien de l'image est invalide");
+            }
+            else if ($url && !self::checkUrl($url)) {
+                Flash::flash("erreur", "Le lien attaché à l'item est invalide");
+            }
+            else {
+                $item = Item::where('id', '=', intval($args['num']))->first();
+                if ($item === null)
+                    throw new NotFoundException($request, $response);
 
-            $item->titre = $titre;
-            $item->desc = $descrip;
-            if ($filename)
-                $item->img = $filename;
-            $item->url = $url;
-            $item->tarif = $prix;
-            $item->save();
-            Flash::flash("message", "Item modifié");
+                $item->titre = $titre;
+                $item->desc = $descrip;
+                if ($filename)
+                    $item->img = $filename;
+                $item->url = $url;
+                $item->tarif = $prix;
+                $item->save();
+                Flash::flash("message", "Item modifié");
+            }
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
         } else {
             Flash::flash("erreur", "Des données sont manquantes ou invalides");

@@ -169,4 +169,20 @@ $(document).ready((e) => {
         else
             output.text("Sélectionnez une image...");
     });
+    $("input").change(function(e){
+        let elem = $(e.delegateTarget);
+        let files = elem.prop("files");
+        let maxSize = elem.data("max");
+        if (!maxSize)
+            return;
+
+        let size = 0;
+        for (f of files)
+            size += f.size;
+
+        if (size > maxSize * 1024 * 1024)
+            elem[0].setCustomValidity("Le fichier doit faire " + maxSize + " Mo ou moins.");
+        else
+            elem[0].setCustomValidity("");
+    });
 });
