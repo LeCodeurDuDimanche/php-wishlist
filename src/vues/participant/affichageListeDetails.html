@@ -7,65 +7,75 @@
 {% endblock %}
 {% block details %}
 	<h3 class='my-4'>Souhaits de {{liste.createur}}</h3>
- 	<table class="table table-striped">
- 		<thead>
-	 		<tr>
-	 			<th>
-	 				Nom
-	 			</th>
-	 			<th>
-	 				Description
-	 			</th>
-	 			<th>
-	 				Image
-	 			</th>
-	 			<th>
-	 				Tarif
-	 			</th>
-	 			<th>
-	 				Actions
-	 			</th>
-	 		</tr>
- 		</thead>
- 		<tbody>
-	 		{% for it in listeIt %}
-	 		<tr>
-	 			<td>
-	 				{{it.titre}}
-	 			</td>
-	 			<td>
-	 				{{it.desc}}
-	 			</td>
-	 			<td>
-	 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
-	 			</td>
-	 			<td>
-	 				{{it.tarif}}
-	 			</td>
-	 			<td>
+	{% if listeIt is not empty %}
+		<table class="table table-striped">
+	 		<thead>
+		 		<tr>
+		 			<th>
+		 				Nom
+		 			</th>
+		 			<th>
+		 				Description
+		 			</th>
+		 			<th>
+		 				Image
+		 			</th>
+		 			<th>
+		 				Tarif
+		 			</th>
+		 			<th>
+		 				Actions
+		 			</th>
+		 		</tr>
+	 		</thead>
+	 		<tbody>
+		 		{% for it in listeIt %}
+		 		<tr>
+		 			<td>
+		 				{{it.titre}}
+		 			</td>
+		 			<td>
+		 				{{it.desc}}
+		 			</td>
+		 			<td>
+		 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
+		 			</td>
+		 			<td>
+		 				{{it.tarif}}
+		 			</td>
+		 			<td>
 
 
-	 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
+		 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
 
-	 				{% if not it.estReserve() and not liste.estExpiree() %}
-	 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
-	 				{% else %}
-	 					<i> Réservé par : </i>{{it.reservePar() ?? "Personne n'a reservé cet item"}}
-	 				{% endif %}
-	 			</td>
-	 		</tr>
-	 		{% endfor %}
- 		</tbody>
- 	</table>
+		 				{% if not it.estReserve() and not liste.estExpiree() %}
+		 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>
+		 				{% else %}
+		 					<i> Réservé par : </i>{{it.reservePar() ?? "Personne n'a reservé cet item"}}
+		 				{% endif %}
+		 			</td>
+		 		</tr>
+		 		{% endfor %}
+	 		</tbody>
+	 	</table>
+	{% else %}
+		<div class='alert alert-info w-100 text-center my-2'>
+			<i class='fa fa-info mr-2'></i>
+			{{liste.createur}} n'a pas encore ajouté de souhaits à sa liste
+		</div>
+	{% endif %}
 	<h3 class='my-4'>Messages publics</h3>
+		<p>Total de <strong>{{liste.messages|length}}</strong> {{ liste.messages|length <=1 ? "message" : "messages"}}
 		{% for m in liste.messages %}
 			<div class="list-group-item flex-column align-items-start mt-4">
 				  <div class="mb-1">{{m.texte}}</div>
 				<p class="mb-2 mt-2 text-muted font-italic">
 					Par {{m.createur}} {% if m.user_id is not null %} ({{m.auteur().pseudo}}) {% endif %} {{m.created_at|time_diff()}}
 				</p>
+
 		   </div>
 		{% endfor %}
+		<hr class='ml-0 w-25'>
 		<div>
 			<h4 class='mt-4 mb-2'>Ajouter un message à la liste</h4>
 			<form action='{{path_for("ajouterMessagePublic", {token: liste.tokenParticipant})}}' method='POST' class='form-row'>
