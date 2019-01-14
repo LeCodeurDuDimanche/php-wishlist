@@ -56,7 +56,7 @@
 	               	<i class='fas fa-trash'></i>
 	                <span class='d-inline d-sm-none d-md-inline'>Supprimer l'image</span>
             		</button>
-            		
+
             		{% endif %}
 	 			</td>
 	 			<td>
@@ -66,7 +66,7 @@
 	 				{% if it.url is null or it.url is empty %}
 						<div class='text-muted'>Aucun lien</div>
 					{% else %}
-						<a href="{{it.url|url_encode}}" target='_blank'>{{it.url}}</a>
+						<a href="{{it.url}}" target='_blank'>{{it.url}}</a>
 					{% endif %}
 	 			</td>
 				<td>

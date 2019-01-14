@@ -18,7 +18,7 @@
 	<p>
 		<strong>Lien externe :</strong>
 		{% if item.url is not null and item.url is not empty %}
-			<a href="{{item.url|url_encode}}" terget='_blank'>{{item.url}}</a>
+			<a href="{{item.url}}" terget='_blank'>{{item.url}}</a>
 		{% else %}
 			<span class='text-muted'>Aucun lien ajouté</span>
 		{% endif %}
