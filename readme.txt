@@ -34,7 +34,7 @@ Troubleshooting :
         => Modifier la variable $path_to_root dans le fichier src/Migration/{timestamp}_liste_table_migration3.php.
             Elle doit être egale au chemin depuis la racine serveur jusqu'à la racine du projet
             Ensuite éxécuter
-                php vendor/robmorgan/phinx/bin/phinx rollback -c src/Migration/config.php
+                php vendor/robmorgan/phinx/bin/phinx rollback -c src/Migration/config.php -t 0
                 php vendor/robmorgan/phinx/bin/phinx migrate -c src/Migration/config.php
 
 
