@@ -72,7 +72,7 @@ $app->group("/liste", function() use ($app){
         $app->delete('', ControleurListeCreateur::class.":supprimerListe")->setName("supprimerListe");
         $app->get('/editer', ControleurListeCreateur::class.":afficherFormulaireModification")->setName("formulaireModifListe")->add($checkNonPerimee);
         $app->put('/editer', ControleurListeCreateur::class.":modifierListe")->setName("modifierListe")->add($checkNonPerimee);
-
+        $app->post('/valider', ControleurListeCreateur::class.":validerListe")->setName("validerListe")->add($checkNonPerimee);
 
 
 

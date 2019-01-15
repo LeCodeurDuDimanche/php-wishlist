@@ -80,7 +80,7 @@
         </p>
     </div>
 
-    {% if liste.estValidee %}
+    {% if liste.estValidee() %}
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage : </strong></label>
         <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex align-items-center flex-column flex-sm-row">
@@ -118,19 +118,25 @@
     </div>
     {% endblock details %}
 
-    {% block validation %}
-   <div class='mt-5'>
-      <h3 class='mt-5'>Valider la liste</h3>
-        <div class='alert alert-danger text-center my-3'>
-            <i class='fa fa-exclamation-triangle mr-2'></i>
-            Valider votre liste pour accéder aux fonctionnalités de partage !
+    {% if not liste.estValidee() %}
+        {% block validation %}
+        <div class='mt-5'>
+          <h3 class='mt-5'>Valider la liste</h3>
+            <div class='alert alert-info text-center my-3'>
+                <i class='fa fa-info-triangle mr-2'></i>
+                Valider votre liste pour accéder aux fonctionnalités de partage !
+            </div>
+            <div class="text-center">
+                <form method="post" action="{{path_for('validerListe', {id : liste.tokenCreateur})}}">
+                    <button type="submit" class="btn btn-primary e-120">
+                        <i class='fas fa-check mr-3'></i>Valider la liste</a>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="text-center">
-            <a href="{{liste.estExpiree() ? "#" : path_for('afficherMesListes', {id : liste.tokenCreateur})}}" class='btn btn-primary e-120 {{liste.estExpiree() ? "disabled" : ""}}'><i class='fas fa-check mr-3'></i>Valider la liste</a>
-        </div>
-    </div>
 
     {% endblock validation %}
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

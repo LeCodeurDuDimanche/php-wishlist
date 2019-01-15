@@ -27,6 +27,10 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 
 	public function estValidee() : bool
 	{
+		if($this->estValidee == null){
+			return false;
+		}
+
 		return $this->estValidee;
 	}
 
