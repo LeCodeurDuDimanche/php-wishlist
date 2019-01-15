@@ -101,6 +101,18 @@
  	</table>
 {% endif %}
 
+		<div class='alert alert-danger text-center my-3'>
+            <i class='fa fa-exclamation-triangle mr-2'></i>
+            Attention, vous ne pourrez plus modifier la liste !
+        </div>
+		<a href="{{liste.estExpiree() ? "#" : path_for('afficherMesListes', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120 {{liste.estExpiree() ? "disabled" : ""}}' title='Valider la liste'><i class='fas fa-check'></i></a>
+
+
+
+
+
+
+
 	<h3 class='mt-5'>Statistiques</h3>
 	<div class='row my-3'>
 		<div class='col-12 col-sm-6'>
