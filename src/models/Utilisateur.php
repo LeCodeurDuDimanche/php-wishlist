@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class Utilisateur extends \illuminate\Database\Eloquent\Model{
+class Utilisateur extends BaseModel{
 
 	protected $table = 'user';
 	protected $primaryKey = "id";
@@ -29,18 +29,27 @@ class Utilisateur extends \illuminate\Database\Eloquent\Model{
 	}
 
 
-	public function delete()
+	protected function doDelete() : bool
 	{
 		foreach($this->listesCrees as $liste)
-			$liste->delete();
+		{
+			if (!$liste->delete())
+				return false;
+		}
 
 		foreach($this->messages as $message)
-			$message->delete();
+		{
+			if (!$message->delete())
+				return false;
+		}
 
 		foreach($this->itemsReserves as $item)
-			$item->reserver(null);
+		{
+			if (!$item->reserver(null))
+				return false;
+		}
 
-		parent::delete();
+		return parent::delete();
 	}
 
 }

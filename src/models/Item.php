@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class Item extends \Illuminate\Database\Eloquent\Model{
+class Item extends BaseModel{
 
 	protected $table = 'item';
 	protected $primaryKey = 'id';
@@ -15,26 +15,42 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 		return $this->belongsTo(Liste::class);
 	}
 
-	public function aCagnotte() : Bool
+	public function cagnottes(){
+		return $this->hasMany(Cagnotte::class);
+	}
+
+	public function aCagnotte() : bool
 	{
 		return $this->aCagnotte;
 	}
 
-	public function delete()
+	protected function doDelete() : bool
 	{
-		$this->supprimerImage();
-		parent::delete();
+		foreach($this->cagnottes as $c)
+		{
+			if (!$c->delete())
+				return false;
+		}
+
+		return true;
 	}
 
-	public function supprimerImage()
+    protected function postDelete() : bool
+    {
+        return $this->supprimerImage();
+    }
+
+	public function supprimerImage() : bool
 	{
-		if ($this->img && $this->estLocale)
+		if ($this->img && $this->imgLocale)
 		{
 			$file = $_SERVER["DOCUMENT_ROOT"] . $this->img;
 			if (\file_exists($file))
-			 	return unlink($file);
+			{
+				return unlink($file);
+			}
 		}
-		return false;
+		return true;
 	}
 
 	public function reserver($user) : bool
@@ -68,9 +84,5 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	public function estReserve() : bool
 	{
 		return $this->reserveParUser !== null || $this->reservePar !== null;
-	}
-
-	public function cagnotte(){
-		return $this->belongsTo(Cagnotte::class);
 	}
 }

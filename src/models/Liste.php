@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class Liste extends \Illuminate\Database\Eloquent\Model{
+class Liste extends BaseModel{
 
 	protected $table = 'liste';
 	protected $primaryKey = "id";
@@ -45,14 +45,20 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 		return $this->hasMany(MessagesListe::class);
 	}
 
-	public function delete()
+	protected function doDelete() : bool
 	{
 		foreach($this->items as $item)
-			$item->delete();
+		{
+			if (!$item->delete())
+				return false;
+		}
 		foreach($this->messages as $message)
-			$message->delete();
-			
-		parent::delete();
+		{
+			if (!$message->delete())
+				return false;
+		}
+
+		return true;
 	}
 
 }

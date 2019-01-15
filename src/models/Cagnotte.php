@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class Cagnotte extends \Illuminate\Database\Eloquent\Model{
+class Cagnotte extends BaseModel{
 
 	protected $table = 'cagnotte';
 	protected $primaryKey = 'id';
@@ -27,6 +27,11 @@ class Cagnotte extends \Illuminate\Database\Eloquent\Model{
 	public function auteur()
 	{
 		return Utilisateur::find($this->user_id);
+	}
+
+
+	protected function doDelete() :bool {
+		return true;
 	}
 
 }

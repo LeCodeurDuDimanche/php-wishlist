@@ -2,7 +2,7 @@
 
 namespace mywishlist\models;
 
-class MessagesListe extends \Illuminate\Database\Eloquent\Model{
+class MessagesListe extends BaseModel{
 
 	protected $table = 'messagesListe';
 	protected $primaryKey = 'id';
@@ -27,6 +27,10 @@ class MessagesListe extends \Illuminate\Database\Eloquent\Model{
 	public function auteur()
 	{
 		return Utilisateur::find($this->user_id);
+	}
+
+	protected function doDelete() :bool {
+		return true;
 	}
 
 }
