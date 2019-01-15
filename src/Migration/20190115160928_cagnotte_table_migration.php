@@ -5,7 +5,7 @@ use \mywishlist\Migration\Migration;
 use \mywishlist\models\Cagnotte;
 use Illuminate\Database\Schema\Blueprint;
 
-class UsersTableMigration2 extends Migration
+class CagnotteTableMigration extends Migration
 {
     /**
      * Change Method.
