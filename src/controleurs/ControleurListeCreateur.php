@@ -164,8 +164,10 @@
 
      public function supprimerListe($request, $response, $args){
         $liste = self::recupererListe($request, $response, $args['id']);
-        $liste->delete();
-        Flash::flash("message", "Suppression réussie");
+        if ($liste->delete())
+            Flash::flash("message", "Suppression réussie");
+        else
+            Flash::flash("erreur", "Suppression échouée");
         return $response;
      }
 
@@ -173,7 +175,6 @@
         $liste = self::recupererListe($request, $response, $args['id']);
         $liste->estValidee = true;
         $liste->save();
-        Flash::flash("message", "Validation");
         Flash::flash("message", "Validation réussie");
         return Utils::redirect($response, "listeCreateur", ["id" => $args['id']]);
      }
@@ -234,7 +235,7 @@
 
         if($checkboxCagnotte === "on")
             $checkboxCagnotte = true;
-            
+
         else
             $checkboxCagnotte = false;
 
@@ -285,7 +286,7 @@
                 $item->liste_id = $liste->id;
                 $item->save();
 
-                
+
                 $cagnotte = new Cagnotte();
                 $cagnotte->item_id = $item->id;
                 $cagnotte->user_id = $liste->user_id;
@@ -309,9 +310,11 @@
         $item->img = null;
         $item->save();
 
-        $item->supprimerImage();
+        if ($item->supprimerImage())
+            Flash::flash("message", "Suppression réussie");
+        else
+            Flash::flash("erreur", "Erreur lors de la suppression");
 
-        Flash::flash("message", "Suppression réussie");
         return $response;
      }
 
@@ -385,8 +388,12 @@
         $numItem = intval($args['num']);
         $item = Item::where('id', '=', $numItem)->first();
         $token = $args['id'];
-        $item->delete();
-        Flash::flash("message", "Item supprimé");
+
+        if ($item->delete())
+            Flash::flash("message", "Item supprimé");
+        else
+            Flash::flash("erreur", "Erreur lors de la suppression");
+
         return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
      }
 
