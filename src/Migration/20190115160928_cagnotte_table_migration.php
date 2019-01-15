@@ -36,7 +36,7 @@ class UsersTableMigration2 extends Migration
     {
         $this->schema->dropIfExists("cagnotte");
         $this->schema->create("cagnotte", function(Blueprint $table){
-            $table->increments('id');->unique();
+            $table->increments('id')->unique();
             $table->string('item_id');
             $table->string('user_id');
             $table->string('createur');
