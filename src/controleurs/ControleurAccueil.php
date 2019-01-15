@@ -22,7 +22,7 @@ namespace mywishlist\controleurs;
 
         $numPage = $numPage > $maxPage ? $maxPage : $numPage;
 
-    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get();
+    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get()->sortBy("expiration");
 
     	return $this->view->render($response, "listesPubliques.html", compact("listes", "numPage", "maxPage"));
     }
