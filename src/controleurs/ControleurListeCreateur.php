@@ -53,12 +53,34 @@
        return true;
     }
 
-     private static function checkUrl($url, $type = 'all')
+     private static function checkUrl($url)
      {
-        return
-            (strpos($url, "http://") === 0 || strpos($url, "https://") === 0)
-            && file_exists($url);//self::checkType($url, $type);
-     }
+         if (strpos($url, "http://") !== 0 && strpos($url, "https://") !== 0)
+             return false;
+
+        $curl = curl_init();
+        if (!$curl)
+            return false;
+
+        curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTP|CURLPROTO_HTTPS);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 3);
+
+        //Head request
+        curl_setopt($curl, CURLOPT_HEADER, true); // header will be at output
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+
+        $content = curl_exec($curl);
+        $headers = explode("\n", $content);
+        $state = count($headers) ? $headers[0] : "";
+        $code = intval(substr($state, 9, 3));
+
+        curl_close($curl);
+
+        return $code >= 200 && $code < 400;
+    }
 
      public function afficherFormulaireCreation($request, $response, $args)
      {
@@ -220,7 +242,7 @@
                 $filename = null;
             }
 
-            if ($choixImage == "Url" && !self::checkUrl($filename, "img"))
+            if ($choixImage == "Url" && !self::checkUrl($filename))
             {
                 Flash::flash("erreur", "Le lien de l'image est invalide");
             }
@@ -293,7 +315,7 @@
             else
                 $filename = null;
 
-            if ($choixImage == "Url" && !self::checkUrl($filename, "img"))
+            if ($choixImage == "Url" && !self::checkUrl($filename))
             {
                 Flash::flash("erreur", "Le lien de l'image est invalide");
             }
