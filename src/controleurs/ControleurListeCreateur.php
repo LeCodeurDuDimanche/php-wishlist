@@ -168,7 +168,14 @@
         return $response;
      }
 
-
+     public function validerListe($request, $response, $args){
+        $liste = self::recupererListe($request, $response, $args['id']);
+        $liste->estValidee = true;
+        $liste->save();
+        Flash::flash("message", "Validation");
+        Flash::flash("message", "Validation réussie");
+        return Utils::redirect($response, "listeCreateur", ["id" => $args['id']]);
+     }
 
      public function afficherFormulaireModification($request, $response, $args)
      {
