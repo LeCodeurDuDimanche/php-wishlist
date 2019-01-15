@@ -48,6 +48,12 @@
             <label for='tarif'>Tarif</label>
             <input id='tarif' name='tarif' class='form-control' type='number' value='{{get_data(["form", "tarif"])}}' step='0.1' required>
         </div>
+
+        <div class="form-group" >
+        <input type="checkbox" id="cagnotte" name="cagnotte">
+        <label for="cagnotte">Ouvrir une cagnotte pour cet item</label>
+        </div>
+
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value="Ajouter">
         </div>

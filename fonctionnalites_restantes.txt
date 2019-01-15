@@ -4,7 +4,6 @@ Création de liste:
 m 3 Ouvrir une cagnotte pour un item POST liste/{id_edit}/item/{num}/editer/creerCagnotte
 
 3 Validation de liste (pas d'url de partage, ni de visualisation a part le createur si non validee)
-3 Supprimer une image d'un items
 3 Tri des listes publiques par date d'expiration decroissante
 3 Afficher tous les createurs de liste publiques
 3 Ajouter des listes par token au Compte

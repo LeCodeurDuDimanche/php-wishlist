@@ -44,6 +44,7 @@ class ItemsTableMigration3 extends Migration
             $table->boolean('imgLocale')->default(false);
             $table->string('url')->default('');
             $table->string('message')->nullable();
+            $table->boolean('aCagnotte')->default(false);
             $table->float('tarif');
             $table->string('reservePar')->nullable();
             $table->string('reserveParUser')->nullable();
