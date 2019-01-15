@@ -7,7 +7,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 	protected $table = 'liste';
 	protected $primaryKey = "id";
 
-	protected $fillable = ['id' , "user_id", "createur", "titre", "desc", "expiration", "tokenCreateur", "tokenParticipant"," updated_at", "created_at"];
+	protected $fillable = ['id' , "user_id", "createur", "titre", "desc", "expiration", "tokenCreateur", "tokenParticipant"," updated_at", "created_at", "estValidee"];
 
 
 	public function items()
@@ -23,6 +23,11 @@ class Liste extends \Illuminate\Database\Eloquent\Model{
 			return $user ? $user->prenom . " " . $user->nom : "";
 		}
 		return $this->createur;
+	}
+
+	public function estValidee() : bool
+	{
+		return $this->estValidee;
 	}
 
 	public function estExpiree() : bool
