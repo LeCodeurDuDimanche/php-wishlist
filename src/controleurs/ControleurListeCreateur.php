@@ -38,7 +38,6 @@
        $mime = finfo_file($finfo, $file);
 
        finfo_close($finfo);
-       var_dump($mime);
        if (!$mime)
            return false;
 
@@ -333,7 +332,6 @@
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
 
-        //var_dump($titre, $descrip, $prix, $choixImage, (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"));die();
         if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null
          && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
         {
