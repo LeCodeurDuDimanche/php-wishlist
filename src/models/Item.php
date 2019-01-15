@@ -69,4 +69,8 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	{
 		return $this->reserveParUser !== null || $this->reservePar !== null;
 	}
+
+	public function cagnotte(){
+		return $this->belongsTo(Cagnotte::class);
+	}
 }

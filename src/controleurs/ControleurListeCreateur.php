@@ -4,6 +4,7 @@
 
  use mywishlist\models\Liste;
  use mywishlist\models\Item;
+ use mywishlist\models\Cagnotte;
  use Slim\Exception\NotFoundException;
  use Illuminate\Support\Collection;
  use Psr\Http\Message\ServerRequestInterface;
@@ -226,9 +227,15 @@
 
         if($checkboxCagnotte === "on")
             $checkboxCagnotte = true;
+            
         else
             $checkboxCagnotte = false;
-        $cagnotte = new Cagnotte();
+
+       if(!$checkboxCagnotte /*|| $prix === 0* check si le prix est à 0*/)
+       {
+            Flash::flash("erreur", "Cocher la checkbox afin de créer un cagnotte");
+            return Utils::redirect($response, "formulaireAjouterItem", ["id" => $token]);
+       }
 
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
@@ -266,10 +273,19 @@
                 $item->url = $url;
                 $item->imgLocale = $choixImage === "Upload";
                 $item->tarif = $prix;
-                $item->aCagnotte = $cagnotte;
+                $item->aCagnotte = $checkboxCagnotte;
                 $liste = Liste::where("tokenCreateur", "=", $token)->first();
                 $item->liste_id = $liste->id;
                 $item->save();
+
+                
+                $cagnotte = new Cagnotte();
+                $cagnotte->item_id = $item->id;
+                $cagnotte->user_id = $liste->user_id;
+                $cagnotte->createur = $liste->createur();
+                $cagnotte->montant = $item->tarif;
+                $cagnotte->save();
+
 
                 Flash::flash("message", "Item ajouté");
                 return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
