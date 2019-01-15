@@ -377,7 +377,7 @@
 
  		$listeIt = $liste->items()->get();
 
-        $nbContrib = $listeIt->keyBy('reserverParUser')->count() + $listeIt->keyBy('reservePar')->count();
+        $nbContrib = $listeIt->keyBy('reserverParUser')->count() + $listeIt->keyBy('reservePar')->count() - 2;
         $nbItems = $listeIt->count();
         $prixTotal = $listeIt->sum('tarif');
         $nbItemsReserves = $listeIt->filter(function($it) {return $it->estReserve();})->count();
