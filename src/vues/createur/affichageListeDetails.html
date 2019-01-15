@@ -70,9 +70,14 @@
 					{% endif %}
 	 			</td>
 				<td>
-	 				{% if it.estReserve() %}
-						<div class='alert alert-success text-center m-0'>
-							<i class='fa fa-check'></i>
+	 				{% if it.aCagnotte() %}
+						<div class='col-12 col-sm-6'>
+							{% set progression = (100 * ("now"|date("U")|round - liste.created_at.getTimestamp()) / (liste.expiration|date("U")|round - liste.created_at.getTimestamp()))|round(1) %}
+							{% set progression = min(100, progression) %}
+							<div class="progress relative">
+							  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="{{it.tarif}}"></div>
+							  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
+							</div>
 						</div>
 	 				{% else %}
 						<div class='alert alert-danger text-center m-0'>

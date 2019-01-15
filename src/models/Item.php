@@ -15,7 +15,10 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 		return $this->belongsTo(Liste::class);
 	}
 
-
+	public function aCagnotte() : Bool
+	{
+		return $this->aCagnotte;
+	}
 
 	public function delete()
 	{

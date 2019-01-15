@@ -221,6 +221,14 @@
         $img = filter_var(Utils::getFilteredPost($request, "img"), FILTER_SANITIZE_URL);
         $prix = Utils::getFilteredPost($request, "tarif");
         $choixImage = Utils::getFilteredPost($request, "choixImage");
+        $checkboxCagnotte = $_POST['cagnotte'];
+
+
+        if($checkboxCagnotte === "on")
+            $checkboxCagnotte = true;
+        else
+            $checkboxCagnotte = false;
+        $cagnotte = new Cagnotte();
 
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
@@ -258,6 +266,7 @@
                 $item->url = $url;
                 $item->imgLocale = $choixImage === "Upload";
                 $item->tarif = $prix;
+                $item->aCagnotte = $cagnotte;
                 $liste = Liste::where("tokenCreateur", "=", $token)->first();
                 $item->liste_id = $liste->id;
                 $item->save();
