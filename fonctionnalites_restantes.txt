@@ -1,6 +1,5 @@
 Redirect après login
 
-3 Tri des listes publiques par date d'expiration decroissante
 3 Afficher tous les createurs de liste publiques
 3 Ajouter des listes par token au Compte
 3 REcherche de liste publique (auteur et date)

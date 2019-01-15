@@ -11,7 +11,7 @@ namespace mywishlist\controleurs;
     }
 
     public function afficherListesPubliques($request, $response, $args){
-    	$nbParPage = 2;
+    	$nbParPage = 5;
 
     	$numPage = 1;
     	if(isset($args['numPage']) && $args['numPage'] !== null){
@@ -22,7 +22,8 @@ namespace mywishlist\controleurs;
 
         $numPage = $numPage > $maxPage ? $maxPage : $numPage;
 
-    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get()->sortBy("expiration");
+    	$listes = Liste::where("estPublique", "=", "1")->take($nbParPage)->skip(($numPage-1)*$nbParPage)->get()
+            ->filter(function ($e) {return  !$e->estExpiree();})->sortBy("expiration");
 
     	return $this->view->render($response, "listesPubliques.html", compact("listes", "numPage", "maxPage"));
     }
