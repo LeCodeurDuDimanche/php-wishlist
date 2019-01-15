@@ -165,7 +165,7 @@
         public static function formatTwigFunction($time, string $format = "%A %e %B %Y") : string{
             return $time instanceof Illuminate\Support\Carbon ?
                 $time->formatLocalized($format) :
-                strftime($format, (new \DateTime($time))->getTimestamp());
+                utf8_encode(strftime($format, (new \DateTime($time))->getTimestamp()));
         }
 
         /**

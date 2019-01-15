@@ -101,92 +101,91 @@
  	</table>
 {% endif %}
 
-		<div class='alert alert-danger text-center my-3'>
-            <i class='fa fa-exclamation-triangle mr-2'></i>
-            Attention, vous ne pourrez plus modifier la liste !
-        </div>
-		<a href="{{liste.estExpiree() ? "#" : path_for('afficherMesListes', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120 {{liste.estExpiree() ? "disabled" : ""}}' title='Valider la liste'><i class='fas fa-check'></i></a>
+		
 
 
 
 
 
 
-
-	<h3 class='mt-5'>Statistiques</h3>
-	<div class='row my-3'>
-		<div class='col-12 col-sm-6'>
-			<div>Progression des réservations de la liste</div>
-			{% set progression = listeIt.count() ? (nbItemsReserves / (listeIt.count() ? listeIt.count() : 1)) * 100 : 0 %}
-			<div class="progress relative">
-			  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-			  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
+	{% if liste.estValidee %}
+		<h3 class='mt-5'>Statistiques</h3>
+		<div class='row my-3'>
+			<div class='col-12 col-sm-6'>
+				<div>Progression des réservations de la liste</div>
+				{% set progression = listeIt.count() ? (nbItemsReserves / (listeIt.count() ? listeIt.count() : 1)) * 100 : 0 %}
+				<div class="progress relative">
+				  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+				  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
+				</div>
 			</div>
-		</div>
-		<div class='col-12 col-sm-6'>
-			<div>Temps écoulé</div>
-			{% set progression = (100 * ("now"|date("U")|round - liste.created_at.getTimestamp()) / (liste.expiration|date("U")|round - liste.created_at.getTimestamp()))|round(1) %}
-			{% set progression = min(100, progression) %}
-			<div class="progress relative">
-			  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-			  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
+			<div class='col-12 col-sm-6'>
+				<div>Temps écoulé</div>
+				{% set progression = (100 * ("now"|date("U")|round - liste.created_at.getTimestamp()) / (liste.expiration|date("U")|round - liste.created_at.getTimestamp()))|round(1) %}
+				{% set progression = min(100, progression) %}
+				<div class="progress relative">
+				  <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{progression}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+				  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
+				</div>
 			</div>
-		</div>
-		<div class='col-12 py-4'>
-			{% set max = max(valeursStats) %}
-			{% for val in valeursStats|sort %}
-				<div class='row'>
-					<div class='col-6 col-sm-4 col-md-3'><strong>{{val.text}}</strong></div>
-					<div class='col'>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-striped bg-{{val.bg}}" role="progressbar" style="width:{{100 * val.val / (max.val ? max.val : 1)}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+			<div class='col-12 py-4'>
+				{% set max = max(valeursStats) %}
+				{% for val in valeursStats|sort %}
+					<div class='row'>
+						<div class='col-6 col-sm-4 col-md-3'><strong>{{val.text}}</strong></div>
+						<div class='col'>
+							<div class="progress">
+							  <div class="progress-bar progress-bar-striped bg-{{val.bg}}" role="progressbar" style="width:{{100 * val.val / (max.val ? max.val : 1)}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
 		</div>
-	</div>
 
-	<h3 class='mt-5'>Contributeurs</h3>
-	{% set contributeurs = listeIt.groupBy("reservePar").concat(listeIt.groupBy("reserveParUser")) %}
-	{% if liste.estExpiree() %}
-		<ul class='pl-0'>
-			{% for items in contributeurs if contrib %}
-				<li class='ml-5'>
-					{{items[0].reservePar()}}
-					<ul>
-						{% for it in items %}
-							<li>A offert "{{it.titre}}" {% if it.message is defined %} avec le message suivant : {{it.message}} {% endif %}
-						{% endfor %}
-					</ul>
-				</li>
-			{% else %}
-				<div class='alert alert-info text-center my-3'>
-					<i class='fa fa-info mr-2'></i>
-					Votre liste n'a pas eu beaucoup de succès : aucun contributeur<i class='far fa-sad-tear ml-2'></i>
-				</div>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<div class='alert alert-info text-center my-3'>
-			<i class='fa fa-info mr-2'></i>
-			Vous verrez cette section à l'expiration de la liste
-		</div>
-	{% endif %}
-	{# Les messages publics ne sont pas visible par le créateur
-		<h3 class='mt-5'>Messages associés à la liste</h3>
-		{% for m in liste.messages %}
-			<div class="list-group-item flex-column align-items-start mt-4">
-				  <div class="mb-1">{{m.texte}}</div>
-				<p class="mb-2 mt-2 text-muted font-italic">
-					Par {{m.createur}} {{m.created_at|time_diff()}}
-				</p>
-		   </div>
-		  {% else %}
+		<h3 class='mt-5'>Contributeurs</h3>
+		{% set contributeurs = listeIt.groupBy("reservePar").concat(listeIt.groupBy("reserveParUser")) %}
+		{% if liste.estExpiree() %}
+			<ul class='pl-0'>
+				{% for items in contributeurs if contrib %}
+					<li class='ml-5'>
+						{{items[0].reservePar()}}
+						<ul>
+							{% for it in items %}
+								<li>A offert "{{it.titre}}" {% if it.message is defined %} avec le message suivant : {{it.message}} {% endif %}
+							{% endfor %}
+						</ul>
+					</li>
+				{% else %}
+					<div class='alert alert-info text-center my-3'>
+						<i class='fa fa-info mr-2'></i>
+						Votre liste n'a pas eu beaucoup de succès : aucun contributeur<i class='far fa-sad-tear ml-2'></i>
+					</div>
+				{% endfor %}
+			</ul>
+		{% else %}
 			<div class='alert alert-info text-center my-3'>
 				<i class='fa fa-info mr-2'></i>
-				Aucun message pour l'instant
+				Vous verrez cette section à l'expiration de la liste
 			</div>
-		{% endfor %}
-	#}
+		{% endif %}
+		{# Les messages publics ne sont pas visible par le créateur
+			<h3 class='mt-5'>Messages associés à la liste</h3>
+			{% for m in liste.messages %}
+				<div class="list-group-item flex-column align-items-start mt-4">
+					  <div class="mb-1">{{m.texte}}</div>
+					<p class="mb-2 mt-2 text-muted font-italic">
+						Par {{m.createur}} {{m.created_at|time_diff()}}
+					</p>
+			   </div>
+			  {% else %}
+				<div class='alert alert-info text-center my-3'>
+					<i class='fa fa-info mr-2'></i>
+					Aucun message pour l'instant
+				</div>
+			{% endfor %}
+		#}
+
+	{% endif %}
+
 {% endblock %}

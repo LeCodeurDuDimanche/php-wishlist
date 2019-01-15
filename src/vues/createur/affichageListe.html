@@ -79,6 +79,8 @@
             {% endif %}
         </p>
     </div>
+
+    {% if liste.estValidee %}
     <div>
         <label for='url-partage' class='form-label d-inline'><strong>Lien de partage : </strong></label>
         <div class="input-group ml-md-2 my-2 mr-sm-2 d-inline-flex align-items-center flex-column flex-sm-row">
@@ -92,6 +94,8 @@
         </div>
         <div id='url-alert' class='alert text-center w-50 mx-auto' style='display: none'></div>
     </div>
+    {% endif %}
+
     <div class='my-3'>
         <p><strong>Confidentialité : </strong> Cette liste est
         {% if liste.estPublique %}
@@ -113,6 +117,20 @@
         <a href="{{path_for('listeCreateurDetails', {id : liste.tokenCreateur})}}" class='btn btn-primary extensible e-120' title='Afficher le détail'><i class='far fa-eye'></i></a>
     </div>
     {% endblock details %}
+
+    {% block validation %}
+   <div class='mt-5'>
+      <h3 class='mt-5'>Valider la liste</h3>
+        <div class='alert alert-danger text-center my-3'>
+            <i class='fa fa-exclamation-triangle mr-2'></i>
+            Valider votre liste pour accéder aux fonctionnalités de partage !
+        </div>
+        <div class="text-center">
+            <a href="{{liste.estExpiree() ? "#" : path_for('afficherMesListes', {id : liste.tokenCreateur})}}" class='btn btn-primary e-120 {{liste.estExpiree() ? "disabled" : ""}}'><i class='fas fa-check mr-3'></i>Valider la liste</a>
+        </div>
+    </div>
+
+    {% endblock validation %}
 {% endblock %}
 
 {% block scripts %}
