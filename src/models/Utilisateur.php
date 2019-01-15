@@ -49,7 +49,7 @@ class Utilisateur extends BaseModel{
 				return false;
 		}
 
-		return parent::delete();
+		return true;
 	}
 
 }
