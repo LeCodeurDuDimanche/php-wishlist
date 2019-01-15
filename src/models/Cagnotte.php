@@ -4,10 +4,10 @@ namespace mywishlist\models;
 
 class Cagnotte extends \Illuminate\Database\Eloquent\Model{
 
-	protected $table = 'Cagnotte';
+	protected $table = 'cagnotte';
 	protected $primaryKey = 'id';
 
-    protected $fillable = ['id' , "montant", "createur", "id_item", "updated_at", "created_at"];
+    protected $fillable = ['id' , "item_id", "user_id", "createur", "montant"];
 
 	public function liste()
 	{

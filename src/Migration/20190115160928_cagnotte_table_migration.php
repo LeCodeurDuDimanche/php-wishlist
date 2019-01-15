@@ -2,8 +2,10 @@
 
 
 use \mywishlist\Migration\Migration;
+use \mywishlist\models\Cagnotte;
+use Illuminate\Database\Schema\Blueprint;
 
-class CagnotteTableMigration extends Migration
+class UsersTableMigration2 extends Migration
 {
     /**
      * Change Method.
@@ -30,8 +32,21 @@ class CagnotteTableMigration extends Migration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function up()
     {
+        $this->schema->dropIfExists("cagnotte");
+        $this->schema->create("cagnotte", function(Blueprint $table){
+            $table->increments('id');->unique();
+            $table->string('item_id');
+            $table->string('user_id');
+            $table->string('createur');
+            $table->string('montant');
+            $table->timestamps();
+        });
+    }
 
+    public function down()
+    {
+        $this->schema->drop("cagnotte");
     }
 }
