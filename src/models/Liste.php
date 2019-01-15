@@ -7,7 +7,7 @@ class Liste extends BaseModel{
 	protected $table = 'liste';
 	protected $primaryKey = "id";
 
-	protected $fillable = ['id' , "user_id", "createur", "titre", "desc", "expiration", "tokenCreateur", "tokenParticipant"," updated_at", "created_at", "estValidee"];
+	protected $fillable = ['id' , "user_id", "createur", "titre", "desc", "expiration", "tokenCreateur", "tokenParticipant"," updated_at", "created_at", "estValidee", "estPublique"];
 
 
 	public function items()
