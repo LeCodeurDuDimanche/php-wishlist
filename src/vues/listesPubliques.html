@@ -9,6 +9,35 @@
         </div>
     </div>
 
+    <div class='row my-5 justify-content-center'>
+        <div class="col-12 col-sm-6 d-flex align-items-center">
+            <form class='w-100'>
+                <div class='input-group'>
+                    <input type='search' name='q' class='form-control' placeholder='Recherchez une liste...' required>
+                    <div class='input-group-append'>
+                        <button class='btn btn-outline-secondary' title='Rechercher'>
+                            <i class='fa fa-search'></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if recherche is not null %}
+            <div class='w-100'></div>
+            <div class="col-12 col-sm-6 d-flex align-items-center my-2">
+                <form class='w-100'>
+                    <button class='btn btn-outline-primary mx-auto d-block'>Réinitialiser les filtres</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if recherche is not null %}
+    <div class='w-100'>
+        <h2>Résultats pour la recherche de {{recherche}}</h2>
+    </div>
+    {% endif %}
+
     <div class="list-group">
 
     {% for liste in listes %}
@@ -29,7 +58,11 @@
     {% else %}
         <div class='alert alert-warning text-center my-2'>
             <i class='fa fa-exclamation-triangle mr-2'></i>
-            Il n'y a aucune liste publique pour le moment
+            {% if recherche is null %}
+                Il n'y a aucune liste publique pour le moment
+            {% else %}
+                Aucune liste ne correspond à cette recherche
+            {% endif %}
         </div>
     {% endfor %}
 
