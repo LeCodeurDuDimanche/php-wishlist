@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block titre %}{{parent()}} - Page introuvable ! {% endblock %}
+{% block titre %}{{parent()}} - Accès interdit ! {% endblock %}
 
 {% block content %}
    <div class='row'>
        <div class='col-12 alert alert-danger text-center p-2'>
            <h1>
                <i class='fa fa-exclamation-triangle mr-2'></i>
-               404 - Vous vous êtes perdus ?
+               403 - Vous n'avez pas accès à cette page !
            </h1>
        </div>
     </div>
 
     <div>
-        <p class='my-5 text-center' style='font-size :1.5rem'>Cette page ou liste n'existe pas ou a été supprimée.</p>
+        <!--<p class='my-5 text-center' style='font-size :1.5rem'>Cette page ou liste n'existe pas ou a été supprimée.</p>-->
         <p class='my-5 text-center'><img class='w-50 d-block mx-auto' src="{{base_url()}}/ressources/img/404.jpg"></p>
         <div class='centered-bar flex-column flex-md-row'>
             <a class='btn btn-outline-primary' href="{{path_for('accueil')}}">Retour à l'accueil</a>

@@ -169,7 +169,7 @@
         }
 
         /**
-        * Affiche une page d'erreur personalisee
+        * Affiche une page d'erreur 404 personalisee
         */
         public static function notFound(ServerRequestInterface $request, ResponseInterface $response) {
             global $app;
@@ -178,4 +178,16 @@
 
             return $app->getContainer()->view->render($response, "erreur404.html")->withStatus(404);
         }
+
+        /**
+        * Affiche une page d'erreur 403 personalisee
+        */
+        public static function forbidden(ServerRequestInterface $request, ResponseInterface $response) {
+            global $app;
+            //On met a jour les donnees flash
+            Flash::next();
+
+            return $app->getContainer()->view->render($response, "erreur403.html")->withStatus(403);
+        }
+
     }

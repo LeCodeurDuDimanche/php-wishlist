@@ -59,4 +59,8 @@ return [
     'settings' => [
         'displayErrorDetails' => true,
     ],
+    'errorHandler' => Utils::class . "::forbidden",
+    'settings' => [
+        'displayErrorDetails' => true,
+    ],
 ];
