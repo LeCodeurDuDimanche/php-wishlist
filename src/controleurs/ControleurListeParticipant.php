@@ -81,7 +81,7 @@
 
         //On check les cookies (avec les listes crees par un utilisateur connecte seulement si on n'est pas connecte)
         $estConnect = Authentification::estConnecte();
-        $estCreateur = in_array($liste->id, Utils::getValidListesCookie($estConnect));
+        $estCreateur = in_array($liste->id, Utils::getValidListesCookie(!$estConnect));
         //On check les listes de l'Utilisateur
         if ($user = Authentification::getUtilisateur())
             $estCreateur = $estCreateur || $user->listesCrees->where("id", "=", $liste->id)->count() > 0;
@@ -89,8 +89,15 @@
         //Si l'utilisateur est createur de cette liste, on le redirige vers le lien du createur
         if ($estCreateur)
         {
-            Flash::flash("avertissement", "Vous avez tenté d'accéder à la liste avec l'url de participation. Vous avez été redirigé sur la page du créateur de liste.");
-            return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
+            if (!Authentification::estConnecte() && $liste->user_id !== null)
+            {
+                global $app;               
+                return $app->getContainer()->view->render($response, "createur/affichageListeErreur.html", ["form" => false, "avertissement"=> "Cette liste a été créée sur cet ordinateur et appartient à un utilisateur authentifié. Si elle vous appartient, connectez-vous pour la visualiser. Sinon, connectez-vous à un autre compte ou supprimer vos cookies pour y participer. Pour information, le cookie à supprimer est liste" . $liste->id ."."]);
+            }
+            else {
+                Flash::flash("avertissement", "Vous avez tenté d'accéder à la liste avec l'url de participation. Vous avez été redirigé sur la page du créateur de liste.");
+                return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
+            }
         }
 
         return $next($request, $response);

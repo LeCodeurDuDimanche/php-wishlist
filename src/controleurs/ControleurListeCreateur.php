@@ -449,7 +449,7 @@
             $listeParticipation = new Collection();
         }
 
-        $idListesCookies = Utils::getValidListesCookie();
+        $idListesCookies = Utils::getValidListesCookie(!Authentification::estConnecte());
         foreach($idListesCookies as $id)
             $meslistes->push(Liste::find($id));
 

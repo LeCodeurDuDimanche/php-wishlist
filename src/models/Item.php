@@ -81,6 +81,20 @@ class Item extends BaseModel{
 		return $this->reservePar;
 	}
 
+	public function aParticiperCagnotte() : array
+	{
+		$participants = array();
+
+		foreach ($this->cagnottes as $cagnotte) {
+				$participant = $cagnotte->nom();
+				if($participant !== null){
+					$participants[] = $participant;
+				}
+		}
+
+		return $participants;
+	}
+
 	public function estReserve() : bool
 	{
 		return $this->cagnottes->isNotEmpty() || $this->reserveParUser !== null || $this->reservePar !== null;

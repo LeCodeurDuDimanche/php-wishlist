@@ -41,14 +41,27 @@
 		 				<img src="{{it.img}}" alt="{{it.descr}}" class='w-100 d-block mx-auto'>
 		 			</td>
 		 			<td>
-		 				{{it.tarif}}
+		 				{% if not it.aCagnotte() %}
+		 					{{it.tarif}}
+		 				{% else %}
+		 					{{it.cagnottes().sum('montant')}}€ sur {{it.tarif}}
+		 				{% endif %}
+		 				
 		 			</td>
 		 			<td>
-
-
 		 				<a href="{{path_for('afficherItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-outline-primary btn-block' title='Voir le détail'>Voir le détail</a>
 		 				{% if it.aCagnotte() %}
-		 					<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Participer</a>
+		 					{% if it.cagnottes().sum('montant') == it.tarif %}
+		 						<strong>Cagnotte remplie</strong>
+		 					{% else %}
+		 						<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Participer</a>
+		 					{% endif %}
+		 					<p class="mt-2"><strong>Contributeurs :</strong></p>
+		 					<ul>
+		 					{% for participant in it.aParticiperCagnotte() %}
+		 						<li><i>{{participant}}</i></li>
+		 					{% endfor %}
+		 					</ul>
 		 				{% else %}
 			 				{% if not it.estReserve() and not liste.estExpiree() %}
 			 				<a href="{{path_for('formulaireReserverItem', {token : liste.tokenParticipant, idItem : it.id})}}" class='btn btn-primary btn-block' title='Reserver'>Reserver</a>

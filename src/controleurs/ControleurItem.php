@@ -99,7 +99,7 @@ class ControleurItem extends Controleur{
                 $insertCagnotte->user_id = null;
             }
             else {
-                $insertCagnotte->nom = $user->prenom;
+                $insertCagnotte->nom = null;
                 $insertCagnotte->user_id = $user->id;
             }
             $insertCagnotte->montant = $cagnotteParticipant;

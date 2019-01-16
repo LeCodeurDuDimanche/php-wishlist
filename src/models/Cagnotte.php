@@ -14,7 +14,7 @@ class Cagnotte extends BaseModel{
 		return $this->belongsTo(Liste::class);
 	}
 
-	public function createur() : string
+	public function nom() : string
 	{
 		if ($this->user_id)
 		{

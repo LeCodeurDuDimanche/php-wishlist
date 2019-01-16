@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block titre %}{{parent()}} - Réserver item{% endblock %}
 
 
@@ -9,7 +10,11 @@
             <a href="{{path_for('listeParticipantDetails', {token : item.liste.tokenParticipant})}}" class='btn btn-primary extensible e-120' title="Retour"><i class='fa fa-arrow-left'></i></a>
         </div>
     </div>
-    <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
+    {% if item.aCagnotte %}
+        <h1 class='text-center'>Participation pour : {{item.titre}}</h1>
+    {% else %}
+        <h1 class='text-center'>Réservation de : {{item.titre}}</h1>
+    {% endif %}
     <form action="{{item.aCagnotte ? path_for('participerItem', {token : item.liste.tokenParticipant, idItem : item.id}) : path_for('reserverItem', {token : item.liste.tokenParticipant, idItem : item.id})}}" method="POST">
         {% if est_connecte() %}
             <input name='nom' type='hidden' value='{{get_user_nomprenom()}}' required>
@@ -21,8 +26,8 @@
         {% endif %}
         {% if item.aCagnotte %}
             <div class='form-group'>
-            <label for='cagnotte'>Choisissez le montant que vous désirez</label>
-            <input id='cagnotte' name='cagnotte' class='form-control' type='number' min="0,1" max="{{item.montant}}"></input>
+            <label for='cagnotte'>Choisissez le montant que vous désirez entre 1 € et {{item.tarif - item.cagnottes().sum('montant')}} €</label>
+            <input id='cagnotte' name='cagnotte' class='form-control' type='number' min="1" max="{{item.tarif - item.cagnottes().sum('montant')}}"></input>
         </div>
 
         {% else %}
