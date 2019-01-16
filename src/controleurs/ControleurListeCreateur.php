@@ -322,7 +322,7 @@
         $prix = Utils::getFilteredPost($request, "tarif");
         $choixImage = Utils::getFilteredPost($request, "choixImage");
 
-        $checkboxCagnotte = $_POST['cagnotte'];
+        $checkboxCagnotte = isset($_POST['cagnotte']) ? $_POST['cagnotte'] : "off";
 
 
         if($checkboxCagnotte === "on")
@@ -381,6 +381,7 @@
                 }
                 $item->url = $url;
                 $item->tarif = $prix;
+                $item->aCagnotte = $checkboxCagnotte;
                 $item->save();
 
                 Flash::flash("message", "Item modifié");
@@ -427,7 +428,10 @@
         $nbContrib = $listeIt->keyBy('reserverParUser')->count() + $listeIt->keyBy('reservePar')->count() - 2;
         $nbItems = $listeIt->count();
         $prixTotal = $listeIt->sum('tarif');
-        $nbItemsReserves = $listeIt->filter(function($it) {return $it->estReserve();})->count();
+        $nbItemsReserves = $listeIt->map(function($it) {
+            return $it->estReserve() ?
+                ($it->aCagnotte ? $it->cagnottes->sum("montant") / $it->tarif : 1)
+                : 0;})->sum();
 
 
         $valeursStats = [

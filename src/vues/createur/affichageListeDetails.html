@@ -80,7 +80,11 @@
 							</div>
 						</div>
 						<p class="text-center">{{it.cagnottes().sum('montant')}}€</p>
-	 				{% else %}
+	 				{% elseif it.estReserve() %}
+						<div class='alert alert-success text-center m-0'>
+							<i class='fa fa-check'></i>
+						</div>
+					{% else %}
 						<div class='alert alert-danger text-center m-0'>
 							<i class='fa fa-times'></i>
 						</div>
