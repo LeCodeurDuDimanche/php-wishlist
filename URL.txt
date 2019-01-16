@@ -1,0 +1,2 @@
+url webetu : https://webetu.iutnc.univ-lorraine.fr/www/duvalbon1u/php_wishlist
+url depot git : https://bitbucket.org/pinot17u/php_wishlist/src/master/
