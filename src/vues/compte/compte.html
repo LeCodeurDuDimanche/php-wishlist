@@ -62,7 +62,7 @@
         <h4>Supprimer mon compte</h4>
         <div class='alert alert-danger text-center my-3'>
             <i class='fa fa-exclamation-triangle mr-2'></i>
-            Attention, cette action est irréversible !
+            Attention, cette action est irréversible ! Toutes les listes, incluant leurs items et messages, créées et associées à ce compte, les messages publiés et les participation aux listes qui ont expirés seront supprimés.
         </div>
         <form action='{{path_for("supprimerCompte")}}' method='POST' class='form-row'>
             <input type='hidden' name='_METHOD' value='DELETE' required>
@@ -81,5 +81,17 @@
         {% set nbPartici = user.listesParticipation.all()|length %}
         <div>Vous avez créé <strong>{{nbListes}}</strong> liste{% if nbListes > 1 %}s{% endif %} et participé à <strong>{{nbPartici}}</strong> liste{% if nbPartici > 1 %}s{% endif %}</div>
         <a href="{{path_for('afficherMesListes')}}" class='btn btn-outline-primary' title='Voir mes listes'><i class="far fa-arrow-alt-circle-right pr-1"></i>Accéder à mes listes</a>
+        <div class='my-2'>
+            <p>Associer une liste à ce compte. Cette liste ne doit pas appartenir à un autre utilisateur authentifié.</p>
+            <form class='form-row' action="{{path_for("ajouterListeCompte")}}" method="POST">
+                <div class='col-12 col-sm-8 form-group'>
+                    <label for='token'>Token ou url de la liste</label>
+                    <input type='text' id='token' class='form-control' name='token' placeholder="Token ou url d'une liste existante" required>
+                </div>
+                <div class='col-12 col-sm-4 form-group'>
+                    <button class='btn btn-outline-primary'>Ajouter</button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

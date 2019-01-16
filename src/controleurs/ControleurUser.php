@@ -2,6 +2,7 @@
 namespace mywishlist\controleurs;
 
 use mywishlist\models\Utilisateur;
+use mywishlist\models\Liste;
 
  class ControleurUser extends Controleur{
 
@@ -168,9 +169,51 @@ use mywishlist\models\Utilisateur;
         $mdp = Utils::getFilteredPost($request, "mdp");
 
         if (Authentification::supprimer($mdp))
-            Flash::flash('message', 'Compte supprimé. Toutes les listes et message associés à ce compte on été supprimés.');
+            Flash::flash('message', 'Compte supprimé. Toutes les listes et messages associés à ce compte on été supprimés.');
         else
             Flash::flash('erreur', 'Mot de passe incorrect');
+
+        return Utils::redirect($response, "compte");
+    }
+
+    public function associerListe($request, $response, $args)
+    {
+        $url = Utils::getFilteredPost($request, "token");
+        $token = "";
+
+        if (!$url)
+            Flash::flash('erreur', 'Veuillez indiquer un token ou un url');
+
+        if (Liste::where("tokenCreateur", "=", $url)->count())
+        {
+            $token = $url;
+        }
+        else
+        {
+            $path = parse_url($url, PHP_URL_PATH);
+            if ($path)
+            {
+                $matches = [];
+                if (\preg_match("/\/liste\/c([^\/]*)/", $path, $matches))
+                    $token = $matches[1];
+
+            }
+        }
+
+        if (!Liste::where("tokenCreateur", "=", $token)->count())
+            Flash::flash("erreur", "Cette liste n'existe pas.");
+        else if (Liste::where("tokenCreateur", "=", $token)->where("user_id", "=", Authentification::getIdUtilisateur())->count())
+            Flash::flash("avertissement", "Cette liste est déjà associée à votre compte");
+        else if (Liste::where("tokenCreateur", "=", $token)->where("user_id", "!=", null)->count())
+            Flash::flash("erreur", "Cette liste est déjà associée à un autre compte");
+        else {
+            $liste = Liste::where("tokenCreateur", "=", $token)->first();
+            $liste->createur = null;
+            $liste->user_id = Authentification::getIdUtilisateur();
+            $liste->save();
+
+            Flash::flash("message", "Liste associée à votre compte");
+        }
 
         return Utils::redirect($response, "compte");
     }

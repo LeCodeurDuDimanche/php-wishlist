@@ -1,7 +1,5 @@
 Redirect après login
 
-3 Ajouter des listes par token au Compte
-
 VALIDATION :
     Verification html par w3c
 

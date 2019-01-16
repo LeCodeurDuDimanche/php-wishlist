@@ -132,6 +132,8 @@ $app->group("/compte", function() use ($app, $requireAnon, $requireLogged){
     $app->put("", ControleurUser::class . ":modifier")->setName("modifierCompte")->add($requireLogged);
     $app->delete("", ControleurUser::class . ":supprimerCompte")->setName("supprimerCompte")->add($requireLogged);
     $app->put("/modiferMdp", ControleurUser::class . ":modifierMdp")->setName("modifierMdp")->add($requireLogged);
+    $app->post("/associerListe", ControleurUser::class . ":associerListe")->setName("ajouterListeCompte")->add($requireLogged);
+
 
 });
 
