@@ -8,11 +8,11 @@
     <h1 class='text-center'>Ajouter un item</h1>
     <form action="{{path_for("ajouterItem", {id : liste.tokenCreateur})}}" method="POST" enctype="multipart/form-data">
         <div class='form-group'>
-            <label for='nom'>Titre de l'item</label>
+            <label for='nom'>Titre de l'item*</label>
             <input id='nom' name='nom' class='form-control' type='text' placeholder='Titre' value='{{get_data(["form", "nom"])}}' required>
         </div>
         <div class='form-group'>
-            <label for='desc'>Description</label>
+            <label for='desc'>Description*</label>
             <textarea id='desc' name='desc' class='form-control' placeholder="Descriptif de l'item" required>{{get_data(["form", "desc"])}}</textarea>
         </div>
 
@@ -45,7 +45,7 @@
         </div>
 
         <div class='form-group'>
-            <label for='tarif'>Tarif</label>
+            <label for='tarif'>Tarif*</label>
             <input id='tarif' name='tarif' class='form-control' type='number' value='{{get_data(["form", "tarif"])}}' step='0.1' required>
         </div>
 
@@ -57,6 +57,9 @@
         <div class='form-group'>
             <input type='submit' class='btn btn-primary mx-auto d-block' value="Ajouter">
         </div>
+        <small>
+        <p>* : Champ obligatoire</p>
+        </small>
 
     </form>
 {% endblock %}

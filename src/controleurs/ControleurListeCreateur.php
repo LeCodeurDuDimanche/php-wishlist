@@ -238,9 +238,9 @@
         else
             $checkboxCagnotte = false;
 
-       if(!$checkboxCagnotte /*|| $prix === 0* check si le prix est à 0*/)
+       if ($checkboxCagnotte && $prix <= 0)
        {
-            Flash::flash("erreur", "Cocher la checkbox afin de créer un cagnotte");
+            Flash::flash("erreur", "Fixer un prix pour ouvrir une cagnotte");
             return Utils::redirect($response, "formulaireAjouterItem", ["id" => $token]);
        }
 
@@ -286,14 +286,6 @@
                 $item->save();
 
 
-                $cagnotte = new Cagnotte();
-                $cagnotte->item_id = $item->id;
-                $cagnotte->user_id = $liste->user_id;
-                $cagnotte->createur = $liste->createur();
-                $cagnotte->montant = $item->tarif;
-                $cagnotte->save();
-
-
                 Flash::flash("message", "Item ajouté");
                 return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);
             }
@@ -322,6 +314,7 @@
         $token = $args['id'];
         $liste = self::recupererListe($request, $response, $token);
 
+
         $titre = Utils::getFilteredPost($request, "nom");
         $descrip = Utils::getFilteredPost($request, "desc");
         $url = filter_var(Utils::getFilteredPost($request, "url"), FILTER_SANITIZE_URL);
@@ -329,8 +322,24 @@
         $prix = Utils::getFilteredPost($request, "tarif");
         $choixImage = Utils::getFilteredPost($request, "choixImage");
 
+        $checkboxCagnotte = $_POST['cagnotte'];
+
+
+        if($checkboxCagnotte === "on")
+            $checkboxCagnotte = true;
+        else
+            $checkboxCagnotte = false;
+
+        if ($checkboxCagnotte && $prix <= 0)
+       {
+            Flash::flash("erreur", "Fixer un prix pour ouvrir une cagnotte");
+            return Utils::redirect($response, "formulaireAjouterItem", ["id" => $token]);
+       }
+
         $files = $request->getUploadedFiles();
         $file = isset($files["fichierImg"]) ? $files["fichierImg"] : null;
+
+
 
         if ($titre !== null && $descrip !== null && $prix !== null && $choixImage !== null
          && (($choixImage == "Upload" && $file && !$file->getError()) || ($choixImage === "Url" && $img) || $choixImage === "Aucun"))
@@ -373,6 +382,7 @@
                 $item->url = $url;
                 $item->tarif = $prix;
                 $item->save();
+
                 Flash::flash("message", "Item modifié");
                 return Utils::redirect($response, "listeCreateurDetails", ["id" => $liste->tokenCreateur]);
             }
