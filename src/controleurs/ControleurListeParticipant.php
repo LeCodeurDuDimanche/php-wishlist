@@ -46,7 +46,7 @@
                 $message->user_id = Authentification::getIdUtilisateur();
             else
                 $message->createur = $nom;
-                
+
             $message->liste_id = $liste->id;
             $message->texte = $texte;
             if ($message->save())
@@ -92,6 +92,21 @@
             Flash::flash("avertissement", "Vous avez tenté d'accéder à la liste avec l'url de participation. Vous avez été redirigé sur la page du créateur de liste.");
             return Utils::redirect($response, "listeCreateur", ["id" => $liste->tokenCreateur]);
         }
+
+        return $next($request, $response);
+    }
+
+    /**
+    * Permet de restreindre l'acces aux listes non validees
+    */
+    public static function checkListeValideeMiddleware(ServerRequestInterface $request, ResponseInterface $response, callable $next) : ResponseInterface
+    {
+        $route = $request->getAttribute('route');
+        $token = $route->getArgument('token');
+        $liste = static::recupererListe($request, $response, $token);
+
+        if (!$liste->estValidee())
+            throw new NotFoundException($request, $response);
 
         return $next($request, $response);
     }

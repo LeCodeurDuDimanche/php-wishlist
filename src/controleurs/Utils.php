@@ -3,6 +3,7 @@
 
     use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
+    use Illuminate\Support\Collection;
     use mywishlist\models\Liste;
 
     class Utils{
@@ -169,13 +170,58 @@
         }
 
         /**
-        * Affiche une page d'erreur personalisee
+        * Affiche une page d'erreur 404 personalisee
         */
         public static function notFound(ServerRequestInterface $request, ResponseInterface $response) {
             global $app;
             //On met a jour les donnees flash
             Flash::next();
 
-            return $app->getContainer()->view->render($response, "erreur404.html")->withStatus(404);
+            $img = self::getGIF("disappointed", $request->getUri()->getBaseUrl() . "ressources/img/404.jpg");
+
+            return $app->getContainer()->view->render($response, "erreur404.html", compact("img"))->withStatus(404);
         }
+
+        /**
+        * Affiche une page d'erreur 403 personalisee
+        */
+        public static function forbidden(ServerRequestInterface $request, ResponseInterface $response) {
+            global $app;
+            //On met a jour les donnees flash
+            Flash::next();
+
+            $img = self::getGIF("no", $request->getUri()->getBaseUrl() . "ressources/img/403.gif");
+
+            return $app->getContainer()->view->render($response, "erreur403.html", compact("img"))->withStatus(403);
+        }
+
+        public static function getGIF($search, $default)
+        {
+            $data = null;
+
+            $curl = curl_init();
+            if ($curl)
+            {
+                curl_setopt($curl, CURLOPT_URL, "https://api.giphy.com/v1/gifs/search?api_key=t8jwJsbWc6WG4EHcIkoSqeeglctKRM38&q=" . urlencode($search) . "&limit=100");
+                curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_TIMEOUT, 2);
+
+                $content = curl_exec($curl);
+                if ($content) {
+                    $data = json_decode($content);
+                }
+
+                curl_close($curl);
+            }
+
+            if ($data)
+            {
+                $data = new Collection($data->data);
+                return "https://media.giphy.com/media/" .  $data->shuffle()->values()->all()[0]->id . "/giphy.gif";
+            }
+
+            return $default;
+        }
+
     }
