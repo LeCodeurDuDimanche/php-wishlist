@@ -2,6 +2,7 @@
 namespace mywishlist\controleurs;
 
  use mywishlist\models\Liste;
+ use Illuminate\Support\Carbon;
 
  class ControleurAccueil extends Controleur{
 
@@ -24,13 +25,24 @@ namespace mywishlist\controleurs;
 
         $numPage = $numPage > $maxPage ? $maxPage : $numPage;
 
-    	$listes = Liste::where("estPublique", "=", "1")->where("estValidee", "=", "1")->where("expiration", "<", time());
+    	$listes = Liste::where("estPublique", "=", "1")->where("estValidee", "=", "1")->where("expiration", ">", new Carbon());
         if ($recherche)
         {
-            $listes = $listes->where("titre", "like", "%$recherche%")->orWhere("desc", "like", "%$recherche%");
+            $listes = $listes->where(function($query) {
+                $query->where("titre", "like", "%$recherche%")->orWhere("desc", "like", "%$recherche%");
+            });
         }
         $listes = $listes->orderBy("expiration")->take($nbParPage)->skip(($numPage - 1) * $nbParPage)->get();
 
+        if ($recherche)
+        {
+            $listes = $listes->map(function($it) use ($recherche){
+                $balise = "<span class='resultat-recherche'>$recherche</span>";
+                $it->titre = \str_replace($recherche, $balise, $it->titre);
+                $it->desc = \str_replace($recherche, $balise, $it->desc);
+                return $it;
+            });
+        }
 
     	return $this->view->render($response, "listesPubliques.html", compact("recherche", "listes", "numPage", "maxPage"));
     }

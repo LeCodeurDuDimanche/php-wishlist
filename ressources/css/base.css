@@ -80,3 +80,9 @@ input:not([value=""]):invalid~.text-feedback{
 .custom-file-label::after {
   content: "Parcourir";
 }
+
+/* Style des resultats sur la page de recherche (listes publiques, createurs) */
+.resultat-recherche{
+    font-weight: bold;
+    background: #ff1;
+}

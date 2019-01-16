@@ -13,7 +13,7 @@
         <div class="col-12 col-sm-6 d-flex align-items-center">
             <form class='w-100'>
                 <div class='input-group'>
-                    <input type='search' name='q' class='form-control' placeholder='Recherchez une liste...' required>
+                    <input type='search' name='q' class='form-control' placeholder='Recherchez une liste...' value='{{recherche}}' required>
                     <div class='input-group-append'>
                         <button class='btn btn-outline-secondary' title='Rechercher'>
                             <i class='fa fa-search'></i>
@@ -43,10 +43,10 @@
     {% for liste in listes %}
       <a href="{{path_for('listeParticipant', {token:liste.tokenParticipant})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
         <div class="d-flex justify-content-center">
-          <h3 class="mb-1">{{liste.titre}}</h3>
+          <h3 class="mb-1">{{liste.titre|raw}}</h3>
         </div>
         <p class="mb-2 mt-2">
-            {{liste.desc}}
+            {{liste.desc|raw}}
         </p>
         <small>
             <i>
