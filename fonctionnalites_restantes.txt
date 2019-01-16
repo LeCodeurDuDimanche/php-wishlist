@@ -1,8 +1,6 @@
 Redirect après login
 
-3 Afficher tous les createurs de liste publiques
 3 Ajouter des listes par token au Compte
-3 REcherche de liste publique (auteur et date)
 
 VALIDATION :
     Verification html par w3c

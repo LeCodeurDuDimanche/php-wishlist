@@ -164,9 +164,14 @@
         * La locale doit être correctement définie pour LC_TIME pour un résultat correct
         */
         public static function formatTwigFunction($time, string $format = "%A %e %B %Y") : string{
-            return $time instanceof Illuminate\Support\Carbon ?
-                $time->formatLocalized($format) :
-                utf8_encode(strftime($format, (new \DateTime($time))->getTimestamp()));
+            if ($time instanceof Illuminate\Support\Carbon)
+                return $time->formatLocalized($format);
+            else{
+                $date = strftime($format, (new \DateTime($time))->getTimestamp());
+                if (!mb_detect_encoding($str, 'UTF-8', true))
+                    $date = utf8_encode($date);
+                return $date;
+            }
         }
 
         /**

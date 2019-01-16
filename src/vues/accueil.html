@@ -3,7 +3,7 @@
 {% block titre %}{{parent()}} - Accueil{% endblock %}
 
 {% block content %}
-    <div class='row'>
+    <div class='row justify-content-center'>
         <div class='col-12 text-justify py-3'>
             <h1 class='text-center mb-5'>My Whish List, plus t'en mets, plus t'en as !</h1>
             <p>
@@ -30,6 +30,18 @@
                 <p>Créez un compte afin de retrouver vos listes sur tous vos appareils et pour gagner du temps</p>
                 <a href="{{path_for('afficherLogin')}}#creerCompte" class='btn btn-primary d-block mx-auto'>Créer un compte</a>
             {% endif %}
+            </div>
+        </div>
+        <div class='col-12 col-sm-6 text-justify p-4'>
+            <h2>Découvrez la communauté</h2>
+            <p>Accédez et participez aux listes publique publiées par la communauté My Wish List et consultez les profils de la communauté.</p>
+            <div class='row'>
+                <div class='col-12 col-md-6 p-2 d-flex justify-content-center'>
+                    <a href="{{path_for('listesPubliques')}}" class='btn btn-outline-primary'>Accéder aux listes publiques</a>
+                </div>
+                <div class='col-12 col-sm-6 p-2 d-flex justify-content-center'>
+                    <a href="{{path_for('createurs')}}" class='btn btn-outline-primary'>Voir la liste des créateurs</a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block titre %}{{parent()}} - Listes publiques{% endblock %}
+{% block titre %}{{parent()}} - Créateurs{% endblock %}
 
 {% block content %}
     <div class='row my-5 justify-content-center'>
         <div class="col-12 col-sm-6 d-flex align-items-center">
             <form class='w-100'>
                 <div class='input-group'>
-                    <input type='search' name='q' class='form-control' placeholder='Recherchez une liste...' value='{{recherche}}' required>
+                    <input type='search' name='q' class='form-control' placeholder='Recherchez un créateur...' value='{{recherche}}' required>
                     <div class='input-group-append'>
                         <button class='btn btn-outline-secondary' title='Rechercher'>
                             <i class='fa fa-search'></i>
@@ -34,28 +34,31 @@
 
     <div class="list-group">
 
-    {% for liste in listes %}
-      <a href="{{path_for('listeParticipant', {token:liste.tokenParticipant})}}" class="list-group-item list-group-item-action flex-column align-items-start mt-4">
-        <div class="d-flex justify-content-center">
-          <h3 class="mb-1">{{liste.titre|raw}}</h3>
+    {% for createur in createurs %}
+      <div class="list-group-item flex-column align-items-start mt-4">
+        <div class="text-center">
+          <h3 class="mb-1">{{(createur.prenom ~ " " ~ createur.nom)|raw}}</h3>
+          <h4 class=" text-muted mb-1">{{createur.pseudo|raw}}</h4>
         </div>
-        <p class="mb-2 mt-2">
-            {{liste.desc|raw}}
+        <p>
+            A crée {{createur.listesCrees()|length}} listes et participé à {{createur.listesParticipation|length}} listes
+        </p>
+        <p>
+            A laissé {{createur.messages|length}} messages
         </p>
         <small>
             <i>
-                Créée par : {{liste.createur}}<br>
-                Expire {{liste.expiration|time_diff(false)}}
+                Compte crée le: {{format_date(createur.created_at)}}
             </i>
         </small>
-      </a>
+      </div>
     {% else %}
         <div class='alert alert-warning text-center my-2'>
             <i class='fa fa-exclamation-triangle mr-2'></i>
             {% if recherche is null %}
-                Il n'y a aucune liste publique pour le moment
+                Il n'y a aucune utilisateur créateur de listes publiques
             {% else %}
-                Aucune liste ne correspond à cette recherche
+                Aucun compte ne correspond à cette recherche
             {% endif %}
         </div>
     {% endfor %}

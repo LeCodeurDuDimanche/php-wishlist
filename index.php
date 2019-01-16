@@ -14,6 +14,7 @@
  use \mywishlist\controleurs\ControleurItem;
  use \mywishlist\controleurs\Flash;
  use \mywishlist\controleurs\Authentification;
+ use \mywishlist\controleurs\Utils;
 
  use Illuminate\Database\Capsule\Manager as DBManager;
  use Psr7Middlewares\Middleware;
@@ -56,6 +57,9 @@ if (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && $_SERVER['REDIRECT_REDIRECT_S
 
 //Accueil
 $app->get('/', ControleurAccueil::class.":afficherAccueil")->setName('accueil');
+$app->get('/liste/publiques[/page{numPage:[0-9]+}]', ControleurAccueil::class.":afficherListesPubliques")->setName('listesPubliques');
+$app->get('/liste/createurs[/page{numPage:[0-9]+}]', ControleurAccueil::class.":afficherCreateurs")->setName('createurs');
+
 
 //403
  $app->get("/interdit", Utils::class . "::forbidden");
@@ -100,7 +104,6 @@ $app->group("/liste", function() use ($app){
 
 //Liste participant
 $app->group("/liste", function() use ($app){
-    $app->get('/publiques[/page{numPage:[0-9]+}]', ControleurAccueil::class.":afficherListesPubliques")->setName('listesPubliques');
 
     $app->group("/p{token}", function() use ($app){
         $app->get("", ControleurListeParticipant::class.":afficherListe")->setName('listeParticipant');
