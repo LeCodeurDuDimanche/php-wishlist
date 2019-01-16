@@ -215,7 +215,7 @@
 
          $file->moveTo($fullFilename);
 
-         return "/" .$request->getUri()->getBasePath() . "/" . $relativeFilename;
+         return $request->getUri()->getBasePath() . "/" . $relativeFilename;
      }
 
      public function ajouterItem($request, $response, $args)
