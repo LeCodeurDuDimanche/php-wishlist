@@ -27,7 +27,7 @@ namespace mywishlist\controleurs;
     	$listes = Liste::where("estPublique", "=", "1")->where("estValidee", "=", "1")->where("expiration", "<", time());
         if ($recherche)
         {
-            $listes = $listes->where("nom", "like", "%$recherche%")->orWhere("desc", "like", "%$recherche%");
+            $listes = $listes->where("titre", "like", "%$recherche%")->orWhere("desc", "like", "%$recherche%");
         }
         $listes = $listes->orderBy("expiration")->take($nbParPage)->skip(($numPage - 1) * $nbParPage)->get();
 
