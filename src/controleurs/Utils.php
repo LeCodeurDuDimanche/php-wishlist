@@ -177,7 +177,7 @@
             //On met a jour les donnees flash
             Flash::next();
 
-            $img = self::getGIF("disappointed", $request->getUri()->getBaseUrl() . "ressources/img/404.jpg");
+            $img = self::getGIF("disappointed", $request->getUri()->getBaseUrl() . "/ressources/img/404.jpg");
 
             return $app->getContainer()->view->render($response, "erreur404.html", compact("img"))->withStatus(404);
         }
@@ -190,7 +190,7 @@
             //On met a jour les donnees flash
             Flash::next();
 
-            $img = self::getGIF("no", $request->getUri()->getBaseUrl() . "ressources/img/403.gif");
+            $img = self::getGIF("no", $request->getUri()->getBaseUrl() . "/ressources/img/403.gif");
 
             return $app->getContainer()->view->render($response, "erreur403.html", compact("img"))->withStatus(403);
         }
