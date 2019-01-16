@@ -1,4 +1,0 @@
-Redirect après login
-
-Description de toutes les fonctionnalites faites
-Tableau de bord
