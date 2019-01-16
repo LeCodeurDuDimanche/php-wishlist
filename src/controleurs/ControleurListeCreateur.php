@@ -43,7 +43,7 @@
 
        if ($type !== "all")
        {
-           if ($type === 'url')
+           if ($type === 'img')
            {
                return strpos($mime, "image/") === 0;
            }

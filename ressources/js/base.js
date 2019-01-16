@@ -12,6 +12,8 @@ $(document).ready((e) => {
     	let url = $("#image-url");
     	let upload = $("#image-upload");
 
+        upload.children("input")[0].setCustomValidity("");
+
     	if (val === "Url")
     	{
     		upload.stop(true).fadeOut();
@@ -79,7 +81,7 @@ $(document).ready((e) => {
         });
     });
 
-   
+
 
     //Permet de mettre a jour l'attribut value des inputs en fonction de leur valeur réelle, pour que les styles css s'appliquent correctement
     $(".follow-input").keyup(function(e){

@@ -42,6 +42,7 @@ footer, header{
 
 .table{
     overflow-x: auto;
+    display: block;
 }
 
 /* Permet de centrer des éléments en les espaçant de 10 px */
