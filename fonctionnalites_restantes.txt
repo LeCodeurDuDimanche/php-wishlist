@@ -1,7 +1,4 @@
 Redirect après login
 
-VALIDATION :
-    Verification html par w3c
-
 Description de toutes les fonctionnalites faites
 Tableau de bord

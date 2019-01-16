@@ -39,7 +39,7 @@ Troubleshooting :
 
 
 Remarques :
-    Pour pouvoir les urls de participation il faut soit utiliser un autre navigateur (ou la navigation privée), soit supprimer les cookies du site.
-    De plus, si la liste est créé par un utilisateur authentifié, il faut se déconnecter de son compte
+    Pour pouvoir les urls de participation il faut soit utiliser un autre navigateur (ou la navigation privée), soit supprimer les cookies du site ou être connecté à un autre compte que le compte créateur.
+    De plus, si la liste est créé par un utilisateur authentifié, il faut se déconnecter de son compte.
     En local, les urls de partage ne sont disponible que depuis l'ordinateur local. De plus, le widget de partage Facebook ne marchera pas.
-    Si vous avez un blocage de publicité ou de cookies traceurs (firefox), les boutons des réseaux sociaux n'apparaitront pas
+    Si vous avez un blocage de publicité ou de cookies traceurs (firefox), les boutons des réseaux sociaux n'apparaîtront pas

@@ -76,7 +76,7 @@
 							<div class="progress relative">
 							  <div class="progress-bar bg-success" role="progressbar" style="width:{{progression}}%" aria-valuemin="0" aria-valuemax="100"></div>
 							  <div class='w-100 text-center text-dark absolute'>{{progression}}%</div>
-							  
+
 							</div>
 						</div>
 						<p class="text-center">{{it.cagnottes().sum('montant')}}€</p>
@@ -107,7 +107,7 @@
  	</table>
 {% endif %}
 
-		
+
 
 
 
@@ -158,7 +158,25 @@
 						{{items[0].reservePar()}}
 						<ul>
 							{% for it in items %}
-								<li>A offert "{{it.titre}}" {% if it.message is defined %} avec le message suivant : {{it.message}} {% endif %}
+								<li>A offert "{{it.titre}}" {% if it.message is defined %} avec le message suivant : {{it.message}} {% endif %}</li>
+							{% endfor %}
+						</ul>
+					</li>
+				{% else %}
+					<div class='alert alert-info text-center my-3'>
+						<i class='fa fa-info mr-2'></i>
+						Votre liste n'a pas eu beaucoup de succès : aucun contributeur<i class='far fa-sad-tear ml-2'></i>
+					</div>
+				{% endfor %}
+			</ul>
+			<p>Participation aux cagnottes</p>
+			<ul class='pl-0'>
+				{% for item in items if item.aCagnotte %}
+					<li class='ml-5'>
+						Cagnotte de {{item.tarif}} € pour l'item {{item.nom}}
+						<ul>
+							{% for c in item.cagnottes %}
+								<li>{{c.nom()}}</li>
 							{% endfor %}
 						</ul>
 					</li>
