@@ -4,7 +4,6 @@ Redirect après login
 
 VALIDATION :
     Verification html par w3c
-    Test effets de bord suppression user et liste
 
 Description de toutes les fonctionnalites faites
 Tableau de bord
