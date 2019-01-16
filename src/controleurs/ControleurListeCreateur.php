@@ -537,7 +537,9 @@
         $item = Item::where('id', '=', $numItem)->first();
 
         //On ne peut pas modifier un item reserve
-        if ($item->estReserve())
+        if (!$item || $item->liste->id !== $liste->id)
+            throw new NotFoundException($request, $response);
+        else if ($item->estReserve())
         {
             Flash::flash("erreur", "Impossible de modifier ou de supprimer un item reservé");
             return Utils::redirect($response, "listeCreateurDetails", ["id" => $token]);

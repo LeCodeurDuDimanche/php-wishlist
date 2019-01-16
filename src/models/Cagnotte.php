@@ -7,7 +7,7 @@ class Cagnotte extends BaseModel{
 	protected $table = 'cagnotte';
 	protected $primaryKey = 'id';
 
-    protected $fillable = ['id' , "item_id", "user_id", "createur", "montant"];
+    protected $fillable = ['id' , "item_id", "user_id", "nom", "montant"];
 
 	public function liste()
 	{
@@ -21,7 +21,7 @@ class Cagnotte extends BaseModel{
 			$user = Utilisateur::find($this->user_id);
 			return $user ? $user->prenom . " " . $user->nom : "";
 		}
-		return $this->createur;
+		return $this->nom;
 	}
 
 	public function auteur()

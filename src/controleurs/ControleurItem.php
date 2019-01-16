@@ -3,13 +3,14 @@ namespace mywishlist\controleurs;
 
  use mywishlist\models\Item;
  use mywishlist\models\Liste;
+ use mywishlist\models\Cagnotte;
 
 class ControleurItem extends Controleur{
 
 	public function afficherFormulaireReservation($request, $response, $args){
 		$item = $this->recuperItem($request, $response, $args);
 
-		if($item->estReserve()){
+		if($item->estReserve() && !$item->aCagnotte){
 			return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
 		}
 
@@ -64,5 +65,48 @@ class ControleurItem extends Controleur{
 			throw new \Slim\Exception\NotFoundException($request, $response);
 		}
 		return $item;
+	}
+
+	public function participerItem($request, $response, $args)
+	{
+		$item = $this->recuperItem($request, $response, $args);
+        $nom = Utils::getFilteredPost($request, "nom");
+        $cagnotteParticipant = Utils::getFilteredPost($request, "cagnotte");
+
+        if ($nom === null)
+        {
+            Flash::flash("erreur", "Des données sont manquantes");
+        }
+
+        $lcagnottes = $item->cagnottes()->get();
+        //var_dump($lcagnottes);
+        $sum = 0;
+        foreach ($lcagnottes as $key => $value) {
+        	$sum += $value->montant;
+        }
+        $cagnotteMax = $item->tarif - $sum;
+        if($cagnotteParticipant > $cagnotteMax)
+        {
+        	Flash::flash("erreur", "D'autres personnes ont déjà participé, vous pouvez participer à une hauteur de ". $cagnotteMax . "€");
+        	return Utils::redirect($response, "formulaireReserverItem", ["token" => $args['token'], "idItem" => $args['idItem']]);
+        }
+        else {
+            $insertCagnotte = new Cagnotte();
+            $insertCagnotte->item_id = $item->id;
+            $user = Authentification::getUtilisateur();
+            if($user === null){
+                $insertCagnotte->nom = $nom;
+                $insertCagnotte->user_id = null;
+            }
+            else {
+                $insertCagnotte->nom = $user->prenom;
+                $insertCagnotte->user_id = $user->id;
+            }
+            $insertCagnotte->montant = $cagnotteParticipant;
+            $insertCagnotte->save();
+        	return Utils::redirect($response, "listeParticipantDetails", ["token" => $args['token']]);
+        }
+
+
 	}
 }

@@ -100,6 +100,7 @@ $app->group("/liste", function() use ($app){
         $app->get('/details/item/{idItem}', ControleurItem::class.":afficherItem")->setName('afficherItem');
         $app->get('/details/item/{idItem}/reserver', ControleurItem::class.":afficherFormulaireReservation")->setName('formulaireReserverItem');
         $app->post('/details/item/{idItem}/reserver', ControleurItem::class.":reserverItem")->setName('reserverItem');
+        $app->post('/details/item/{idItem}/participer', ControleurItem::class.":participerItem")->setName('participerItem');
         $app->post('/ajouterMessage', ControleurListeParticipant::class.":ajouterMessagePublic")->setName('ajouterMessagePublic');
     })->add(ControleurListeParticipant::class."::checkNonCreateurMiddleware");
 });

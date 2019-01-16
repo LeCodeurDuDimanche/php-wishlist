@@ -38,8 +38,8 @@ class CagnotteTableMigration extends Migration
         $this->schema->create("cagnotte", function(Blueprint $table){
             $table->increments('id')->unique();
             $table->string('item_id');
-            $table->string('user_id');
-            $table->string('createur');
+            $table->string('user_id')->nullable();
+            $table->string('nom')->nullable();
             $table->string('montant');
             $table->timestamps();
         });

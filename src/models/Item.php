@@ -83,6 +83,6 @@ class Item extends BaseModel{
 
 	public function estReserve() : bool
 	{
-		return $this->reserveParUser !== null || $this->reservePar !== null;
+		return $this->cagnottes->isNotEmpty() || $this->reserveParUser !== null || $this->reservePar !== null;
 	}
 }
