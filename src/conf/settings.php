@@ -53,6 +53,10 @@ return [
             return ob_get_clean();
         }));
 
+        //gif
+        $view->getEnvironment()->addFunction(new Twig_Function("get_gif", Utils::class . "::getGIF"));
+
+
         return $view;
     },
     'notFoundHandler' => Utils::class . "::notFound",
