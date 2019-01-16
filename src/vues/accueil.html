@@ -26,7 +26,8 @@
                 <p>Créez une nouvelle liste de souhaits pour Noël, pour votre anniversaire ou autre évènement spécial, afin que vos amis sachent ce qui vous plairait vraiment</p>
                 <a href="{{path_for('formulaireCreerListe')}}" class='btn btn-primary d-block mx-auto'>Créer une liste</a>
             </div>
-            {% if not est_connecte() %}<div class='mt-4'>
+            <div class='mt-4'>
+            {% if not est_connecte() %}
                 <p>Créez un compte afin de retrouver vos listes sur tous vos appareils et pour gagner du temps</p>
                 <a href="{{path_for('afficherLogin')}}#creerCompte" class='btn btn-primary d-block mx-auto'>Créer un compte</a>
             {% endif %}
