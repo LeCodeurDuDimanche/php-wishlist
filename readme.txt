@@ -43,3 +43,8 @@ Remarques :
     De plus, si la liste est créé par un utilisateur authentifié, il faut se déconnecter de son compte.
     En local, les urls de partage ne sont disponible que depuis l'ordinateur local. De plus, le widget de partage Facebook ne marchera pas.
     Si vous avez un blocage de publicité ou de cookies traceurs (firefox), les boutons des réseaux sociaux n'apparaîtront pas
+
+Partis pris:
+    Suppresion de l'image d'un item : même si cela n'était pas demandé, nous avons décidé pour plus de cohérence de supprimer l'image du serveur lorsqu'elle est supprimée ou modifiée
+    Changement du mot de passe : Vu qu'il n'y a pas de jeton rememberMe, et qu'il n'y a aucun moyen de déconnecter tous les session d'une utilisateur vu notre implémentation, nous ne déconnectons pas l'utilisateur lors du changement du mot de passe.
+    Modification de pseudo: Même si cela n'était pas demandé, nous avons jugé utile de pouvoir modifier le pseudo, avec vérification préalable pour conserver l'unicité (forcée par la bdd de toute façon)
