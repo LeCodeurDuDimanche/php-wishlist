@@ -48,9 +48,17 @@ foreach($appMiddlewares as $middleware)
     $app->add($middleware);
 }
 
+if (isset($_SERVER['REDIRECT_REDIRECT_STATUS']) && $_SERVER['REDIRECT_REDIRECT_STATUS'] == 403)
+{
+	header("Location: interdit");
+	die("403");
+}
 
 //Accueil
 $app->get('/', ControleurAccueil::class.":afficherAccueil")->setName('accueil');
+
+//403
+ $app->get("/interdit", Utils::class . "::forbidden");
 
 //listeCreateur
 $app->group("/liste", function() use ($app){
