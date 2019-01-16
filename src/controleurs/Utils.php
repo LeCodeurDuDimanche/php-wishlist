@@ -168,7 +168,7 @@
                 return $time->formatLocalized($format);
             else{
                 $date = strftime($format, (new \DateTime($time))->getTimestamp());
-                if (!mb_detect_encoding($str, 'UTF-8', true))
+                if (!mb_detect_encoding($date, 'UTF-8', true))
                     $date = utf8_encode($date);
                 return $date;
             }
