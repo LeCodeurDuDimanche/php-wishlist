@@ -2,3 +2,5 @@ vendor/
 conf.ini
 composer.lock
 src/cache
+ressources/uploaded
+
